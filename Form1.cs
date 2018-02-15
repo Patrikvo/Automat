@@ -15,14 +15,13 @@ namespace Automat
         public Form1()
         {
             InitializeComponent();
-            dossierContext = new Database.DossierContext();
 
-            Controller.OverviewController overviewController = new Controller.OverviewController(dossierContext);
+            Controller.OverviewController overviewController = new Controller.OverviewController(this);
             overviewController.showView();
 
 
 
-
+            
             /*
             int j = 0;
             
@@ -70,8 +69,20 @@ namespace Automat
 
             }
 
-        Database.DossierContext dossierContext;
 
+        public void showPersonForm()
+        {
+            Controller.PersonController personController = new Controller.PersonController(null);
+            personController.showView();
+        }
+
+
+        
+
+        public void exitApplication()
+        {
+            this.Close();
+        }
 
     
     }

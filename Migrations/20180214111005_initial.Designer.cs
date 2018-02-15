@@ -10,9 +10,10 @@ using System;
 namespace Automat.Migrations
 {
     [DbContext(typeof(DossierContext))]
-    partial class DossierContextModelSnapshot : ModelSnapshot
+    [Migration("20180214111005_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +37,7 @@ namespace Automat.Migrations
 
                     b.Property<string>("dossierTitel");
 
-                    b.Property<bool>("isGearchiveerd").HasDefaultValue(false);
+                    b.Property<bool>("isGearchiveerd");
 
                     b.HasKey("Id");
 

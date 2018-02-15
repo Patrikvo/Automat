@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Automat.Model;
 using Automat.View;
+using System.Data.Entity.Infrastructure;
 
 namespace Automat.Controller
 {
@@ -13,17 +14,80 @@ namespace Automat.Controller
         OverviewForm overviewForm;
         List<Dossier> dossierList;
 
-        public OverviewController(Database.DossierContext dossierContext)
+        public OverviewController(Form1 parent)
         {
-            this.dossierContext = dossierContext;
-            this.dossierList = dossierContext.dossiers.ToList();
+            this.parent = parent;
+
             this.overviewForm = new OverviewForm();
             this.overviewForm.selectWithID = showWithID;
             this.overviewForm.saveDossier = SaveDossier;
             this.overviewForm.saveNewDossier = saveNewDossier;
             this.overviewForm.deleteDossier = deleteDossier;
 
-            this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+            this.overviewForm.showPersonForm = showPersonForm;
+            this.overviewForm.exitApplication = this.exitApplication;
+            this.overviewForm.refreshDossierList = this.refreshDossierList;
+
+
+            refreshDossierList(false);
+
+            
+        }
+
+
+        /*
+        public int saveDossierArchiveProperty(int id, bool isArchived, byte[] rowVersion)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Dossier dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+
+                // the dossier is delete by another user?
+                if (dossier == null)
+                {
+                    this.overviewForm.setStatusText("Entry was deleted by another user.");
+                    return 0;
+                }
+                else
+                {
+                    if (Database.DossierContext.ByteArrayCompare(rowVersion, dossier.RowVersion))
+                    {
+                        dossier.isGearchiveerd = isArchived;
+
+                        result = dossierContext.SaveChanges();
+
+                        refreshDossierList(this.overviewForm.isShowingArchivedItems());
+                  //      this.dossierList = dossierContext.dossiers.ToList();
+                   //     this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+                    }
+                    else
+                    {
+                        this.overviewForm.setStatusText("Entry was modified by another user.");
+                    }
+                }
+
+            }
+            return result;
+        }
+        */
+
+
+
+        public void refreshDossierList(bool showArchived)
+        {
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                if (!showArchived)
+                {
+                    this.dossierList = dossierContext.dossiers.Where(c => c.isGearchiveerd == false).ToList();
+                }
+                else
+                {
+                    this.dossierList = dossierContext.dossiers.ToList();
+                }
+                this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+            }
         }
 
         public void showView()
@@ -37,68 +101,116 @@ namespace Automat.Controller
 
         public void showWithID(int id)
         {
-            Dossier dossier =  this.dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
-            this.overviewForm.setdossier(dossier.Id, dossier.dossierNummer, dossier.dossierTitel, dossier.dossierStandvanzaken);
-        }
-
-        public int SaveDossier(int id, string nummer, string titel, string stavaza)
-        {
-            int result = 0;
-            Dossier dossier = this.dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+            Dossier dossier = null;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+            }
             if (dossier != null)
             {
-                dossier.dossierNummer = nummer;
-                dossier.dossierTitel = titel;
-                dossier.dossierStandvanzaken = stavaza;
-                result =  this.dossierContext.SaveChanges();
-                this.dossierList = dossierContext.dossiers.ToList();
-                this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+                Controller.PersonController personController = new Controller.PersonController(id);
+                string names = personController.getNamesAsString();
+                this.overviewForm.setdossier(dossier.Id, dossier.dossierNummer, dossier.dossierTitel, dossier.dossierStandvanzaken, dossier.isGearchiveerd, names, dossier.RowVersion);
             }
+        }
 
+        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, byte[] rowVersion)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Dossier dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+
+                // the dossier is delete by another user?
+                if (dossier == null)
+                {
+                    this.overviewForm.setStatusText("Entry was deleted by another user.");
+                    return saveNewDossier(out id, nummer, titel, stavaza);
+                }
+                else
+                {
+                    if (Database.DossierContext.ByteArrayCompare(rowVersion, dossier.RowVersion))
+                    {
+                        dossier.dossierNummer = nummer;
+                        dossier.dossierTitel = titel;
+                        dossier.dossierStandvanzaken = stavaza;
+                        dossier.isGearchiveerd = isArchived;
+
+                        result = dossierContext.SaveChanges();
+
+
+                        refreshDossierList(this.overviewForm.isShowingArchivedItems());
+                    }
+                    else
+                    {
+                        this.overviewForm.setStatusText("Entry was modified by another user.");
+                    }
+                }
+       
+            }
             return result;
         }
 
         public int saveNewDossier(out int id, string nummer, string titel, string stavaza)
         {
             int result = 0;
-            Dossier dossier = new Dossier();
-            dossier.dossierNummer = nummer;
-            dossier.dossierTitel = titel;
-            dossier.dossierStandvanzaken = stavaza;
-            this.dossierContext.dossiers.Add(dossier);
-            result = this.dossierContext.SaveChanges();
-            this.dossierList = dossierContext.dossiers.ToList();
-            this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
-            if (result > 0)
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                id = dossier.Id;
-            }
-            else
-            {
-                id = -1;
-            }
+                Dossier dossier = new Dossier();
+                dossier.dossierNummer = nummer;
+                dossier.dossierTitel = titel;
+                dossier.dossierStandvanzaken = stavaza;
+                dossier.isGearchiveerd = false;
+                dossierContext.dossiers.Add(dossier);
+                result = dossierContext.SaveChanges();
 
+                refreshDossierList(this.overviewForm.isShowingArchivedItems());
+                if (result > 0)
+                {
+                    id = dossier.Id;
+                }
+                else
+                {
+                    id = -1;
+                }
+            }
             return result;
 
         }
 
-        public int deleteDossier(int id)
+        public int deleteDossier(int id, byte[] rowVersion)
         {
             int result = 0;
-            Dossier dossier = this.dossierContext.dossiers.Where(c => c.Id == id).First(); ;
-            this.dossierContext.dossiers.Remove(dossier);
-            result = this.dossierContext.SaveChanges();
-            this.dossierList = dossierContext.dossiers.ToList();
-            this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Dossier dossier = dossierContext.dossiers.Where(c => c.Id == id).First(); ;
+                dossierContext.dossiers.Remove(dossier);
+                result = dossierContext.SaveChanges();
 
+                refreshDossierList(this.overviewForm.isShowingArchivedItems());
+
+            }
             return result;
         }
 
 
 
+        public void showPersonForm(int? id)
+        {
+                Controller.PersonController personController = new Controller.PersonController(id);
+                personController.showView();
+        }
 
 
+        public void exitApplication()
+        {
+            this.parent.exitApplication();
+        }
 
-        Database.DossierContext dossierContext;
+        public string lastError { get; set; }
+
+
+        Form1 parent;
+
     }
 }

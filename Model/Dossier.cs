@@ -10,15 +10,31 @@ namespace Automat.Model
 {
     public class Dossier
     {
+        public Dossier()
+        {
+            
+        }
+
+
         [Key]
         public int Id { get; set; }
 
         [Required]
         public string dossierNummer { get; set; }
+
         public string dossierTitel { get; set; }
         public string dossierStandvanzaken { get; set; }
 
+        public string dossierLinkToFiles { get; set; }
+
+        public bool isGearchiveerd { get; set; }
+
+
+       // [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         public virtual List<Dossier> dossiers { get; set; }
+        
 
 
         [NotMapped]

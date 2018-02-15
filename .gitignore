@@ -11,6 +11,8 @@
 .vs
 *.sln
 *.config
+database.db
+
 
 # Cordova bestanden
 cordova/vos/.npmignore
