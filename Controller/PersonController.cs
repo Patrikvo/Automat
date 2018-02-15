@@ -14,23 +14,6 @@ namespace Automat.Controller
         public PersonController(int? dossierId)
         {
             this.dossierId = dossierId;
-            /*  using (Database.DossierContext dossierContext = new Database.DossierContext())
-              {
-                  if (dossierId == null)
-                  {
-                      this.personList = dossierContext.personen.ToList();
-                  }
-                  else
-                  {
-                      this.personList = (from t3 in dossierContext.dossierPersoon
-                                         where t3.dossierId == dossierId
-                                         from t2 in dossierContext.personen
-                                         where t2.Id == t3.persoonId
-                                         select t2).ToList();
-                  }
-              }
-
-      */
 
             getPersonList();
             personViewForm = new PersonViewForm();
@@ -196,6 +179,19 @@ namespace Automat.Controller
                                        select t2).ToList();
                 }
             }
+        }
+
+
+        public List<Tuple<string, int>> getNameTuples()
+        {
+            List<Tuple<string, int>> tuples = new List<Tuple<string, int>>();
+
+            foreach(Persoon p in personList)
+            {
+                tuples.Add(new Tuple<string, int>(p.naam, p.Id));
+            }
+
+            return tuples;
         }
 
 

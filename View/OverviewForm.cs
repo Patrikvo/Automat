@@ -12,6 +12,9 @@ namespace Automat.View
 {
     public partial class OverviewForm : Form
     {
+
+
+
         public OverviewForm()
         {
             InitializeComponent();
@@ -31,16 +34,26 @@ namespace Automat.View
 
         }
 
-        public void setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, string contactpersonen, byte[] rowVersion)
+        public void setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles , byte[] rowVersion)
         {
             this.textBoxDossierNummer.Text = nummer;
             this.textBoxDossierTitel.Text = titel;
             this.textBoxStavaza.Text = stavaza;
-
+            if (linkTofiles != "")
+            {
+                this.linkLabelfiles.Text = linkTofiles;
+            }
+            else
+            {
+                this.linkLabelfiles.Text = "Niet opgegeven";
+            }
             this.checkBoxIsArchived.Checked = isArchived;
 
-            this.linkLabelContactpersonen.Text = contactpersonen;
-
+            this.comboBoxContactpersonen.DataSource = null;
+            this.comboBoxContactpersonen.DataSource = contactpersonen;
+            this.comboBoxContactpersonen.DisplayMember = "Item1";
+            this.comboBoxContactpersonen.ValueMember = "Item2";
+            
             this.rowVersion = rowVersion;
             this.id = id;
         }
@@ -51,10 +64,16 @@ namespace Automat.View
 
         private void listBoxDossiers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // to prevent infinite recursion
+            if (listboxDossiersSupressEvent) { return; } // Dossier is being saved, ignore this event.
+            listboxDossiersSupressEvent = true;
+       //     doSaveDossier();
+            listboxDossiersSupressEvent = false;
+
             int id = (int)listBoxDossiers.SelectedValue;
             selectWithID(id);
         }
-
+        bool listboxDossiersSupressEvent = false;
 
 
         private int id;
@@ -69,7 +88,7 @@ namespace Automat.View
 
 
         public delegate void SelectWithIdDelegate(int id);
-        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, byte[] rowVersion);
+        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
         public delegate int SaveNewDossierDelegate(out int id, string nummer, string titel, string stavaza);
         public delegate int DeleteDossierDelegate(int id, byte[] rowVersion);
         public delegate void RefreshDossierListDelegate(bool showArchived);
@@ -85,19 +104,24 @@ namespace Automat.View
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            doSaveDossier();
+
+        }
+
+        private void doSaveDossier()
+        {
             int index = listBoxDossiers.SelectedIndex;
 
-            int result = saveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.rowVersion);
+            int result = saveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
 
             this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
 
             setListboxDossiersIndex(index);
- 
-
         }
 
         private void nieuwDossierToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            listboxDossiersSupressEvent = true;
             int result = saveNewDossier(out this.id, "Geen nummer", "Geen titel", "");
             if (result > 0)
             {
@@ -173,6 +197,38 @@ namespace Automat.View
         private void linkLabelContactpersonen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             showPersonForm(this.id);
+        }
+
+        private void linkLabelfiles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+
+
+                if (System.IO.Directory.Exists(this.linkLabelfiles.Text))
+                {
+                    System.Diagnostics.Process.Start(this.linkLabelfiles.Text);
+                    //System.Diagnostics.Process.Start(@"C:\temp");
+                }
+                else
+                {
+                    MessageBox.Show("De map " + this.linkLabelfiles.Text + " bestaat niet.", "Map niet gevonden.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        private void contextMenuStripFiles_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "toolStripMenuItemEdit")
+            {
+                Automat.Common.EditFileLocationForm editForm = new Common.EditFileLocationForm();
+                editForm.fileLocation = this.linkLabelfiles.Text;
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    this.linkLabelfiles.Text = editForm.fileLocation;
+                }
+            }
         }
     }
 }

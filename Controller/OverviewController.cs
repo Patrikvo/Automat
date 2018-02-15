@@ -109,12 +109,13 @@ namespace Automat.Controller
             if (dossier != null)
             {
                 Controller.PersonController personController = new Controller.PersonController(id);
-                string names = personController.getNamesAsString();
-                this.overviewForm.setdossier(dossier.Id, dossier.dossierNummer, dossier.dossierTitel, dossier.dossierStandvanzaken, dossier.isGearchiveerd, names, dossier.RowVersion);
+                
+                List<Tuple<string, int>> contactpersonen = personController.getNameTuples();
+                this.overviewForm.setdossier(dossier.Id, dossier.dossierNummer, dossier.dossierTitel, dossier.dossierStandvanzaken, dossier.isGearchiveerd, contactpersonen, dossier.dossierLinkToFiles, dossier.RowVersion);
             }
         }
 
-        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, byte[] rowVersion)
+        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -135,7 +136,14 @@ namespace Automat.Controller
                         dossier.dossierTitel = titel;
                         dossier.dossierStandvanzaken = stavaza;
                         dossier.isGearchiveerd = isArchived;
-
+                        if (linkTofiles != "")
+                        {
+                            dossier.dossierLinkToFiles = linkTofiles;
+                        }
+                        else
+                        {
+                            dossier.dossierLinkToFiles = Automat.Rules.DossierRules.getFileLocation(nummer);
+                        }
                         result = dossierContext.SaveChanges();
 
 
@@ -153,6 +161,7 @@ namespace Automat.Controller
 
         public int saveNewDossier(out int id, string nummer, string titel, string stavaza)
         {
+            
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
@@ -161,6 +170,7 @@ namespace Automat.Controller
                 dossier.dossierTitel = titel;
                 dossier.dossierStandvanzaken = stavaza;
                 dossier.isGearchiveerd = false;
+                dossier.dossierLinkToFiles = Automat.Rules.DossierRules.getFileLocation(nummer);
                 dossierContext.dossiers.Add(dossier);
                 result = dossierContext.SaveChanges();
 

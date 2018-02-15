@@ -23,8 +23,15 @@ https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-sta
 - field "Archived" (implemented)
 
 - link to files  (field exist in DB, code needs to be added to the application.)
+UI: contains the base directory, needs the part to split up the dossiernummer in year and nummer.
+	Important part is to support both new and old dossiers. 
+  implemented by extraction year and number from dossiernumber. and store it at first opportunity (when dossiernummer is for first time valid).
+editing ability added
 
 - client (name, email, organisation, department)  (person and personDossier tables exist, persons can be added to the DB. Next is adding the link between dossiers and persons. (many-to-many relationship).
+needed: ability to add/remove person to dossier, "send email button".
+
+
 
 - Migration support  (import older DB)
 after changing models and adding to dossierContext (public DbSet<Model.DossierPerson> dossierPersoon { get; set; })
@@ -33,6 +40,9 @@ remove migrations (everything)
 remove database.db (source map)
 apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
+
+
+20180215  added link to files, changed UI.
 
 20180214 add archiving of dossiers.
 
