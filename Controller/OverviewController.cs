@@ -27,7 +27,7 @@ namespace Automat.Controller
             this.overviewForm.showPersonForm = showPersonForm;
             this.overviewForm.exitApplication = this.exitApplication;
             this.overviewForm.refreshDossierList = this.refreshDossierList;
-
+            this.overviewForm.getAllPersons = this.GetAllPersons;
 
             refreshDossierList(false);
 
@@ -218,6 +218,14 @@ namespace Automat.Controller
         }
 
         public string lastError { get; set; }
+
+        public List<Tuple<string, int>> GetAllPersons()
+        {
+            Controller.PersonController personController = new Controller.PersonController(null);
+
+            return personController.getNameTuples();
+        }
+
 
 
         Form1 parent;

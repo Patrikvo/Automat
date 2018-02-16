@@ -29,7 +29,7 @@ UI: contains the base directory, needs the part to split up the dossiernummer in
 editing ability added
 
 - client (name, email, organisation, department)  (person and personDossier tables exist, persons can be added to the DB. Next is adding the link between dossiers and persons. (many-to-many relationship).
-needed: ability to add/remove person to dossier, "send email button".
+needed: ability to add/remove person to dossier (UI part works, needs link to DB), "send email button".
 
 
 
@@ -41,6 +41,7 @@ remove database.db (source map)
 apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
+20180216   Added ability to add and remove persons to the dossier. the UI-part is done, DB link needs to be added next.
 
 20180215  added link to files, changed UI.
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -12,13 +13,15 @@ namespace Automat.View
 {
     public partial class OverviewForm : Form
     {
-
+        // listbox uses bindingSource to allow add/remove. 
 
 
         public OverviewForm()
         {
             InitializeComponent();
             this.toolStripStatusLabel1.Text = "Ready";
+            binding1 = new BindingSource();
+
 
 
         }
@@ -50,9 +53,22 @@ namespace Automat.View
             this.checkBoxIsArchived.Checked = isArchived;
 
             this.comboBoxContactpersonen.DataSource = null;
-            this.comboBoxContactpersonen.DataSource = contactpersonen;
+            linkedPersonList = new ObservableCollection<Tuple<string, int>>(contactpersonen);
+            binding1.DataSource = linkedPersonList;
+            this.comboBoxContactpersonen.DataSource = binding1;
             this.comboBoxContactpersonen.DisplayMember = "Item1";
             this.comboBoxContactpersonen.ValueMember = "Item2";
+
+            personList = this.getAllPersons();
+            this.listBoxAllPersons.DataSource = personList;
+            this.listBoxAllPersons.DisplayMember = "Item1";
+            this.listBoxAllPersons.ValueMember = "Item2";
+
+            
+            this.listBoxLinkedPersons.DataSource = binding1;
+            this.listBoxLinkedPersons.DisplayMember = "Item1";
+            this.listBoxLinkedPersons.ValueMember = "Item2";
+            
             
             this.rowVersion = rowVersion;
             this.id = id;
@@ -85,15 +101,15 @@ namespace Automat.View
         public ShowPersonForm showPersonForm;
         public exitAplicationDelegate exitApplication;
         public RefreshDossierListDelegate refreshDossierList;
-
+        public GetAllPersonsDelegate getAllPersons;
 
         public delegate void SelectWithIdDelegate(int id);
         public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
         public delegate int SaveNewDossierDelegate(out int id, string nummer, string titel, string stavaza);
         public delegate int DeleteDossierDelegate(int id, byte[] rowVersion);
         public delegate void RefreshDossierListDelegate(bool showArchived);
-
-
+        public delegate List<Tuple<string, int>> GetAllPersonsDelegate();
+ 
         public delegate void ShowPersonForm(int? id);
         public delegate void exitAplicationDelegate();
 
@@ -230,5 +246,48 @@ namespace Automat.View
                 }
             }
         }
-    }
+
+        
+
+
+        private List<Tuple<string, int>> personList;
+        private ObservableCollection<Tuple<string, int>> linkedPersonList;
+        private BindingSource binding1;
+
+        private void buttonAddPerson_Click(object sender, EventArgs e)
+        {
+            if (listBoxAllPersons.SelectedItem != null)
+            {
+                Tuple<string, int> selectedPerson = (Tuple<string, int>)listBoxAllPersons.SelectedItem;
+                if (!linkedPersonList.Contains(selectedPerson))
+                {
+                    binding1.Add(selectedPerson);
+                }
+            }
+        }
+
+        private void buttonRemovePerson_Click(object sender, EventArgs e)
+        {
+            Tuple<string, int> selectedPerson = (Tuple<string, int>)listBoxLinkedPersons.SelectedItem;
+            if (linkedPersonList.Contains(selectedPerson))
+            {
+                binding1.Remove(selectedPerson);
+            }
+        }
+
+
+        private void buttonSaveP2_Click(object sender, EventArgs e)
+        {
+            // TODO sychornise linkedPersonList with DB. 
+            // some items are already in DB, some have been removed, some are new.
+
+
+
+
+
+
+        }
+
+
+    } 
 }

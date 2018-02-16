@@ -34,6 +34,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.linkLabelfiles = new System.Windows.Forms.LinkLabel();
+            this.contextMenuStripFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBoxContactpersonen = new System.Windows.Forms.ComboBox();
             this.textBoxDossierNummer = new System.Windows.Forms.TextBox();
@@ -45,7 +47,7 @@
             this.labelDossierNummer = new System.Windows.Forms.Label();
             this.labelDossierTitel = new System.Windows.Forms.Label();
             this.labelStavaza = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageContact = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -58,17 +60,23 @@
             this.toonArchiefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBoxLinkedPersons = new System.Windows.Forms.ListBox();
+            this.listBoxAllPersons = new System.Windows.Forms.ListBox();
+            this.buttonAddPerson = new System.Windows.Forms.Button();
+            this.buttonRemovePerson = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonSaveP2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.contextMenuStripFiles.SuspendLayout();
+            this.tabPageContact.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStripFiles.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBoxDossiers
@@ -105,7 +113,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageContact);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -147,6 +155,20 @@
             this.linkLabelfiles.TabStop = true;
             this.linkLabelfiles.Text = "Naar bestanden";
             this.linkLabelfiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelfiles_LinkClicked);
+            // 
+            // contextMenuStripFiles
+            // 
+            this.contextMenuStripFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemEdit});
+            this.contextMenuStripFiles.Name = "contextMenuStripFiles";
+            this.contextMenuStripFiles.Size = new System.Drawing.Size(126, 26);
+            this.contextMenuStripFiles.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStripFiles_ItemClicked);
+            // 
+            // toolStripMenuItemEdit
+            // 
+            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
+            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(125, 22);
+            this.toolStripMenuItemEdit.Text = "Bewerken";
             // 
             // button1
             // 
@@ -192,9 +214,9 @@
             this.checkBoxIsArchived.AutoSize = true;
             this.checkBoxIsArchived.Location = new System.Drawing.Point(18, 589);
             this.checkBoxIsArchived.Name = "checkBoxIsArchived";
-            this.checkBoxIsArchived.Size = new System.Drawing.Size(90, 17);
+            this.checkBoxIsArchived.Size = new System.Drawing.Size(29, 17);
             this.checkBoxIsArchived.TabIndex = 8;
-            this.checkBoxIsArchived.Text = "Gearchiveerd";
+            this.checkBoxIsArchived.Text = "t";
             this.checkBoxIsArchived.UseVisualStyleBackColor = true;
             this.checkBoxIsArchived.CheckedChanged += new System.EventHandler(this.checkBoxIsArchived_CheckedChanged);
             // 
@@ -254,15 +276,22 @@
             this.labelStavaza.TabIndex = 5;
             this.labelStavaza.Text = "Stand van zaken";
             // 
-            // tabPage2
+            // tabPageContact
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(469, 612);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageContact.Controls.Add(this.buttonSaveP2);
+            this.tabPageContact.Controls.Add(this.label2);
+            this.tabPageContact.Controls.Add(this.label1);
+            this.tabPageContact.Controls.Add(this.buttonRemovePerson);
+            this.tabPageContact.Controls.Add(this.buttonAddPerson);
+            this.tabPageContact.Controls.Add(this.listBoxAllPersons);
+            this.tabPageContact.Controls.Add(this.listBoxLinkedPersons);
+            this.tabPageContact.Location = new System.Drawing.Point(4, 22);
+            this.tabPageContact.Name = "tabPageContact";
+            this.tabPageContact.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageContact.Size = new System.Drawing.Size(469, 612);
+            this.tabPageContact.TabIndex = 1;
+            this.tabPageContact.Text = "Contact";
+            this.tabPageContact.UseVisualStyleBackColor = true;
             // 
             // statusStrip1
             // 
@@ -326,21 +355,21 @@
             // nieuwDossierToolStripMenuItem1
             // 
             this.nieuwDossierToolStripMenuItem1.Name = "nieuwDossierToolStripMenuItem1";
-            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.nieuwDossierToolStripMenuItem1.Text = "Nieuw Dossier";
             this.nieuwDossierToolStripMenuItem1.Click += new System.EventHandler(this.nieuwDossierToolStripMenuItem_Click);
             // 
             // dossierWissenToolStripMenuItem
             // 
             this.dossierWissenToolStripMenuItem.Name = "dossierWissenToolStripMenuItem";
-            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dossierWissenToolStripMenuItem.Text = "Dossier wissen";
             this.dossierWissenToolStripMenuItem.Click += new System.EventHandler(this.dossierWissenToolStripMenuItem_Click);
             // 
             // toonArchiefToolStripMenuItem
             // 
             this.toonArchiefToolStripMenuItem.Name = "toonArchiefToolStripMenuItem";
-            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.toonArchiefToolStripMenuItem.Text = "Toon Archief";
             this.toonArchiefToolStripMenuItem.Click += new System.EventHandler(this.toonArchiefToolStripMenuItem_Click);
             // 
@@ -359,19 +388,69 @@
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.overzichtToolStripMenuItem_Click);
             // 
-            // contextMenuStripFiles
+            // listBoxLinkedPersons
             // 
-            this.contextMenuStripFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemEdit});
-            this.contextMenuStripFiles.Name = "contextMenuStripFiles";
-            this.contextMenuStripFiles.Size = new System.Drawing.Size(153, 48);
-            this.contextMenuStripFiles.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStripFiles_ItemClicked);
+            this.listBoxLinkedPersons.FormattingEnabled = true;
+            this.listBoxLinkedPersons.Location = new System.Drawing.Point(6, 49);
+            this.listBoxLinkedPersons.Name = "listBoxLinkedPersons";
+            this.listBoxLinkedPersons.Size = new System.Drawing.Size(208, 173);
+            this.listBoxLinkedPersons.TabIndex = 0;
             // 
-            // toolStripMenuItemEdit
+            // listBoxAllPersons
             // 
-            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
-            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItemEdit.Text = "Bewerken";
+            this.listBoxAllPersons.FormattingEnabled = true;
+            this.listBoxAllPersons.Location = new System.Drawing.Point(251, 49);
+            this.listBoxAllPersons.Name = "listBoxAllPersons";
+            this.listBoxAllPersons.Size = new System.Drawing.Size(210, 173);
+            this.listBoxAllPersons.TabIndex = 1;
+            // 
+            // buttonAddPerson
+            // 
+            this.buttonAddPerson.Location = new System.Drawing.Point(220, 93);
+            this.buttonAddPerson.Name = "buttonAddPerson";
+            this.buttonAddPerson.Size = new System.Drawing.Size(25, 23);
+            this.buttonAddPerson.TabIndex = 2;
+            this.buttonAddPerson.Text = "<-";
+            this.buttonAddPerson.UseVisualStyleBackColor = true;
+            this.buttonAddPerson.Click += new System.EventHandler(this.buttonAddPerson_Click);
+            // 
+            // buttonRemovePerson
+            // 
+            this.buttonRemovePerson.Location = new System.Drawing.Point(220, 122);
+            this.buttonRemovePerson.Name = "buttonRemovePerson";
+            this.buttonRemovePerson.Size = new System.Drawing.Size(25, 23);
+            this.buttonRemovePerson.TabIndex = 3;
+            this.buttonRemovePerson.Text = "->";
+            this.buttonRemovePerson.UseVisualStyleBackColor = true;
+            this.buttonRemovePerson.Click += new System.EventHandler(this.buttonRemovePerson_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Gekoppelde personen";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(248, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Alle Personen";
+            // 
+            // buttonSaveP2
+            // 
+            this.buttonSaveP2.Location = new System.Drawing.Point(386, 228);
+            this.buttonSaveP2.Name = "buttonSaveP2";
+            this.buttonSaveP2.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveP2.TabIndex = 6;
+            this.buttonSaveP2.Text = "Save";
+            this.buttonSaveP2.UseVisualStyleBackColor = true;
+            this.buttonSaveP2.Click += new System.EventHandler(this.buttonSaveP2_Click);
             // 
             // OverviewForm
             // 
@@ -392,11 +471,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.contextMenuStripFiles.ResumeLayout(false);
+            this.tabPageContact.ResumeLayout(false);
+            this.tabPageContact.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStripFiles.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -429,11 +510,18 @@
         private System.Windows.Forms.Label labelContactpersoon;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageContact;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBoxContactpersonen;
         private System.Windows.Forms.LinkLabel linkLabelfiles;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripFiles;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEdit;
+        private System.Windows.Forms.Button buttonRemovePerson;
+        private System.Windows.Forms.Button buttonAddPerson;
+        private System.Windows.Forms.ListBox listBoxAllPersons;
+        private System.Windows.Forms.ListBox listBoxLinkedPersons;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonSaveP2;
     }
 }
