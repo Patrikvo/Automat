@@ -39,6 +39,7 @@ namespace Automat.View
 
         public void setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles , byte[] rowVersion)
         {
+            this.contactpersonen = contactpersonen;
             this.textBoxDossierNummer.Text = nummer;
             this.textBoxDossierTitel.Text = titel;
             this.textBoxStavaza.Text = stavaza;
@@ -75,7 +76,7 @@ namespace Automat.View
         }
 
         private byte[] rowVersion;
-
+        List<Tuple<string, int>> contactpersonen;
 
 
         private void listBoxDossiers_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,6 +103,7 @@ namespace Automat.View
         public exitAplicationDelegate exitApplication;
         public RefreshDossierListDelegate refreshDossierList;
         public GetAllPersonsDelegate getAllPersons;
+        public PersistLinkedPersonListDelegate persistLinkedPersonList;
 
         public delegate void SelectWithIdDelegate(int id);
         public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
@@ -109,7 +111,8 @@ namespace Automat.View
         public delegate int DeleteDossierDelegate(int id, byte[] rowVersion);
         public delegate void RefreshDossierListDelegate(bool showArchived);
         public delegate List<Tuple<string, int>> GetAllPersonsDelegate();
- 
+        public delegate int PersistLinkedPersonListDelegate(int dossierId, List<Tuple<string, int>> linkedPersons);
+
         public delegate void ShowPersonForm(int? id);
         public delegate void exitAplicationDelegate();
 
@@ -280,9 +283,9 @@ namespace Automat.View
         {
             // TODO sychornise linkedPersonList with DB. 
             // some items are already in DB, some have been removed, some are new.
+            int modifiedObjectsCount = this.persistLinkedPersonList(this.id, linkedPersonList.ToList());
 
-
-
+            this.toolStripStatusLabel1.Text = modifiedObjectsCount.ToString() + " persons modified.";
 
 
 

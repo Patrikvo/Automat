@@ -195,6 +195,83 @@ namespace Automat.Controller
         }
 
 
+        public int persistLinkedPersonList(List<Tuple<string, int>> linkedPersons)
+        {
+            List<int> personsToRemove = new List<int>();
+            foreach(Persoon stored_p in personList)
+            {
+                bool found = false;
+                foreach( Tuple<string, int> new_p in linkedPersons)
+                {
+                    if (stored_p.Id == new_p.Item2)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    personsToRemove.Add(stored_p.Id);
+                }
+            }
+
+
+            List<int> personsToAdd = new List<int>();
+
+            foreach (Tuple<string, int> new_p in linkedPersons)
+            {
+                bool found = false;
+                foreach (Persoon stored_p in personList)
+                {
+                    if (stored_p.Id == new_p.Item2)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    personsToAdd.Add(new_p.Item2);
+                }
+            }
+
+            int modifiedCount = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+
+                foreach (int p in personsToRemove)
+                {
+                    DossierPersoon dp =  dossierContext.dossierPersoon.SingleOrDefault(c => c.persoonId == p && c.dossierId == this.dossierId);
+                    if (dp != null)
+                    {
+                        dossierContext.dossierPersoon.Remove(dp);
+                    }
+                }
+
+                foreach (int p in personsToAdd)
+                {
+                    if (this.dossierId != null)
+                    {
+                        DossierPersoon dp = new DossierPersoon();
+
+                        dp.dossierId = (int)this.dossierId;
+                        dp.persoonId = p;
+
+                        dossierContext.dossierPersoon.Add(dp);
+                    }
+                }
+
+
+                modifiedCount = dossierContext.SaveChanges();
+            }
+
+            return modifiedCount;
+        }
+
+
+
         int? dossierId;
         List<Persoon> personList;
         PersonViewForm personViewForm;

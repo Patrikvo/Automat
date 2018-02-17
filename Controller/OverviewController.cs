@@ -28,7 +28,7 @@ namespace Automat.Controller
             this.overviewForm.exitApplication = this.exitApplication;
             this.overviewForm.refreshDossierList = this.refreshDossierList;
             this.overviewForm.getAllPersons = this.GetAllPersons;
-
+            this.overviewForm.persistLinkedPersonList = this.persistLinkedPersonList;
             refreshDossierList(false);
 
             
@@ -226,7 +226,12 @@ namespace Automat.Controller
             return personController.getNameTuples();
         }
 
+        public int persistLinkedPersonList(int dossierId, List<Tuple<string, int>> linkedPersons)
+        {
+            Controller.PersonController personController = new Controller.PersonController(dossierId);
 
+            return personController.persistLinkedPersonList(linkedPersons);
+        }
 
         Form1 parent;
 

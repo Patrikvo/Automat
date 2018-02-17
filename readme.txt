@@ -10,12 +10,15 @@ Future:
 - list sorting
 
 - dates and info during CBS-process
+- send-email-button for contactpersons.
 
-
+-- controller per tabpage?
 
 Current:
 
 IT_002
+
+TODO: refactor
 
 - timestamp (concurency):
 https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
@@ -29,7 +32,8 @@ UI: contains the base directory, needs the part to split up the dossiernummer in
 editing ability added
 
 - client (name, email, organisation, department)  (person and personDossier tables exist, persons can be added to the DB. Next is adding the link between dossiers and persons. (many-to-many relationship).
-needed: ability to add/remove person to dossier (UI part works, needs link to DB), "send email button".
+added ability to add/remove person to dossier, 
+
 
 
 
@@ -40,6 +44,8 @@ remove migrations (everything)
 remove database.db (source map)
 apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
+
+20180217  added DB link for persons.
 
 20180216   Added ability to add and remove persons to the dossier. the UI-part is done, DB link needs to be added next.
 
