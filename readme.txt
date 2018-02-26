@@ -45,6 +45,8 @@ remove database.db (source map)
 apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
+20180226  cleaned up code to conform to Stylecop rules.
+
 20180217  added DB link for persons.
 
 20180216   Added ability to add and remove persons to the dossier. the UI-part is done, DB link needs to be added next.

@@ -60,7 +60,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(278, 20);
             this.textBoxName.TabIndex = 0;
-            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
+            this.textBoxName.TextChanged += new System.EventHandler(this.TextBoxName_TextChanged);
             // 
             // textBoxEmail
             // 
@@ -68,7 +68,7 @@
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(278, 20);
             this.textBoxEmail.TabIndex = 1;
-            this.textBoxEmail.TextChanged += new System.EventHandler(this.textBoxEmail_TextChanged);
+            this.textBoxEmail.TextChanged += new System.EventHandler(this.TextBoxEmail_TextChanged);
             // 
             // textBoxOrganisation
             // 
@@ -76,7 +76,7 @@
             this.textBoxOrganisation.Name = "textBoxOrganisation";
             this.textBoxOrganisation.Size = new System.Drawing.Size(278, 20);
             this.textBoxOrganisation.TabIndex = 2;
-            this.textBoxOrganisation.TextChanged += new System.EventHandler(this.textBoxOrganisation_TextChanged);
+            this.textBoxOrganisation.TextChanged += new System.EventHandler(this.TextBoxOrganisation_TextChanged);
             // 
             // textBoxDepartement
             // 
@@ -84,7 +84,7 @@
             this.textBoxDepartement.Name = "textBoxDepartement";
             this.textBoxDepartement.Size = new System.Drawing.Size(278, 20);
             this.textBoxDepartement.TabIndex = 3;
-            this.textBoxDepartement.TextChanged += new System.EventHandler(this.textBoxDepartement_TextChanged);
+            this.textBoxDepartement.TextChanged += new System.EventHandler(this.TextBoxDepartement_TextChanged);
             // 
             // listBoxPersons
             // 
@@ -94,7 +94,7 @@
             this.listBoxPersons.Name = "listBoxPersons";
             this.listBoxPersons.Size = new System.Drawing.Size(153, 292);
             this.listBoxPersons.TabIndex = 4;
-            this.listBoxPersons.SelectedIndexChanged += new System.EventHandler(this.listBoxPersons_SelectedIndexChanged);
+            this.listBoxPersons.SelectedIndexChanged += new System.EventHandler(this.ListBoxPersons_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
@@ -148,7 +148,7 @@
             this.labelName.Size = new System.Drawing.Size(35, 13);
             this.labelName.TabIndex = 4;
             this.labelName.Text = "Naam";
-            this.labelName.Click += new System.EventHandler(this.labelName_Click);
+            this.labelName.Click += new System.EventHandler(this.LabelName_Click);
             // 
             // labelEmail
             // 
@@ -187,7 +187,7 @@
             this.buttonClose.TabIndex = 8;
             this.buttonClose.Text = "Sluiten";
             this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            this.buttonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // buttonSave
             // 
@@ -199,7 +199,7 @@
             this.buttonSave.TabIndex = 9;
             this.buttonSave.Text = "Opslaan";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // menuStrip1
             // 
@@ -225,14 +225,14 @@
             this.nieuwePersoonToolStripMenuItem.Name = "nieuwePersoonToolStripMenuItem";
             this.nieuwePersoonToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.nieuwePersoonToolStripMenuItem.Text = "Nieuwe Persoon";
-            this.nieuwePersoonToolStripMenuItem.Click += new System.EventHandler(this.nieuwePersoonToolStripMenuItem_Click);
+            this.nieuwePersoonToolStripMenuItem.Click += new System.EventHandler(this.NieuwePersoonToolStripMenuItem_Click);
             // 
             // persoonWissenToolStripMenuItem
             // 
             this.persoonWissenToolStripMenuItem.Name = "persoonWissenToolStripMenuItem";
             this.persoonWissenToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.persoonWissenToolStripMenuItem.Text = "Persoon Wissen";
-            this.persoonWissenToolStripMenuItem.Click += new System.EventHandler(this.persoonWissenToolStripMenuItem_Click);
+            this.persoonWissenToolStripMenuItem.Click += new System.EventHandler(this.PersoonWissenToolStripMenuItem_Click);
             // 
             // PersonViewForm
             // 

@@ -41,7 +41,7 @@
             this.textBoxFileLocation.Name = "textBoxFileLocation";
             this.textBoxFileLocation.Size = new System.Drawing.Size(450, 20);
             this.textBoxFileLocation.TabIndex = 0;
-            this.textBoxFileLocation.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBoxFileLocation.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // buttonBrowse
             // 
@@ -51,7 +51,7 @@
             this.buttonBrowse.TabIndex = 1;
             this.buttonBrowse.Text = "...";
             this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            this.buttonBrowse.Click += new System.EventHandler(this.ButtonBrowse_Click);
             // 
             // buttonCancel
             // 
@@ -62,7 +62,7 @@
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "Annuleren";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonSave
             // 
@@ -72,7 +72,7 @@
             this.buttonSave.TabIndex = 3;
             this.buttonSave.Text = "Opslaan";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // folderBrowserDialog1
             // 

@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.Migrations
 {
-    public partial class initial : Migration
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

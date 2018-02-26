@@ -1,49 +1,125 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*  Notes:
+ *  - listbox uses bindingSource to allow add/remove.
+ * */
 
 namespace Automat.View
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Forms;
+
     public partial class OverviewForm : Form
     {
-        // listbox uses bindingSource to allow add/remove. 
+        /* Common Public Members
+         *  Contains all the methodes, controls and members not contained in the tabcontrol.
+         * */
 
+        /* COMMON FIELDS */
+
+        private SaveNewDossierDelegate saveNewDossier;
+
+        private DeleteDossierDelegate deleteDossier;
+
+        private ShowPersonForm showPersonFormValue;
+
+        private ExitAplicationDelegate exitApplication;
+
+        private RefreshDossierListDelegate refreshDossierList;
+
+        private GetAllPersonsDelegate getAllPersons;
+
+        private BindingSource binding1;
+
+        private List<Tuple<string, int>> contactpersonen;
+
+        /* TAPPAGE 1 FIELDS */
+
+        private SelectWithIdDelegate selectWithID;
+
+        private SaveDossierDelegate saveDossier;
+
+        private bool listboxDossiersSupressEvent = false;
+
+        private byte[] rowVersion;
+
+        private int id;
+
+        /* TAPPAGE 2 FIELDS */
+
+        private PersistLinkedPersonListDelegate persistLinkedPersonList;
+
+        private List<Tuple<string, int>> personList;
+
+        private ObservableCollection<Tuple<string, int>> linkedPersonList;
+
+        /* COMMON CONSTRUCTOR */
 
         public OverviewForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.toolStripStatusLabel1.Text = "Ready";
-            binding1 = new BindingSource();
-
-
-
+            this.binding1 = new BindingSource();
         }
 
+        /* COMMON DELEGATES */
 
-        public bool isShowingArchivedItems() { return this.toonArchiefToolStripMenuItem.Checked; }
+        public delegate int SaveNewDossierDelegate(out int id, string nummer, string titel, string stavaza);
 
-        public void setDossierList(object list, string displayMember, string valueMember)
-        {
-            this.listBoxDossiers.DisplayMember = displayMember;
-            this.listBoxDossiers.ValueMember = valueMember;
-            this.listBoxDossiers.DataSource = list;
+        public delegate int DeleteDossierDelegate(int id, byte[] rowVersion);
 
-        }
+        public delegate void ShowPersonForm(int? id);
 
-        public void setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles , byte[] rowVersion)
+        public delegate void ExitAplicationDelegate();
+
+        public delegate void RefreshDossierListDelegate(bool showArchived);
+
+        public delegate List<Tuple<string, int>> GetAllPersonsDelegate();
+
+        /* TAPPAGE 1 DELEGATES */
+
+        public delegate void SelectWithIdDelegate(int id);
+
+        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
+
+        /* TAPPAGE 2 DELEGATES */
+
+        public delegate int PersistLinkedPersonListDelegate(int dossierId, List<Tuple<string, int>> linkedPersons);
+
+        /* COMMON PROPERTIES */
+
+        public SaveNewDossierDelegate SaveNewDossier { get => this.saveNewDossier; set => this.saveNewDossier = value; }
+
+        public DeleteDossierDelegate DeleteDossier { get => this.deleteDossier; set => this.deleteDossier = value; }
+
+        public ShowPersonForm ShowPersonFormValue { get => this.showPersonFormValue; set => this.showPersonFormValue = value; }
+
+        public ExitAplicationDelegate ExitApplication { get => this.exitApplication; set => this.exitApplication = value; }
+
+        public RefreshDossierListDelegate RefreshDossierList { get => this.refreshDossierList; set => this.refreshDossierList = value; }
+
+        public GetAllPersonsDelegate GetAllPersons { get => this.getAllPersons; set => this.getAllPersons = value; }
+
+        /* TAPPAGE 1 PROPERTIES */
+
+        public SelectWithIdDelegate SelectWithID { get => this.selectWithID; set => this.selectWithID = value; }
+
+        public SaveDossierDelegate SaveDossier { get => this.saveDossier; set => this.saveDossier = value; }
+
+        /* TAPPAGE 2 PROPERTIES */
+
+        public PersistLinkedPersonListDelegate PersistLinkedPersonList { get => this.persistLinkedPersonList; set => this.persistLinkedPersonList = value; }
+
+        /* COMMON PUBLIC METHODES */
+
+        public void Setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles, byte[] rowVersion)
         {
             this.contactpersonen = contactpersonen;
             this.textBoxDossierNummer.Text = nummer;
             this.textBoxDossierTitel.Text = titel;
             this.textBoxStavaza.Text = stavaza;
-            if (linkTofiles != "")
+            if (linkTofiles != string.Empty)
             {
                 this.linkLabelfiles.Text = linkTofiles;
             }
@@ -51,102 +127,58 @@ namespace Automat.View
             {
                 this.linkLabelfiles.Text = "Niet opgegeven";
             }
+
             this.checkBoxIsArchived.Checked = isArchived;
 
             this.comboBoxContactpersonen.DataSource = null;
-            linkedPersonList = new ObservableCollection<Tuple<string, int>>(contactpersonen);
-            binding1.DataSource = linkedPersonList;
-            this.comboBoxContactpersonen.DataSource = binding1;
+            this.linkedPersonList = new ObservableCollection<Tuple<string, int>>(contactpersonen);
+            this.binding1.DataSource = this.linkedPersonList;
+            this.comboBoxContactpersonen.DataSource = this.binding1;
             this.comboBoxContactpersonen.DisplayMember = "Item1";
             this.comboBoxContactpersonen.ValueMember = "Item2";
 
-            personList = this.getAllPersons();
-            this.listBoxAllPersons.DataSource = personList;
+            this.personList = this.GetAllPersons();
+            this.listBoxAllPersons.DataSource = this.personList;
             this.listBoxAllPersons.DisplayMember = "Item1";
             this.listBoxAllPersons.ValueMember = "Item2";
 
-            
-            this.listBoxLinkedPersons.DataSource = binding1;
+            this.listBoxLinkedPersons.DataSource = this.binding1;
             this.listBoxLinkedPersons.DisplayMember = "Item1";
             this.listBoxLinkedPersons.ValueMember = "Item2";
-            
-            
+
             this.rowVersion = rowVersion;
             this.id = id;
         }
 
-        private byte[] rowVersion;
-        List<Tuple<string, int>> contactpersonen;
-
-
-        private void listBoxDossiers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // to prevent infinite recursion
-            if (listboxDossiersSupressEvent) { return; } // Dossier is being saved, ignore this event.
-            listboxDossiersSupressEvent = true;
-       //     doSaveDossier();
-            listboxDossiersSupressEvent = false;
-
-            int id = (int)listBoxDossiers.SelectedValue;
-            selectWithID(id);
-        }
-        bool listboxDossiersSupressEvent = false;
-
-
-        private int id;
-
-        public SelectWithIdDelegate selectWithID;
-        public SaveDossierDelegate saveDossier;
-        public SaveNewDossierDelegate saveNewDossier;
-        public DeleteDossierDelegate deleteDossier;
-        public ShowPersonForm showPersonForm;
-        public exitAplicationDelegate exitApplication;
-        public RefreshDossierListDelegate refreshDossierList;
-        public GetAllPersonsDelegate getAllPersons;
-        public PersistLinkedPersonListDelegate persistLinkedPersonList;
-
-        public delegate void SelectWithIdDelegate(int id);
-        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
-        public delegate int SaveNewDossierDelegate(out int id, string nummer, string titel, string stavaza);
-        public delegate int DeleteDossierDelegate(int id, byte[] rowVersion);
-        public delegate void RefreshDossierListDelegate(bool showArchived);
-        public delegate List<Tuple<string, int>> GetAllPersonsDelegate();
-        public delegate int PersistLinkedPersonListDelegate(int dossierId, List<Tuple<string, int>> linkedPersons);
-
-        public delegate void ShowPersonForm(int? id);
-        public delegate void exitAplicationDelegate();
-
-        public  void setStatusText(string statusText)
+        public void SetStatusText(string statusText)
         {
             this.toolStripStatusLabel1.Text = statusText;
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        public bool IsShowingArchivedItems()
         {
-            doSaveDossier();
-
+            return this.toonArchiefToolStripMenuItem.Checked;
         }
 
-        private void doSaveDossier()
+        public void SetDossierList(object list, string displayMember, string valueMember)
         {
-            int index = listBoxDossiers.SelectedIndex;
-
-            int result = saveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
-
-            this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
-
-            setListboxDossiersIndex(index);
+            this.listBoxDossiers.DisplayMember = displayMember;
+            this.listBoxDossiers.ValueMember = valueMember;
+            this.listBoxDossiers.DataSource = list;
         }
 
-        private void nieuwDossierToolStripMenuItem_Click(object sender, EventArgs e)
+        /* TAPPAGE 2 PUBLIC METHODES */
+
+        /* COMMON PRIVATE METHODES */
+
+        private void NieuwDossierToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            listboxDossiersSupressEvent = true;
-            int result = saveNewDossier(out this.id, "Geen nummer", "Geen titel", "");
+            int result = this.SaveNewDossier(out this.id, "Geen nummer", "Geen titel", string.Empty);
             if (result > 0)
             {
                 this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
 
-                listBoxDossiers.SelectedValue = this.id;
+                this.listBoxDossiers.SelectedValue = this.id;
             }
             else
             {
@@ -154,11 +186,11 @@ namespace Automat.View
             }
         }
 
-        private void dossierWissenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DossierWissenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int index = listBoxDossiers.SelectedIndex;
+            int index = this.listBoxDossiers.SelectedIndex;
 
-            int result = deleteDossier(this.id, this.rowVersion);
+            int result = this.DeleteDossier(this.id, this.rowVersion);
             if (result > 0)
             {
                 this.toolStripStatusLabel1.Text = result.ToString() + " objects Deleted.";
@@ -168,129 +200,155 @@ namespace Automat.View
                 this.toolStripStatusLabel1.Text = "deleting object failed.";
             }
 
-            setListboxDossiersIndex(index-1);
-
+            this.SetListboxDossiersIndex(index - 1);
         }
 
-        private void overzichtToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OverzichtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showPersonForm(null);
+            this.ShowPersonFormValue(null);
         }
 
-        private void afsluitenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AfsluitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            exitApplication();
+            this.ExitApplication();
         }
 
         private void OverviewForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            exitApplication();
+            this.ExitApplication();
         }
 
-        private void toonArchiefToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToonArchiefToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toonArchiefToolStripMenuItem.Checked = !toonArchiefToolStripMenuItem.Checked;
-            refreshDossierList(toonArchiefToolStripMenuItem.Checked);
+            this.toonArchiefToolStripMenuItem.Checked = !this.toonArchiefToolStripMenuItem.Checked;
+            this.RefreshDossierList(this.toonArchiefToolStripMenuItem.Checked);
         }
 
-        private void checkBoxIsArchived_CheckedChanged(object sender, EventArgs e)
+        /* TAPPAGE 1 PRIVATE METHODES */
+
+        private void ListBoxDossiers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // TODO: issue: saving when changing selected dossier.
 
-
-        }
-
-
-        private void setListboxDossiersIndex(int index)
-        {
-            if (index < listBoxDossiers.Items.Count && index >= 0)
+            // to prevent infinite recursion
+            if (this.listboxDossiersSupressEvent)
             {
-                listBoxDossiers.SelectedIndex = index;
+                return;
+            }
+
+            // Dossier is being saved, ignore this event.
+            this.listboxDossiersSupressEvent = true;
+
+            // doSaveDossier();
+            this.listboxDossiersSupressEvent = false;
+
+            int id = (int)this.listBoxDossiers.SelectedValue;
+            this.SelectWithID(id);
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            this.DoSaveDossier();
+        }
+
+        private void DoSaveDossier()
+        {
+            int index = this.listBoxDossiers.SelectedIndex;
+
+            int result = this.SaveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
+
+            this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
+
+            this.SetListboxDossiersIndex(index);
+        }
+
+        private void CheckBoxIsArchived_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void SetListboxDossiersIndex(int index)
+        {
+            if (index < this.listBoxDossiers.Items.Count && index >= 0)
+            {
+                this.listBoxDossiers.SelectedIndex = index;
             }
             else
             {
-                if (index < 0) { listBoxDossiers.SelectedIndex = 0; }
-                else { listBoxDossiers.SelectedIndex = listBoxDossiers.Items.Count - 1; }
+                if (index < 0)
+                {
+                    this.listBoxDossiers.SelectedIndex = 0;
+                }
+                else
+                {
+                    this.listBoxDossiers.SelectedIndex = this.listBoxDossiers.Items.Count - 1;
+                }
             }
         }
 
-        private void linkLabelContactpersonen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelContactpersonen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            showPersonForm(this.id);
+            this.ShowPersonFormValue(this.id);
         }
 
-        private void linkLabelfiles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelfiles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-
-
                 if (System.IO.Directory.Exists(this.linkLabelfiles.Text))
                 {
                     System.Diagnostics.Process.Start(this.linkLabelfiles.Text);
-                    //System.Diagnostics.Process.Start(@"C:\temp");
+
+                    // System.Diagnostics.Process.Start(@"C:\temp");
                 }
                 else
                 {
                     MessageBox.Show("De map " + this.linkLabelfiles.Text + " bestaat niet.", "Map niet gevonden.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
 
-        private void contextMenuStripFiles_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void ContextMenuStripFiles_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Name == "toolStripMenuItemEdit")
             {
                 Automat.Common.EditFileLocationForm editForm = new Common.EditFileLocationForm();
-                editForm.fileLocation = this.linkLabelfiles.Text;
+                editForm.FileLocation = this.linkLabelfiles.Text;
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    this.linkLabelfiles.Text = editForm.fileLocation;
+                    this.linkLabelfiles.Text = editForm.FileLocation;
                 }
             }
         }
 
-        
+        /* TAPPAGE 2 PRIVATE METHODES */
 
-
-        private List<Tuple<string, int>> personList;
-        private ObservableCollection<Tuple<string, int>> linkedPersonList;
-        private BindingSource binding1;
-
-        private void buttonAddPerson_Click(object sender, EventArgs e)
+        private void ButtonAddPerson_Click(object sender, EventArgs e)
         {
-            if (listBoxAllPersons.SelectedItem != null)
+            if (this.listBoxAllPersons.SelectedItem != null)
             {
-                Tuple<string, int> selectedPerson = (Tuple<string, int>)listBoxAllPersons.SelectedItem;
-                if (!linkedPersonList.Contains(selectedPerson))
+                Tuple<string, int> selectedPerson = (Tuple<string, int>)this.listBoxAllPersons.SelectedItem;
+                if (!this.linkedPersonList.Contains(selectedPerson))
                 {
-                    binding1.Add(selectedPerson);
+                    this.binding1.Add(selectedPerson);
                 }
             }
         }
 
-        private void buttonRemovePerson_Click(object sender, EventArgs e)
+        private void ButtonRemovePerson_Click(object sender, EventArgs e)
         {
-            Tuple<string, int> selectedPerson = (Tuple<string, int>)listBoxLinkedPersons.SelectedItem;
-            if (linkedPersonList.Contains(selectedPerson))
+            Tuple<string, int> selectedPerson = (Tuple<string, int>)this.listBoxLinkedPersons.SelectedItem;
+            if (this.linkedPersonList.Contains(selectedPerson))
             {
-                binding1.Remove(selectedPerson);
+                this.binding1.Remove(selectedPerson);
             }
         }
 
-
-        private void buttonSaveP2_Click(object sender, EventArgs e)
+        private void ButtonSaveP2_Click(object sender, EventArgs e)
         {
-            // TODO sychornise linkedPersonList with DB. 
             // some items are already in DB, some have been removed, some are new.
-            int modifiedObjectsCount = this.persistLinkedPersonList(this.id, linkedPersonList.ToList());
+            int modifiedObjectsCount = this.PersistLinkedPersonList(this.id, this.linkedPersonList.ToList());
 
             this.toolStripStatusLabel1.Text = modifiedObjectsCount.ToString() + " persons modified.";
-
-
-
         }
-
-
-    } 
+    }
 }

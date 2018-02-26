@@ -1,68 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.Common
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class EditFileLocationForm : Form
     {
         public EditFileLocationForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        public string FileLocation
         {
-
+            get { return this.textBoxFileLocation.Text; }
+            set { this.textBoxFileLocation.Text = value; }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void buttonBrowse_Click(object sender, EventArgs e)
+        private void ButtonBrowse_Click(object sender, EventArgs e)
         {
-            if (fileLocation != "")
+            if (this.FileLocation != string.Empty)
             {
-                if (System.IO.Directory.Exists(fileLocation))
+                if (System.IO.Directory.Exists(this.FileLocation))
                 {
-                    this.folderBrowserDialog1.SelectedPath = fileLocation;
+                    this.folderBrowserDialog1.SelectedPath = this.FileLocation;
                 }
             }
 
-            DialogResult result =  this.folderBrowserDialog1.ShowDialog();
+            DialogResult result = this.folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                fileLocation = this.folderBrowserDialog1.SelectedPath;
+                this.FileLocation = this.folderBrowserDialog1.SelectedPath;
             }
-
         }
-
-
-        
-
-
-        public string fileLocation
-        {
-            get { return textBoxFileLocation.Text; }
-            set { textBoxFileLocation.Text = value; }
-        }
-
-
-
     }
 }

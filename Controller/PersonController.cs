@@ -1,114 +1,113 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Automat.Model;
-using Automat.View;
-
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.Controller
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Automat.Model;
+    using Automat.View;
+
     public class PersonController
     {
+        private int? dossierId;
+        private List<Persoon> personList;
+        private PersonViewForm personViewForm;
+        private List<int> personsToAdd = new List<int>();
+        private int modifiedCount = 0;
+
         public PersonController(int? dossierId)
         {
             this.dossierId = dossierId;
 
-            getPersonList();
-            personViewForm = new PersonViewForm();
+            this.GetPersonList();
+            this.personViewForm = new PersonViewForm();
 
-
-            this.personViewForm.selectWithID = showWithID;
-            this.personViewForm.save = save;
-            this.personViewForm.saveNew = saveNew;
-            this.personViewForm.delete = delete;
-
-
-            this.personViewForm.setPersonList(this.personList, "naam", "Id");
+            // Configure delegates
+            this.personViewForm.SelectWithID = this.ShowWithID;
+            this.personViewForm.Save = this.Save;
+            this.personViewForm.SaveNew = this.SaveNew;
+            this.personViewForm.Delete = this.Delete;
+            this.personViewForm.SetPersonList(this.personList, "naam", "Id");
         }
 
-        
-
-
-
-        public void showView()
+        public void ShowView()
         {
-            if (personViewForm != null)
+            if (this.personViewForm != null)
             {
-                personViewForm.Show();
+                this.personViewForm.Show();
             }
-
         }
 
-
-        public void showWithID(int id)
+        public void ShowWithID(int id)
         {
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                Persoon persoon = dossierContext.personen.SingleOrDefault(c => c.Id == id);
+                Persoon persoon = dossierContext.Personen.SingleOrDefault(c => c.Id == id);
                 if (persoon != null)
                 {
-                    this.personViewForm.setPerson(persoon.Id, persoon.naam, persoon.email, persoon.organisatie, persoon.departement, persoon.RowVersion);
+                    this.personViewForm.SetPerson(persoon.Id, persoon.Naam, persoon.Email, persoon.Organisatie, persoon.Departement, persoon.RowVersion);
                 }
             }
         }
 
-        public int save(int id, string name, string email, string organisation, string departement, byte[] rowVersion)
+        public int Save(int id, string name, string email, string organisation, string departement, byte[] rowVersion)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                Persoon persoon = dossierContext.personen.SingleOrDefault(c => c.Id == id);
+                Persoon persoon = dossierContext.Personen.SingleOrDefault(c => c.Id == id);
 
                 if (persoon == null)
                 {
                    // this.overviewForm.setStatusText("Entry was deleted by another user.");
-                    return saveNew(out id, name, email, organisation, departement);
+                    return this.SaveNew(out id, name, email, organisation, departement);
                 }
                 else
                 {
                     if (Database.DossierContext.ByteArrayCompare(rowVersion, persoon.RowVersion))
                     {
-                        persoon.naam = name;
-                        persoon.email = email;
-                        persoon.organisatie = organisation;
-                        persoon.departement = departement;
+                        persoon.Naam = name;
+                        persoon.Email = email;
+                        persoon.Organisatie = organisation;
+                        persoon.Departement = departement;
 
                         result = dossierContext.SaveChanges();
 
-                        getPersonList();
-                        //this.personList = dossierContext.personen.ToList();
-                        this.personViewForm.setPersonList(this.personList, "name", "Id");
+                        this.GetPersonList();
+
+                        this.personViewForm.SetPersonList(this.personList, "name", "Id");
                     }
                     else
                     {
-                      //  this.overviewForm.setStatusText("Entry was modified by another user.");
+                      // this.overviewForm.setStatusText("Entry was modified by another user.");
                     }
                 }
             }
+
             return result;
         }
 
-
-
-        public int saveNew(out int id, string name, string email, string organisation, string departement)
+        public int SaveNew(out int id, string name, string email, string organisation, string departement)
         {
             int result = 0;
             Persoon persoon = new Persoon();
-            persoon.naam = name;
-            persoon.email = email;
-            persoon.organisatie = organisation;
-            persoon.departement = departement;
+            persoon.Naam = name;
+            persoon.Email = email;
+            persoon.Organisatie = organisation;
+            persoon.Departement = departement;
 
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                dossierContext.personen.Add(persoon);
+                dossierContext.Personen.Add(persoon);
                 result = dossierContext.SaveChanges();
 
-                getPersonList();
-                //this.personList = dossierContext.personen.ToList();
-                this.personViewForm.setPersonList(this.personList, "name", "Id");
+                this.GetPersonList();
+
+                this.personViewForm.SetPersonList(this.personList, "name", "Id");
                 if (result > 0)
                 {
                     id = persoon.Id;
@@ -118,90 +117,68 @@ namespace Automat.Controller
                     id = -1;
                 }
             }
-            return result;
 
+            return result;
         }
 
-
-        public int delete(int id)
+        public int Delete(int id)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                Persoon persoon = dossierContext.personen.Where(c => c.Id == id).First(); ;
-                dossierContext.personen.Remove(persoon);
+                Persoon persoon = dossierContext.Personen.Where(c => c.Id == id).First();
+                dossierContext.Personen.Remove(persoon);
                 result = dossierContext.SaveChanges();
 
-                getPersonList();
-                //this.personList = dossierContext.personen.ToList();
-                this.personViewForm.setPersonList(this.personList, "name", "Id");
+                this.GetPersonList();
+
+                // this.personList = dossierContext.personen.ToList();
+                this.personViewForm.SetPersonList(this.personList, "name", "Id");
             }
+
             return result;
         }
 
-
-        public string getNamesAsString()
+        public string GetNamesAsString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (Persoon p in personList)
+            foreach (Persoon p in this.personList)
             {
-                sb.Append(p.naam);
+                sb.Append(p.Naam);
                 sb.Append(", ");
             }
 
-            if (sb.Length > 2) // At least one name was present. 
+            // At least one name was present.
+            if (sb.Length > 2)
             {
                 // return the string, minus the trailing ", ".
                 return sb.ToString(0, sb.Length - 2);
             }
-            else // the personList was empty.
+            else
             {
                 return "Geen contactpersonen";
             }
-
         }
 
-
-        private void getPersonList()
-        {
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
-            {
-                if (this.dossierId == null)
-                {
-                    this.personList = dossierContext.personen.ToList();
-                }
-                else
-                {
-                    this.personList = (from t3 in dossierContext.dossierPersoon
-                                       where t3.dossierId == this.dossierId
-                                       from t2 in dossierContext.personen
-                                       where t2.Id == t3.persoonId
-                                       select t2).ToList();
-                }
-            }
-        }
-
-
-        public List<Tuple<string, int>> getNameTuples()
+        public List<Tuple<string, int>> GetNameTuples()
         {
             List<Tuple<string, int>> tuples = new List<Tuple<string, int>>();
 
-            foreach(Persoon p in personList)
+            foreach (Persoon p in this.personList)
             {
-                tuples.Add(new Tuple<string, int>(p.naam, p.Id));
+                tuples.Add(new Tuple<string, int>(p.Naam, p.Id));
             }
 
             return tuples;
         }
 
-
-        public int persistLinkedPersonList(List<Tuple<string, int>> linkedPersons)
+        public int PersistLinkedPersonList(List<Tuple<string, int>> linkedPersons)
         {
             List<int> personsToRemove = new List<int>();
-            foreach(Persoon stored_p in personList)
+            foreach (Persoon stored_p in this.personList)
             {
                 bool found = false;
-                foreach( Tuple<string, int> new_p in linkedPersons)
+                foreach (Tuple<string, int> new_p in linkedPersons)
                 {
                     if (stored_p.Id == new_p.Item2)
                     {
@@ -216,13 +193,10 @@ namespace Automat.Controller
                 }
             }
 
-
-            List<int> personsToAdd = new List<int>();
-
             foreach (Tuple<string, int> new_p in linkedPersons)
             {
                 bool found = false;
-                foreach (Persoon stored_p in personList)
+                foreach (Persoon stored_p in this.personList)
                 {
                     if (stored_p.Id == new_p.Item2)
                     {
@@ -233,50 +207,57 @@ namespace Automat.Controller
 
                 if (!found)
                 {
-                    personsToAdd.Add(new_p.Item2);
+                    this.personsToAdd.Add(new_p.Item2);
                 }
             }
 
-            int modifiedCount = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-
                 foreach (int p in personsToRemove)
                 {
-                    DossierPersoon dp =  dossierContext.dossierPersoon.SingleOrDefault(c => c.persoonId == p && c.dossierId == this.dossierId);
+                    DossierPersoon dp = dossierContext.DossierPersoon.SingleOrDefault(c => c.PersoonId == p && c.DossierId == this.dossierId);
                     if (dp != null)
                     {
-                        dossierContext.dossierPersoon.Remove(dp);
+                        dossierContext.DossierPersoon.Remove(dp);
                     }
                 }
 
-                foreach (int p in personsToAdd)
+                foreach (int p in this.personsToAdd)
                 {
                     if (this.dossierId != null)
                     {
                         DossierPersoon dp = new DossierPersoon();
 
-                        dp.dossierId = (int)this.dossierId;
-                        dp.persoonId = p;
+                        dp.DossierId = (int)this.dossierId;
+                        dp.PersoonId = p;
 
-                        dossierContext.dossierPersoon.Add(dp);
+                        dossierContext.DossierPersoon.Add(dp);
                     }
                 }
 
-
-                modifiedCount = dossierContext.SaveChanges();
+                this.modifiedCount = dossierContext.SaveChanges();
             }
 
-            return modifiedCount;
+            return this.modifiedCount;
         }
 
-
-
-        int? dossierId;
-        List<Persoon> personList;
-        PersonViewForm personViewForm;
-
-
-        
+        private void GetPersonList()
+        {
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                if (this.dossierId == null)
+                {
+                    this.personList = dossierContext.Personen.ToList();
+                }
+                else
+                {
+                    this.personList = (from t3 in dossierContext.DossierPersoon
+                                       where t3.DossierId == this.dossierId
+                                       from t2 in dossierContext.Personen
+                                       where t2.Id == t3.PersoonId
+                                       select t2).ToList();
+                }
+            }
+        }
     }
 }

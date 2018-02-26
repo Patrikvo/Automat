@@ -1,117 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Automat.Model;
-using Automat.View;
-using System.Data.Entity.Infrastructure;
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.Controller
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Automat.Model;
+    using Automat.View;
+
     public class OverviewController
     {
-        OverviewForm overviewForm;
-        List<Dossier> dossierList;
+        private OverviewForm overviewForm;
+        private List<Dossier> dossierList;
+        private Form1 parent;
 
         public OverviewController(Form1 parent)
         {
             this.parent = parent;
 
             this.overviewForm = new OverviewForm();
-            this.overviewForm.selectWithID = showWithID;
-            this.overviewForm.saveDossier = SaveDossier;
-            this.overviewForm.saveNewDossier = saveNewDossier;
-            this.overviewForm.deleteDossier = deleteDossier;
+            this.overviewForm.SelectWithID = this.ShowWithID;
+            this.overviewForm.SaveDossier = this.SaveDossier;
+            this.overviewForm.SaveNewDossier = this.SaveNewDossier;
+            this.overviewForm.DeleteDossier = this.DeleteDossier;
 
-            this.overviewForm.showPersonForm = showPersonForm;
-            this.overviewForm.exitApplication = this.exitApplication;
-            this.overviewForm.refreshDossierList = this.refreshDossierList;
-            this.overviewForm.getAllPersons = this.GetAllPersons;
-            this.overviewForm.persistLinkedPersonList = this.persistLinkedPersonList;
-            refreshDossierList(false);
-
-            
+            this.overviewForm.ShowPersonFormValue = this.ShowPersonForm;
+            this.overviewForm.ExitApplication = this.ExitApplication;
+            this.overviewForm.RefreshDossierList = this.RefreshDossierList;
+            this.overviewForm.GetAllPersons = this.GetAllPersons;
+            this.overviewForm.PersistLinkedPersonList = this.PersistLinkedPersonList;
+            this.RefreshDossierList(false);
         }
 
+        public string LastError { get; set; }
 
-        /*
-        public int saveDossierArchiveProperty(int id, bool isArchived, byte[] rowVersion)
-        {
-            int result = 0;
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
-            {
-                Dossier dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
-
-                // the dossier is delete by another user?
-                if (dossier == null)
-                {
-                    this.overviewForm.setStatusText("Entry was deleted by another user.");
-                    return 0;
-                }
-                else
-                {
-                    if (Database.DossierContext.ByteArrayCompare(rowVersion, dossier.RowVersion))
-                    {
-                        dossier.isGearchiveerd = isArchived;
-
-                        result = dossierContext.SaveChanges();
-
-                        refreshDossierList(this.overviewForm.isShowingArchivedItems());
-                  //      this.dossierList = dossierContext.dossiers.ToList();
-                   //     this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
-                    }
-                    else
-                    {
-                        this.overviewForm.setStatusText("Entry was modified by another user.");
-                    }
-                }
-
-            }
-            return result;
-        }
-        */
-
-
-
-        public void refreshDossierList(bool showArchived)
+        public void RefreshDossierList(bool showArchived)
         {
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
                 if (!showArchived)
                 {
-                    this.dossierList = dossierContext.dossiers.Where(c => c.isGearchiveerd == false).ToList();
+                    this.dossierList = dossierContext.Dossiers.Where(c => c.IsGearchiveerd == false).ToList();
                 }
                 else
                 {
-                    this.dossierList = dossierContext.dossiers.ToList();
+                    this.dossierList = dossierContext.Dossiers.ToList();
                 }
-                this.overviewForm.setDossierList(this.dossierList, "Name", "Id");
+
+                this.overviewForm.SetDossierList(this.dossierList, "Name", "Id");
             }
         }
 
-        public void showView()
+        public void ShowView()
         {
-            if (overviewForm != null)
+            if (this.overviewForm != null)
             {
-                overviewForm.Show();
+                this.overviewForm.Show();
             }
-
         }
 
-        public void showWithID(int id)
+        public void ShowWithID(int id)
         {
             Dossier dossier = null;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+                dossier = dossierContext.Dossiers.SingleOrDefault(c => c.Id == id);
             }
+
             if (dossier != null)
             {
                 Controller.PersonController personController = new Controller.PersonController(id);
-                
-                List<Tuple<string, int>> contactpersonen = personController.getNameTuples();
-                this.overviewForm.setdossier(dossier.Id, dossier.dossierNummer, dossier.dossierTitel, dossier.dossierStandvanzaken, dossier.isGearchiveerd, contactpersonen, dossier.dossierLinkToFiles, dossier.RowVersion);
+
+                List<Tuple<string, int>> contactpersonen = personController.GetNameTuples();
+                this.overviewForm.Setdossier(dossier.Id, dossier.DossierNummer, dossier.DossierTitel, dossier.DossierStandvanzaken, dossier.IsGearchiveerd, contactpersonen, dossier.DossierLinkToFiles, dossier.RowVersion);
             }
         }
 
@@ -120,61 +83,60 @@ namespace Automat.Controller
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                Dossier dossier = dossierContext.dossiers.SingleOrDefault(c => c.Id == id);
+                Dossier dossier = dossierContext.Dossiers.SingleOrDefault(c => c.Id == id);
 
                 // the dossier is delete by another user?
                 if (dossier == null)
                 {
-                    this.overviewForm.setStatusText("Entry was deleted by another user.");
-                    return saveNewDossier(out id, nummer, titel, stavaza);
+                    this.overviewForm.SetStatusText("Entry was deleted by another user.");
+                    return this.SaveNewDossier(out id, nummer, titel, stavaza);
                 }
                 else
                 {
                     if (Database.DossierContext.ByteArrayCompare(rowVersion, dossier.RowVersion))
                     {
-                        dossier.dossierNummer = nummer;
-                        dossier.dossierTitel = titel;
-                        dossier.dossierStandvanzaken = stavaza;
-                        dossier.isGearchiveerd = isArchived;
-                        if (linkTofiles != "")
+                        dossier.DossierNummer = nummer;
+                        dossier.DossierTitel = titel;
+                        dossier.DossierStandvanzaken = stavaza;
+                        dossier.IsGearchiveerd = isArchived;
+                        if (linkTofiles != string.Empty)
                         {
-                            dossier.dossierLinkToFiles = linkTofiles;
+                            dossier.DossierLinkToFiles = linkTofiles;
                         }
                         else
                         {
-                            dossier.dossierLinkToFiles = Automat.Rules.DossierRules.getFileLocation(nummer);
+                            dossier.DossierLinkToFiles = Automat.Rules.DossierRules.GetFileLocation(nummer);
                         }
+
                         result = dossierContext.SaveChanges();
 
-
-                        refreshDossierList(this.overviewForm.isShowingArchivedItems());
+                        this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
                     }
                     else
                     {
-                        this.overviewForm.setStatusText("Entry was modified by another user.");
+                        this.overviewForm.SetStatusText("Entry was modified by another user.");
                     }
                 }
-       
             }
+
             return result;
         }
 
-        public int saveNewDossier(out int id, string nummer, string titel, string stavaza)
+        public int SaveNewDossier(out int id, string nummer, string titel, string stavaza)
         {
-            
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
                 Dossier dossier = new Dossier();
-                dossier.dossierNummer = nummer;
-                dossier.dossierTitel = titel;
-                dossier.dossierStandvanzaken = stavaza;
-                dossier.isGearchiveerd = false;
-                dossier.dossierLinkToFiles = Automat.Rules.DossierRules.getFileLocation(nummer);
-                dossierContext.dossiers.Add(dossier);
+                dossier.DossierNummer = nummer;
+                dossier.DossierTitel = titel;
+                dossier.DossierStandvanzaken = stavaza;
+                dossier.IsGearchiveerd = false;
+                dossier.DossierLinkToFiles = Automat.Rules.DossierRules.GetFileLocation(nummer);
+                dossierContext.Dossiers.Add(dossier);
                 result = dossierContext.SaveChanges();
 
-                refreshDossierList(this.overviewForm.isShowingArchivedItems());
+                this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
                 if (result > 0)
                 {
                     id = dossier.Id;
@@ -184,56 +146,48 @@ namespace Automat.Controller
                     id = -1;
                 }
             }
-            return result;
 
+            return result;
         }
 
-        public int deleteDossier(int id, byte[] rowVersion)
+        public int DeleteDossier(int id, byte[] rowVersion)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
-                Dossier dossier = dossierContext.dossiers.Where(c => c.Id == id).First(); ;
-                dossierContext.dossiers.Remove(dossier);
+                Dossier dossier = dossierContext.Dossiers.Where(c => c.Id == id).First();
+                dossierContext.Dossiers.Remove(dossier);
                 result = dossierContext.SaveChanges();
 
-                refreshDossierList(this.overviewForm.isShowingArchivedItems());
-
+                this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
             }
+
             return result;
         }
 
-
-
-        public void showPersonForm(int? id)
+        public void ShowPersonForm(int? id)
         {
                 Controller.PersonController personController = new Controller.PersonController(id);
-                personController.showView();
+                personController.ShowView();
         }
 
-
-        public void exitApplication()
+        public void ExitApplication()
         {
-            this.parent.exitApplication();
+            this.parent.ExitApplication();
         }
-
-        public string lastError { get; set; }
 
         public List<Tuple<string, int>> GetAllPersons()
         {
             Controller.PersonController personController = new Controller.PersonController(null);
 
-            return personController.getNameTuples();
+            return personController.GetNameTuples();
         }
 
-        public int persistLinkedPersonList(int dossierId, List<Tuple<string, int>> linkedPersons)
+        public int PersistLinkedPersonList(int dossierId, List<Tuple<string, int>> linkedPersons)
         {
             Controller.PersonController personController = new Controller.PersonController(dossierId);
 
-            return personController.persistLinkedPersonList(linkedPersons);
+            return personController.PersistLinkedPersonList(linkedPersons);
         }
-
-        Form1 parent;
-
     }
 }

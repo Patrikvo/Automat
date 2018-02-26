@@ -74,7 +74,7 @@
             this.buttonOngedaanMaken.TabIndex = 5;
             this.buttonOngedaanMaken.Text = "Ongedaan maken";
             this.buttonOngedaanMaken.UseVisualStyleBackColor = true;
-            this.buttonOngedaanMaken.Click += new System.EventHandler(this.buttonOngedaanMaken_Click);
+            this.buttonOngedaanMaken.Click += new System.EventHandler(this.ButtonOngedaanMaken_Click);
             // 
             // DossierControl
             // 

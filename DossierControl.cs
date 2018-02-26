@@ -1,42 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class DossierControl : UserControl
     {
-        public DossierControl(): this(new Model.Dossier())
+        private Model.Dossier dossier;
+
+        public DossierControl()
+            : this(new Model.Dossier())
         {
-            
         }
 
         public DossierControl(Model.Dossier dossier)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.dossier = dossier;
-            refreshModel();
+            this.RefreshModel();
         }
 
-
-        public void refreshModel()
+        public void RefreshModel()
         {
-            this.labelDossierNummer.Text = this.dossier.dossierNummer + " - " + this.dossier.dossierTitel;
-            this.textBoxStandvanzaken.Text = this.dossier.dossierStandvanzaken;
+            this.labelDossierNummer.Text = this.dossier.DossierNummer + " - " + this.dossier.DossierTitel;
+            this.textBoxStandvanzaken.Text = this.dossier.DossierStandvanzaken;
         }
 
-
-        Model.Dossier dossier;
-
-        private void buttonOngedaanMaken_Click(object sender, EventArgs e)
+        private void ButtonOngedaanMaken_Click(object sender, EventArgs e)
         {
-            this.textBoxStandvanzaken.Text = this.dossier.dossierStandvanzaken;
+            this.textBoxStandvanzaken.Text = this.dossier.DossierStandvanzaken;
         }
     }
 }

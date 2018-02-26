@@ -11,7 +11,7 @@ namespace Automat.Migrations
 {
     [DbContext(typeof(DossierContext))]
     [Migration("20180214111005_initial")]
-    partial class initial
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
