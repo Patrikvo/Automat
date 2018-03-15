@@ -1,49 +1,51 @@
 Future:
 
-- Procedure
 - phases + dates
 
-- states (active, on hold, archived)
-
 - Form manager (dispatcher)
-
-- list sorting
 
 - dates and info during CBS-process
 - send-email-button for contactpersons.
 
+- generate documents
+
+- candidates
+
 -- controller per tabpage?
+
+Note: new DB column should be nullable to make migration easier. (prevents the need to alter the SQL insert statements).
 
 Current:
 
-IT_002
+IT_003
 
-TODO: refactor
+bug:
+- remove empty form.
+- tickbutton "isGearchiveerd" doesn't scale correctly along the form. (move to menu?)
 
-- timestamp (concurency):
-https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
+features:
+- Procedure (Name)
+- Financial info.
 
-- field "Archived" (implemented)
+- list sorting
+- states (active, on hold, archived)
 
-- link to files  (field exist in DB, code needs to be added to the application.)
-UI: contains the base directory, needs the part to split up the dossiernummer in year and nummer.
-	Important part is to support both new and old dossiers. 
-  implemented by extraction year and number from dossiernumber. and store it at first opportunity (when dossiernummer is for first time valid).
-editing ability added
+Fix:
 
-- client (name, email, organisation, department)  (person and personDossier tables exist, persons can be added to the DB. Next is adding the link between dossiers and persons. (many-to-many relationship).
-added ability to add/remove person to dossier, 
-
-
-
-
-- Migration support  (import older DB)
+- better migration support.
+Migration support  (import older DB)
 after changing models and adding to dossierContext (public DbSet<Model.DossierPerson> dossierPersoon { get; set; })
 Using Db Browser export database to SQL 
 remove migrations (everything)
 remove database.db (source map)
 apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
+
+Log:
+
+20180315  started IT_003
+
+20180315  deployed V2 to production.
 
 20180226  cleaned up code to conform to Stylecop rules.
 
@@ -66,6 +68,23 @@ Using Db Browser import sql to database (issue: need someway to add non-nullable
 	  changed: DB context shouldn't be shared and kept around. for each request: create context, use and dispose.
 
 History:
+
+IT_002
+
+- timestamp (concurency):
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
+
+- field "Archived" (implemented)
+
+- link to files  (field exist in DB, code needs to be added to the application.)
+UI: contains the base directory, needs the part to split up the dossiernummer in year and nummer.
+	Important part is to support both new and old dossiers. 
+  implemented by extraction year and number from dossiernumber. and store it at first opportunity (when dossiernummer is for first time valid).
+editing ability added
+
+- client (name, email, organisation, department)  (person and personDossier tables exist, persons can be added to the DB. Next is adding the link between dossiers and persons. (many-to-many relationship).
+added ability to add/remove person to dossier, 
+
 
 IT_001
 

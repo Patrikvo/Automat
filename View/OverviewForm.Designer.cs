@@ -86,6 +86,7 @@
             this.listBoxDossiers.FormattingEnabled = true;
             this.listBoxDossiers.Location = new System.Drawing.Point(0, 0);
             this.listBoxDossiers.Name = "listBoxDossiers";
+            this.listBoxDossiers.ScrollAlwaysVisible = true;
             this.listBoxDossiers.Size = new System.Drawing.Size(261, 638);
             this.listBoxDossiers.TabIndex = 0;
             this.listBoxDossiers.ValueMember = "Id";
@@ -237,8 +238,10 @@
             this.textBoxStavaza.Location = new System.Drawing.Point(18, 155);
             this.textBoxStavaza.Multiline = true;
             this.textBoxStavaza.Name = "textBoxStavaza";
+            this.textBoxStavaza.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBoxStavaza.Size = new System.Drawing.Size(443, 422);
             this.textBoxStavaza.TabIndex = 2;
+            this.textBoxStavaza.WordWrap = false;
             // 
             // labelContactpersoon
             // 
@@ -346,6 +349,7 @@
             this.listBoxAllPersons.FormattingEnabled = true;
             this.listBoxAllPersons.Location = new System.Drawing.Point(251, 49);
             this.listBoxAllPersons.Name = "listBoxAllPersons";
+            this.listBoxAllPersons.ScrollAlwaysVisible = true;
             this.listBoxAllPersons.Size = new System.Drawing.Size(210, 173);
             this.listBoxAllPersons.TabIndex = 1;
             // 
@@ -354,6 +358,7 @@
             this.listBoxLinkedPersons.FormattingEnabled = true;
             this.listBoxLinkedPersons.Location = new System.Drawing.Point(6, 49);
             this.listBoxLinkedPersons.Name = "listBoxLinkedPersons";
+            this.listBoxLinkedPersons.ScrollAlwaysVisible = true;
             this.listBoxLinkedPersons.Size = new System.Drawing.Size(208, 173);
             this.listBoxLinkedPersons.TabIndex = 0;
             // 
@@ -419,21 +424,21 @@
             // nieuwDossierToolStripMenuItem1
             // 
             this.nieuwDossierToolStripMenuItem1.Name = "nieuwDossierToolStripMenuItem1";
-            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
             this.nieuwDossierToolStripMenuItem1.Text = "Nieuw Dossier";
             this.nieuwDossierToolStripMenuItem1.Click += new System.EventHandler(this.NieuwDossierToolStripMenuItem_Click);
             // 
             // dossierWissenToolStripMenuItem
             // 
             this.dossierWissenToolStripMenuItem.Name = "dossierWissenToolStripMenuItem";
-            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.dossierWissenToolStripMenuItem.Text = "Dossier wissen";
             this.dossierWissenToolStripMenuItem.Click += new System.EventHandler(this.DossierWissenToolStripMenuItem_Click);
             // 
             // toonArchiefToolStripMenuItem
             // 
             this.toonArchiefToolStripMenuItem.Name = "toonArchiefToolStripMenuItem";
-            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.toonArchiefToolStripMenuItem.Text = "Toon Archief";
             this.toonArchiefToolStripMenuItem.Click += new System.EventHandler(this.ToonArchiefToolStripMenuItem_Click);
             // 
