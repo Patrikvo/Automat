@@ -212,6 +212,7 @@
             // 
             // checkBoxIsArchived
             // 
+            this.checkBoxIsArchived.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxIsArchived.AutoSize = true;
             this.checkBoxIsArchived.Location = new System.Drawing.Point(18, 589);
             this.checkBoxIsArchived.Name = "checkBoxIsArchived";

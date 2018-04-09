@@ -13,7 +13,9 @@
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            Controller.OverviewController overviewController = new Controller.OverviewController(null);
+            Application.Run(overviewController.GetView());
         }
     }
 }

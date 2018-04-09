@@ -9,7 +9,7 @@ Future:
 
 - generate documents
 
-- candidates
+- states (active, on hold, archived)
 
 -- controller per tabpage?
 
@@ -19,16 +19,19 @@ Current:
 
 IT_003
 
-bug:
-- remove empty form.
-- tickbutton "isGearchiveerd" doesn't scale correctly along the form. (move to menu?)
-
 features:
 - Procedure (Name)
+- W/L/D
+- Nat / EUR
+- AO
+- Type Contract
+
+- candidates
+
 - Financial info.
 
-- list sorting
-- states (active, on hold, archived)
+note: need to make new database, because of changes to model.
+
 
 Fix:
 
@@ -42,6 +45,12 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+20180406  Procedure and type added to Model and DossierRules, needs to be added to Overview controller and form.
+20180406  added list sorting to dossierList.
+20180406  bugfix: tickbutton "isGearchiveerd" scaling problem fixed.
+
+20180329  removed Form1. Application now starts at the OverviewController.
 
 20180315  started IT_003
 

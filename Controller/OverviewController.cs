@@ -7,6 +7,7 @@ namespace Automat.Controller
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Forms;
     using Automat.Model;
     using Automat.View;
 
@@ -14,9 +15,9 @@ namespace Automat.Controller
     {
         private OverviewForm overviewForm;
         private List<Dossier> dossierList;
-        private Form1 parent;
+        private Form parent;
 
-        public OverviewController(Form1 parent)
+        public OverviewController(Form parent)
         {
             this.parent = parent;
 
@@ -42,11 +43,11 @@ namespace Automat.Controller
             {
                 if (!showArchived)
                 {
-                    this.dossierList = dossierContext.Dossiers.Where(c => c.IsGearchiveerd == false).ToList();
+                    this.dossierList = dossierContext.Dossiers.Where(c => c.IsGearchiveerd == false).OrderBy(s => s.DossierNummer).ToList();
                 }
                 else
                 {
-                    this.dossierList = dossierContext.Dossiers.ToList();
+                    this.dossierList = dossierContext.Dossiers.OrderBy(s => s.DossierNummer).ToList();
                 }
 
                 this.overviewForm.SetDossierList(this.dossierList, "Name", "Id");
@@ -59,6 +60,15 @@ namespace Automat.Controller
             {
                 this.overviewForm.Show();
             }
+        }
+
+        public System.Windows.Forms.Form GetView()
+        {
+            if (this.overviewForm != null)
+            {
+                return this.overviewForm;
+            }
+            else { return null; }
         }
 
         public void ShowWithID(int id)
@@ -173,7 +183,10 @@ namespace Automat.Controller
 
         public void ExitApplication()
         {
-            this.parent.ExitApplication();
+            if (this.parent != null)
+            {
+                this.parent.Close();
+            }
         }
 
         public List<Tuple<string, int>> GetAllPersons()

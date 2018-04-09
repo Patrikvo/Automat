@@ -1,0 +1,55 @@
+Procedures
+"onderhandelingsprocedure zonder voorafgaande bekendmaking" 
+"vereenvoudigde onderhandelingsprocedure met voorafgaande bekendmaking"
+"openbare procedure"
+"mededingingsprocedure met onderhandelingen"
+"niet-openbare procedure "
+"sui generis procedure met voorafgaande bekendmaking"
+"concurrentiegerichte dialoog"
+"innovatiepartnerschap"
+
+
+AO
+"Stad Antwerpen"
+"District Antwerpen"
+"District Berchem"
+"District Berendrecht Zandvliet Lillo"
+"District Borgerhout"
+"District Deurne"
+"District Ekeren"
+"District Hoboken"
+"District Merksem"
+"District Wilrijk"
+"OCMW Antwerpen"
+"Brandweerzone Antwerpen"
+"AG Kinderopvang"
+"AG Mobiliteit en Parkeren Antwerpen"
+"IVA Sodi+"
+"VZW Antwerpen Kunstenstad"
+"VZW Antwerpen Sportstad"
+"VZW Stadsmarketing en Toerisme"
+
+
+Soort contract
+"…Ènmalige opdracht"
+"Meerjarenopdracht"
+"Raamovereenkomst"
+
+
+Aard:
+"Leveringen" 
+"Diensten"
+"Werken"
+
+Fin.
+budgetplaats:5153000000
+budgetpositie:225
+functiegebied:1SLW050303A00000
+subsidie:sub_nr
+fonds:intern
+begrotingsprogramma:1SA040500
+budgetperiode: 1800
+mits goedkeuring van de budgetten door college, gemeenteraad en hogere overheid
+mits goedkeuring van de budgetten door districtscollege, districtsraad en nazicht door hogere overheid
+
+

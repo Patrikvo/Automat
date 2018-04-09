@@ -28,6 +28,10 @@ namespace Automat.Model
 
         public bool IsGearchiveerd { get; set; }
 
+        public int DossierProcedure { get; set; }
+
+        public int DossierType { get; set; }
+
        // [Timestamp]
         public byte[] RowVersion { get; set; }
 

@@ -210,7 +210,7 @@ namespace Automat.View
 
         private void AfsluitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ExitApplication();
+            this.Close();
         }
 
         private void OverviewForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -253,13 +253,24 @@ namespace Automat.View
 
         private void DoSaveDossier()
         {
-            int index = this.listBoxDossiers.SelectedIndex;
+            int id = (int)this.listBoxDossiers.SelectedValue;
 
             int result = this.SaveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
 
             this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
+            this.SetListboxDossiersById(id);
+        }
 
-            this.SetListboxDossiersIndex(index);
+        private void SetListboxDossiersById(int id)
+        {
+            foreach (Model.Dossier d in this.listBoxDossiers.Items)
+            {
+                if (d.Id == id)
+                {
+                    this.listBoxDossiers.SelectedIndex = this.listBoxDossiers.Items.IndexOf(d);
+                    break;
+                }
+            }
         }
 
         private void CheckBoxIsArchived_CheckedChanged(object sender, EventArgs e)
