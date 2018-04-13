@@ -63,7 +63,6 @@ namespace Automat.Controller
 
                 if (persoon == null)
                 {
-                   // this.overviewForm.setStatusText("Entry was deleted by another user.");
                     return this.SaveNew(out id, name, email, organisation, departement);
                 }
                 else
@@ -75,7 +74,16 @@ namespace Automat.Controller
                         persoon.Organisatie = organisation;
                         persoon.Departement = departement;
 
-                        result = dossierContext.SaveChanges();
+                        FluentValidation.Results.ValidationResult validationResult = new Model.PersoonValidator().Validate(persoon);
+
+                        if (validationResult.IsValid)
+                        {
+                            result = dossierContext.SaveChanges();
+                        }
+                        else
+                        {
+                            Model.PersoonValidator.DisplayErrorMessage(validationResult);
+                        }
 
                         this.GetPersonList();
 
@@ -83,7 +91,7 @@ namespace Automat.Controller
                     }
                     else
                     {
-                      // this.overviewForm.setStatusText("Entry was modified by another user.");
+                        System.Windows.Forms.MessageBox.Show("Persoon werd gewijzigd door een andere gebruiker.", "Persoon gewijzigd", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                 }
             }
@@ -94,28 +102,39 @@ namespace Automat.Controller
         public int SaveNew(out int id, string name, string email, string organisation, string departement)
         {
             int result = 0;
+            id = -1;
+
             Persoon persoon = new Persoon();
             persoon.Naam = name;
             persoon.Email = email;
             persoon.Organisatie = organisation;
             persoon.Departement = departement;
 
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            FluentValidation.Results.ValidationResult validationResult = new Model.PersoonValidator().Validate(persoon);
+
+            if (validationResult.IsValid)
             {
-                dossierContext.Personen.Add(persoon);
-                result = dossierContext.SaveChanges();
-
-                this.GetPersonList();
-
-                this.personViewForm.SetPersonList(this.personList, "name", "Id");
-                if (result > 0)
+                using (Database.DossierContext dossierContext = new Database.DossierContext())
                 {
-                    id = persoon.Id;
+                    dossierContext.Personen.Add(persoon);
+                    result = dossierContext.SaveChanges();
+
+                    this.GetPersonList();
+
+                    this.personViewForm.SetPersonList(this.personList, "name", "Id");
+                    if (result > 0)
+                    {
+                        id = persoon.Id;
+                    }
+                    else
+                    {
+                        id = -1;
+                    }
                 }
-                else
-                {
-                    id = -1;
-                }
+            }
+            else
+            {
+                Model.PersoonValidator.DisplayErrorMessage(validationResult);
             }
 
             return result;
@@ -132,7 +151,6 @@ namespace Automat.Controller
 
                 this.GetPersonList();
 
-                // this.personList = dossierContext.personen.ToList();
                 this.personViewForm.SetPersonList(this.personList, "name", "Id");
             }
 

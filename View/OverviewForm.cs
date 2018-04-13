@@ -253,12 +253,19 @@ namespace Automat.View
 
         private void DoSaveDossier()
         {
-            int id = (int)this.listBoxDossiers.SelectedValue;
+            int id = -1;
+            if (this.listBoxDossiers.SelectedValue != null)
+            {
+                id = (int)this.listBoxDossiers.SelectedValue;
+            }
 
             int result = this.SaveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
 
             this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
-            this.SetListboxDossiersById(id);
+            if (this.listBoxDossiers.SelectedValue != null)
+            {
+                this.SetListboxDossiersById(id);
+            }
         }
 
         private void SetListboxDossiersById(int id)

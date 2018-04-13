@@ -68,7 +68,10 @@ namespace Automat.Controller
             {
                 return this.overviewForm;
             }
-            else { return null; }
+            else
+            {
+                return null;
+            }
         }
 
         public void ShowWithID(int id)
@@ -118,7 +121,16 @@ namespace Automat.Controller
                             dossier.DossierLinkToFiles = Automat.Rules.DossierRules.GetFileLocation(nummer);
                         }
 
-                        result = dossierContext.SaveChanges();
+                        FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
+
+                        if (validationResult.IsValid)
+                        {
+                            result = dossierContext.SaveChanges();
+                        }
+                        else
+                        {
+                            DossierValidator.DisplayErrorMessage(validationResult);
+                        }
 
                         this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
                     }
@@ -135,6 +147,7 @@ namespace Automat.Controller
         public int SaveNewDossier(out int id, string nummer, string titel, string stavaza)
         {
             int result = 0;
+            id = -1;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
             {
                 Dossier dossier = new Dossier();
@@ -143,17 +156,23 @@ namespace Automat.Controller
                 dossier.DossierStandvanzaken = stavaza;
                 dossier.IsGearchiveerd = false;
                 dossier.DossierLinkToFiles = Automat.Rules.DossierRules.GetFileLocation(nummer);
-                dossierContext.Dossiers.Add(dossier);
-                result = dossierContext.SaveChanges();
 
-                this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
-                if (result > 0)
+                FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
+
+                if (validationResult.IsValid)
                 {
-                    id = dossier.Id;
+                    dossierContext.Dossiers.Add(dossier);
+                    result = dossierContext.SaveChanges();
+
+                    this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
+                    if (result > 0)
+                    {
+                        id = dossier.Id;
+                    }
                 }
                 else
                 {
-                    id = -1;
+                    DossierValidator.DisplayErrorMessage(validationResult);
                 }
             }
 

@@ -19,7 +19,7 @@ Current:
 
 IT_003
 
-features:
+features: (added to Model and DossierRules, needs to be added to Overview controller and form.)
 - Procedure (Name)
 - W/L/D
 - Nat / EUR
@@ -30,7 +30,7 @@ features:
 
 - Financial info.
 
-note: need to make new database, because of changes to model.
+
 
 
 Fix:
@@ -45,6 +45,10 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+20180413  added DisplayErrorMessage to the validators
+20180413  added Fluent Validation. second instance added to PersoonController
+
+20180409  added Fluent Validation. First instance added to Dossier, used in OverviewController.SaveDossier.
 
 20180406  Procedure and type added to Model and DossierRules, needs to be added to Overview controller and form.
 20180406  added list sorting to dossierList.
