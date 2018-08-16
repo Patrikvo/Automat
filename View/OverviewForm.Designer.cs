@@ -67,6 +67,8 @@
             this.toonArchiefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelProcedure = new System.Windows.Forms.Label();
+            this.comboBoxProcedure = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -124,6 +126,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBoxProcedure);
+            this.tabPage1.Controls.Add(this.labelProcedure);
             this.tabPage1.Controls.Add(this.linkLabelfiles);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.comboBoxContactpersonen);
@@ -149,7 +153,7 @@
             this.linkLabelfiles.AutoEllipsis = true;
             this.linkLabelfiles.AutoSize = true;
             this.linkLabelfiles.ContextMenuStrip = this.contextMenuStripFiles;
-            this.linkLabelfiles.Location = new System.Drawing.Point(97, 110);
+            this.linkLabelfiles.Location = new System.Drawing.Point(187, 593);
             this.linkLabelfiles.Name = "linkLabelfiles";
             this.linkLabelfiles.Size = new System.Drawing.Size(83, 13);
             this.linkLabelfiles.TabIndex = 13;
@@ -236,13 +240,14 @@
             this.textBoxStavaza.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxStavaza.Location = new System.Drawing.Point(18, 155);
+            this.textBoxStavaza.Location = new System.Drawing.Point(18, 233);
             this.textBoxStavaza.Multiline = true;
             this.textBoxStavaza.Name = "textBoxStavaza";
             this.textBoxStavaza.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxStavaza.Size = new System.Drawing.Size(443, 422);
+            this.textBoxStavaza.Size = new System.Drawing.Size(443, 344);
             this.textBoxStavaza.TabIndex = 2;
             this.textBoxStavaza.WordWrap = false;
+            this.textBoxStavaza.TextChanged += new System.EventHandler(this.textBoxStavaza_TextChanged);
             // 
             // labelContactpersoon
             // 
@@ -274,7 +279,7 @@
             // labelStavaza
             // 
             this.labelStavaza.AutoSize = true;
-            this.labelStavaza.Location = new System.Drawing.Point(15, 139);
+            this.labelStavaza.Location = new System.Drawing.Point(15, 217);
             this.labelStavaza.Name = "labelStavaza";
             this.labelStavaza.Size = new System.Drawing.Size(88, 13);
             this.labelStavaza.TabIndex = 5;
@@ -458,6 +463,23 @@
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
+            // labelProcedure
+            // 
+            this.labelProcedure.AutoSize = true;
+            this.labelProcedure.Location = new System.Drawing.Point(38, 116);
+            this.labelProcedure.Name = "labelProcedure";
+            this.labelProcedure.Size = new System.Drawing.Size(56, 13);
+            this.labelProcedure.TabIndex = 14;
+            this.labelProcedure.Text = "Procedure";
+            // 
+            // comboBoxProcedure
+            // 
+            this.comboBoxProcedure.FormattingEnabled = true;
+            this.comboBoxProcedure.Location = new System.Drawing.Point(100, 113);
+            this.comboBoxProcedure.Name = "comboBoxProcedure";
+            this.comboBoxProcedure.Size = new System.Drawing.Size(361, 21);
+            this.comboBoxProcedure.TabIndex = 15;
+            // 
             // OverviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,5 +551,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonSaveP2;
+        private System.Windows.Forms.ComboBox comboBoxProcedure;
+        private System.Windows.Forms.Label labelProcedure;
     }
 }

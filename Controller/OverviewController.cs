@@ -32,6 +32,7 @@ namespace Automat.Controller
             this.overviewForm.RefreshDossierList = this.RefreshDossierList;
             this.overviewForm.GetAllPersons = this.GetAllPersons;
             this.overviewForm.PersistLinkedPersonList = this.PersistLinkedPersonList;
+            this.overviewForm.GetAllProcedureNames = this.GetAllProcedures;
             this.RefreshDossierList(false);
         }
 
@@ -87,11 +88,12 @@ namespace Automat.Controller
                 Controller.PersonController personController = new Controller.PersonController(id);
 
                 List<Tuple<string, int>> contactpersonen = personController.GetNameTuples();
-                this.overviewForm.Setdossier(dossier.Id, dossier.DossierNummer, dossier.DossierTitel, dossier.DossierStandvanzaken, dossier.IsGearchiveerd, contactpersonen, dossier.DossierLinkToFiles, dossier.RowVersion);
+                string procedure = Automat.Rules.DossierRules.GetProcedureName(dossier.DossierProcedure);
+                this.overviewForm.Setdossier(dossier.Id, dossier.DossierNummer, dossier.DossierTitel, dossier.DossierStandvanzaken, dossier.IsGearchiveerd, contactpersonen, dossier.DossierLinkToFiles, procedure, dossier.RowVersion);
             }
         }
 
-        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion)
+        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, string procedure, byte[] rowVersion)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -120,6 +122,8 @@ namespace Automat.Controller
                         {
                             dossier.DossierLinkToFiles = Automat.Rules.DossierRules.GetFileLocation(nummer);
                         }
+
+                        dossier.DossierProcedure = Automat.Rules.DossierRules.GetProcedureID(procedure);
 
                         FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
 
@@ -221,5 +225,15 @@ namespace Automat.Controller
 
             return personController.PersistLinkedPersonList(linkedPersons);
         }
+
+        public List<string> GetAllProcedures()
+        {
+            return Automat.Rules.DossierRules.GetProcedureNames();
+        }
+
+
+
+
+
     }
 }

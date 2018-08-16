@@ -29,6 +29,7 @@ namespace Automat.View
         private RefreshDossierListDelegate refreshDossierList;
 
         private GetAllPersonsDelegate getAllPersons;
+        private GetAllProcedureNamesDelegate getAllProcedureNames;
 
         private BindingSource binding1;
 
@@ -77,11 +78,14 @@ namespace Automat.View
 
         public delegate List<Tuple<string, int>> GetAllPersonsDelegate();
 
+        public delegate List<string> GetAllProcedureNamesDelegate();
+
         /* TAPPAGE 1 DELEGATES */
 
         public delegate void SelectWithIdDelegate(int id);
 
-        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, byte[] rowVersion);
+        public delegate int SaveDossierDelegate(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, string procedure, byte[] rowVersion);
+
 
         /* TAPPAGE 2 DELEGATES */
 
@@ -101,6 +105,8 @@ namespace Automat.View
 
         public GetAllPersonsDelegate GetAllPersons { get => this.getAllPersons; set => this.getAllPersons = value; }
 
+        public GetAllProcedureNamesDelegate GetAllProcedureNames { get => this.getAllProcedureNames; set => this.getAllProcedureNames = value; }
+
         /* TAPPAGE 1 PROPERTIES */
 
         public SelectWithIdDelegate SelectWithID { get => this.selectWithID; set => this.selectWithID = value; }
@@ -113,7 +119,7 @@ namespace Automat.View
 
         /* COMMON PUBLIC METHODES */
 
-        public void Setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles, byte[] rowVersion)
+        public void Setdossier(int id, string nummer, string titel, string stavaza, bool isArchived, List<Tuple<string, int>> contactpersonen, string linkTofiles, string procedure, byte[] rowVersion)
         {
             this.contactpersonen = contactpersonen;
             this.textBoxDossierNummer.Text = nummer;
@@ -145,6 +151,9 @@ namespace Automat.View
             this.listBoxLinkedPersons.DataSource = this.binding1;
             this.listBoxLinkedPersons.DisplayMember = "Item1";
             this.listBoxLinkedPersons.ValueMember = "Item2";
+
+            this.comboBoxProcedure.DataSource = this.getAllProcedureNames();
+            this.comboBoxProcedure.SelectedIndex = this.comboBoxProcedure.Items.IndexOf(procedure);
 
             this.rowVersion = rowVersion;
             this.id = id;
@@ -259,7 +268,7 @@ namespace Automat.View
                 id = (int)this.listBoxDossiers.SelectedValue;
             }
 
-            int result = this.SaveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, this.rowVersion);
+            int result = this.SaveDossier(this.id, this.textBoxDossierNummer.Text, this.textBoxDossierTitel.Text, this.textBoxStavaza.Text, this.checkBoxIsArchived.Checked, this.linkLabelfiles.Text, (string)this.comboBoxProcedure.SelectedItem, this.rowVersion);
 
             this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
             if (this.listBoxDossiers.SelectedValue != null)
@@ -367,6 +376,11 @@ namespace Automat.View
             int modifiedObjectsCount = this.PersistLinkedPersonList(this.id, this.linkedPersonList.ToList());
 
             this.toolStripStatusLabel1.Text = modifiedObjectsCount.ToString() + " persons modified.";
+        }
+
+        private void textBoxStavaza_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
