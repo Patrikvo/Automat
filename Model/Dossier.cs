@@ -32,6 +32,12 @@ namespace Automat.Model
 
         public int DossierType { get; set; }
 
+        public bool IsEuropeanPublished { get; set; }
+
+        public int TypeOfContract { get; set; }
+
+        public int ProcuringEnity { get; set; }
+
        // [Timestamp]
         public byte[] RowVersion { get; set; }
 

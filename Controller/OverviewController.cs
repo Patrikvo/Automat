@@ -21,18 +21,8 @@ namespace Automat.Controller
         {
             this.parent = parent;
 
-            this.overviewForm = new OverviewForm();
-            this.overviewForm.SelectWithID = this.ShowWithID;
-            this.overviewForm.SaveDossier = this.SaveDossier;
-            this.overviewForm.SaveNewDossier = this.SaveNewDossier;
-            this.overviewForm.DeleteDossier = this.DeleteDossier;
+            this.overviewForm = new OverviewForm(this);
 
-            this.overviewForm.ShowPersonFormValue = this.ShowPersonForm;
-            this.overviewForm.ExitApplication = this.ExitApplication;
-            this.overviewForm.RefreshDossierList = this.RefreshDossierList;
-            this.overviewForm.GetAllPersons = this.GetAllPersons;
-            this.overviewForm.PersistLinkedPersonList = this.PersistLinkedPersonList;
-            this.overviewForm.GetAllProcedureNames = this.GetAllProcedures;
             this.RefreshDossierList(false);
         }
 
@@ -89,11 +79,39 @@ namespace Automat.Controller
 
                 List<Tuple<string, int>> contactpersonen = personController.GetNameTuples();
                 string procedure = Automat.Rules.DossierRules.GetProcedureName(dossier.DossierProcedure);
-                this.overviewForm.Setdossier(dossier.Id, dossier.DossierNummer, dossier.DossierTitel, dossier.DossierStandvanzaken, dossier.IsGearchiveerd, contactpersonen, dossier.DossierLinkToFiles, procedure, dossier.RowVersion);
+                string type = Rules.DossierRules.GetProcedureTypeName(dossier.DossierType, true);
+                string procuringEnityName = Rules.DossierRules.GetProcuringEntityName(dossier.ProcuringEnity);
+                string contractTypeName = Rules.DossierRules.GetContractTypeName(dossier.TypeOfContract);
+                this.overviewForm.Setdossier(
+                                                dossier.Id,
+                                                dossier.DossierNummer,
+                                                dossier.DossierTitel,
+                                                dossier.DossierStandvanzaken,
+                                                dossier.IsGearchiveerd,
+                                                contactpersonen,
+                                                dossier.DossierLinkToFiles,
+                                                procedure,
+                                                type,
+                                                dossier.IsEuropeanPublished,
+                                                procuringEnityName,
+                                                contractTypeName,
+                                                dossier.RowVersion);
             }
         }
 
-        public int SaveDossier(int id, string nummer, string titel, string stavaza, bool isArchived, string linkTofiles, string procedure, byte[] rowVersion)
+        public int SaveDossier(
+                                int id,
+                                string nummer,
+                                string titel,
+                                string stavaza,
+                                bool isArchived,
+                                string linkTofiles,
+                                string procedure,
+                                string type,
+                                bool isEuropeanPublished,
+                                string procuringEnityName,
+                                string contractTypeName,
+                                byte[] rowVersion)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -124,7 +142,12 @@ namespace Automat.Controller
                         }
 
                         dossier.DossierProcedure = Automat.Rules.DossierRules.GetProcedureID(procedure);
+                        dossier.DossierType = Rules.DossierRules.GetProcedureTypeID(type, true);
+                        dossier.IsEuropeanPublished = isEuropeanPublished;
+                        dossier.ProcuringEnity = Rules.DossierRules.GetProcuringEntityID(procuringEnityName);
+                        dossier.TypeOfContract = Rules.DossierRules.GetContractTypeID(contractTypeName);
 
+                        // Do validation of Dossier object:
                         FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
 
                         if (validationResult.IsValid)
@@ -230,10 +253,5 @@ namespace Automat.Controller
         {
             return Automat.Rules.DossierRules.GetProcedureNames();
         }
-
-
-
-
-
     }
 }

@@ -33,6 +33,14 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBoxProcuringEntity = new System.Windows.Forms.ComboBox();
+            this.labelProcuringEntity = new System.Windows.Forms.Label();
+            this.labelTypeOfContract = new System.Windows.Forms.Label();
+            this.comboBoxTypeOfContract = new System.Windows.Forms.ComboBox();
+            this.checkBoxIsEuropeanPublished = new System.Windows.Forms.CheckBox();
+            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.comboBoxProcedure = new System.Windows.Forms.ComboBox();
+            this.labelProcedure = new System.Windows.Forms.Label();
             this.linkLabelfiles = new System.Windows.Forms.LinkLabel();
             this.contextMenuStripFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,8 +75,6 @@
             this.toonArchiefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelProcedure = new System.Windows.Forms.Label();
-            this.comboBoxProcedure = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,6 +132,12 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBoxProcuringEntity);
+            this.tabPage1.Controls.Add(this.labelProcuringEntity);
+            this.tabPage1.Controls.Add(this.labelTypeOfContract);
+            this.tabPage1.Controls.Add(this.comboBoxTypeOfContract);
+            this.tabPage1.Controls.Add(this.checkBoxIsEuropeanPublished);
+            this.tabPage1.Controls.Add(this.comboBoxType);
             this.tabPage1.Controls.Add(this.comboBoxProcedure);
             this.tabPage1.Controls.Add(this.labelProcedure);
             this.tabPage1.Controls.Add(this.linkLabelfiles);
@@ -147,6 +159,80 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Voorblad";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxProcuringEntity
+            // 
+            this.comboBoxProcuringEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcuringEntity.FormattingEnabled = true;
+            this.comboBoxProcuringEntity.Location = new System.Drawing.Point(100, 171);
+            this.comboBoxProcuringEntity.Name = "comboBoxProcuringEntity";
+            this.comboBoxProcuringEntity.Size = new System.Drawing.Size(361, 21);
+            this.comboBoxProcuringEntity.TabIndex = 21;
+            // 
+            // labelProcuringEntity
+            // 
+            this.labelProcuringEntity.AutoSize = true;
+            this.labelProcuringEntity.Location = new System.Drawing.Point(72, 174);
+            this.labelProcuringEntity.Name = "labelProcuringEntity";
+            this.labelProcuringEntity.Size = new System.Drawing.Size(22, 13);
+            this.labelProcuringEntity.TabIndex = 20;
+            this.labelProcuringEntity.Text = "AO";
+            // 
+            // labelTypeOfContract
+            // 
+            this.labelTypeOfContract.AutoSize = true;
+            this.labelTypeOfContract.Location = new System.Drawing.Point(27, 147);
+            this.labelTypeOfContract.Name = "labelTypeOfContract";
+            this.labelTypeOfContract.Size = new System.Drawing.Size(67, 13);
+            this.labelTypeOfContract.TabIndex = 19;
+            this.labelTypeOfContract.Text = "Contracttype";
+            // 
+            // comboBoxTypeOfContract
+            // 
+            this.comboBoxTypeOfContract.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTypeOfContract.FormattingEnabled = true;
+            this.comboBoxTypeOfContract.Location = new System.Drawing.Point(100, 144);
+            this.comboBoxTypeOfContract.Name = "comboBoxTypeOfContract";
+            this.comboBoxTypeOfContract.Size = new System.Drawing.Size(361, 21);
+            this.comboBoxTypeOfContract.TabIndex = 18;
+            // 
+            // checkBoxIsEuropeanPublished
+            // 
+            this.checkBoxIsEuropeanPublished.AutoSize = true;
+            this.checkBoxIsEuropeanPublished.Location = new System.Drawing.Point(291, 8);
+            this.checkBoxIsEuropeanPublished.Name = "checkBoxIsEuropeanPublished";
+            this.checkBoxIsEuropeanPublished.Size = new System.Drawing.Size(122, 17);
+            this.checkBoxIsEuropeanPublished.TabIndex = 17;
+            this.checkBoxIsEuropeanPublished.Text = "Europese procedure";
+            this.checkBoxIsEuropeanPublished.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxType
+            // 
+            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType.FormattingEnabled = true;
+            this.comboBoxType.Location = new System.Drawing.Point(419, 6);
+            this.comboBoxType.Name = "comboBoxType";
+            this.comboBoxType.Size = new System.Drawing.Size(42, 21);
+            this.comboBoxType.TabIndex = 16;
+            // 
+            // comboBoxProcedure
+            // 
+            this.comboBoxProcedure.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcedure.FormattingEnabled = true;
+            this.comboBoxProcedure.Location = new System.Drawing.Point(100, 117);
+            this.comboBoxProcedure.Name = "comboBoxProcedure";
+            this.comboBoxProcedure.Size = new System.Drawing.Size(361, 21);
+            this.comboBoxProcedure.Sorted = true;
+            this.comboBoxProcedure.TabIndex = 15;
+            // 
+            // labelProcedure
+            // 
+            this.labelProcedure.AutoSize = true;
+            this.labelProcedure.Location = new System.Drawing.Point(38, 120);
+            this.labelProcedure.Name = "labelProcedure";
+            this.labelProcedure.Size = new System.Drawing.Size(56, 13);
+            this.labelProcedure.TabIndex = 14;
+            this.labelProcedure.Text = "Procedure";
             // 
             // linkLabelfiles
             // 
@@ -177,7 +263,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(386, 84);
+            this.button1.Location = new System.Drawing.Point(386, 88);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -187,8 +273,9 @@
             // comboBoxContactpersonen
             // 
             this.comboBoxContactpersonen.DisplayMember = "Item1";
+            this.comboBoxContactpersonen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxContactpersonen.FormattingEnabled = true;
-            this.comboBoxContactpersonen.Location = new System.Drawing.Point(100, 86);
+            this.comboBoxContactpersonen.Location = new System.Drawing.Point(100, 90);
             this.comboBoxContactpersonen.Name = "comboBoxContactpersonen";
             this.comboBoxContactpersonen.Size = new System.Drawing.Size(280, 21);
             this.comboBoxContactpersonen.TabIndex = 11;
@@ -198,7 +285,7 @@
             // 
             this.textBoxDossierNummer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDossierNummer.Location = new System.Drawing.Point(100, 29);
+            this.textBoxDossierNummer.Location = new System.Drawing.Point(100, 33);
             this.textBoxDossierNummer.Name = "textBoxDossierNummer";
             this.textBoxDossierNummer.Size = new System.Drawing.Size(361, 20);
             this.textBoxDossierNummer.TabIndex = 0;
@@ -230,7 +317,7 @@
             // 
             this.textBoxDossierTitel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDossierTitel.Location = new System.Drawing.Point(100, 55);
+            this.textBoxDossierTitel.Location = new System.Drawing.Point(100, 59);
             this.textBoxDossierTitel.Name = "textBoxDossierTitel";
             this.textBoxDossierTitel.Size = new System.Drawing.Size(361, 20);
             this.textBoxDossierTitel.TabIndex = 1;
@@ -247,12 +334,12 @@
             this.textBoxStavaza.Size = new System.Drawing.Size(443, 344);
             this.textBoxStavaza.TabIndex = 2;
             this.textBoxStavaza.WordWrap = false;
-            this.textBoxStavaza.TextChanged += new System.EventHandler(this.textBoxStavaza_TextChanged);
+            this.textBoxStavaza.TextChanged += new System.EventHandler(this.TextBoxStavaza_TextChanged);
             // 
             // labelContactpersoon
             // 
             this.labelContactpersoon.AutoSize = true;
-            this.labelContactpersoon.Location = new System.Drawing.Point(12, 89);
+            this.labelContactpersoon.Location = new System.Drawing.Point(12, 93);
             this.labelContactpersoon.Name = "labelContactpersoon";
             this.labelContactpersoon.Size = new System.Drawing.Size(82, 13);
             this.labelContactpersoon.TabIndex = 9;
@@ -261,7 +348,7 @@
             // labelDossierNummer
             // 
             this.labelDossierNummer.AutoSize = true;
-            this.labelDossierNummer.Location = new System.Drawing.Point(15, 32);
+            this.labelDossierNummer.Location = new System.Drawing.Point(15, 36);
             this.labelDossierNummer.Name = "labelDossierNummer";
             this.labelDossierNummer.Size = new System.Drawing.Size(79, 13);
             this.labelDossierNummer.TabIndex = 3;
@@ -270,7 +357,7 @@
             // labelDossierTitel
             // 
             this.labelDossierTitel.AutoSize = true;
-            this.labelDossierTitel.Location = new System.Drawing.Point(35, 58);
+            this.labelDossierTitel.Location = new System.Drawing.Point(35, 62);
             this.labelDossierTitel.Name = "labelDossierTitel";
             this.labelDossierTitel.Size = new System.Drawing.Size(59, 13);
             this.labelDossierTitel.TabIndex = 4;
@@ -463,23 +550,6 @@
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
-            // labelProcedure
-            // 
-            this.labelProcedure.AutoSize = true;
-            this.labelProcedure.Location = new System.Drawing.Point(38, 116);
-            this.labelProcedure.Name = "labelProcedure";
-            this.labelProcedure.Size = new System.Drawing.Size(56, 13);
-            this.labelProcedure.TabIndex = 14;
-            this.labelProcedure.Text = "Procedure";
-            // 
-            // comboBoxProcedure
-            // 
-            this.comboBoxProcedure.FormattingEnabled = true;
-            this.comboBoxProcedure.Location = new System.Drawing.Point(100, 113);
-            this.comboBoxProcedure.Name = "comboBoxProcedure";
-            this.comboBoxProcedure.Size = new System.Drawing.Size(361, 21);
-            this.comboBoxProcedure.TabIndex = 15;
-            // 
             // OverviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -553,5 +623,11 @@
         private System.Windows.Forms.Button buttonSaveP2;
         private System.Windows.Forms.ComboBox comboBoxProcedure;
         private System.Windows.Forms.Label labelProcedure;
+        private System.Windows.Forms.ComboBox comboBoxType;
+        private System.Windows.Forms.CheckBox checkBoxIsEuropeanPublished;
+        private System.Windows.Forms.Label labelTypeOfContract;
+        private System.Windows.Forms.ComboBox comboBoxTypeOfContract;
+        private System.Windows.Forms.ComboBox comboBoxProcuringEntity;
+        private System.Windows.Forms.Label labelProcuringEntity;
     }
 }

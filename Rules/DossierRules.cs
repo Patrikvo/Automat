@@ -21,6 +21,11 @@
         };
 
         private static string[] procedureType = { "Onbekend", "Werken", "Leveringen", "Diensten" };
+        private static string[] procedureTypeShort = { "?", "W", "L", "D" };
+
+        private static string[] procuringEnities = { "Onbekend", "Stad", "OCMW", "VZW" };
+
+        private static string[] contractType = { "Onbekend", "Eenmalige opdracht", "meerjarenopdracht", "Raamcontract", "RC met meerdere ondernemers" };
 
         public static string GetFileLocation(string dossierNummer)
         {
@@ -43,27 +48,27 @@
 
         public static int GetProcedureID(string procedureName)
         {
-            for (int i = 0; i < procedureNames.Length; i++)
-            {
-                if (string.Equals(procedureNames[i], procedureName))
-                {
-                    return i;
-                }
-            }
-
-            throw new System.IndexOutOfRangeException();
+            return GetID(procedureNames, procedureName);
         }
 
         public static string GetProcedureName(int id)
         {
-            if (id >= 0 && id < DossierRules.procedureNames.Length)
-            {
-                return DossierRules.procedureNames[id];
-            }
-            else
-            {
-                throw new System.IndexOutOfRangeException();
-            }
+            return GetName(procedureNames, id);
+        }
+
+        public static int GetProcuringEntityID(string entittName)
+        {
+            return GetID(procuringEnities, entittName);
+        }
+
+        public static string GetProcuringEntityName(int id)
+        {
+            return GetName(procuringEnities, id);
+        }
+
+        public static List<string> GetProcuringEntityNames()
+        {
+            return new List<string>(DossierRules.procuringEnities);
         }
 
         public static List<string> GetProcedureNames()
@@ -71,37 +76,59 @@
             return new List<string>(DossierRules.procedureNames);
         }
 
-        public static int GetProcedureTypeID(string procedureTypeName)
+        public static int GetProcedureTypeID(string procedureTypeName, bool abbreviated)
         {
-            for (int i = 0; i < procedureType.Length; i++)
+            if (abbreviated)
             {
-                if (string.Equals(procedureType[i], b: procedureTypeName))
-                {
-                    return i;
-                }
-            }
-
-            throw new System.IndexOutOfRangeException();
-        }
-
-        public static string GetProcedureTypeName(int id)
-        {
-            if (id >= 0 && id < DossierRules.procedureType.Length)
-            {
-                return DossierRules.procedureType[id];
+                return GetID(procedureTypeShort, procedureTypeName);
             }
             else
             {
-                throw new System.IndexOutOfRangeException();
+                return GetID(procedureType, procedureTypeName);
             }
         }
 
-        public static List<string> GetProcedureTypeNames()
+        public static string GetProcedureTypeName(int id, bool abbreviated)
         {
-            return new List<string>(DossierRules.procedureType);
+            if (abbreviated)
+            {
+                return GetName(procedureTypeShort, id);
+            }
+            else
+            {
+                return GetName(procedureType, id);
+            }
         }
 
-        private static string ComposeFileLocation(string input, char splitter, string prefix)
+        public static List<string> GetProcedureTypeNames(bool abbreviated)
+        {
+            if (abbreviated)
+            {
+                return new List<string>(DossierRules.procedureTypeShort);
+            }
+            else
+            {
+                return new List<string>(DossierRules.procedureType);
+            }
+        }
+
+        // contractType
+        public static List<string> GetContractTypes()
+        {
+            return new List<string>(DossierRules.contractType);
+        }
+
+        public static int GetContractTypeID(string contractTypeName)
+        {
+            return GetID(contractType, contractTypeName);
+        }
+
+        public static string GetContractTypeName(int id)
+        {
+            return GetName(contractType, id);
+        }
+
+       private static string ComposeFileLocation(string input, char splitter, string prefix)
         {
             string result = string.Empty;
 
@@ -114,6 +141,31 @@
             }
 
             return result;
+        }
+
+        private static int GetID(string[] fromList, string name)
+        {
+            for (int i = 0; i < fromList.Length; i++)
+            {
+                if (string.Equals(fromList[i], b: name))
+                {
+                    return i;
+                }
+            }
+
+            throw new System.IndexOutOfRangeException();
+        }
+
+        private static string GetName(string[] fromList, int id)
+        {
+            if (id >= 0 && id < fromList.Length)
+            {
+                return fromList[id];
+            }
+            else
+            {
+                throw new System.IndexOutOfRangeException();
+            }
         }
     }
 }

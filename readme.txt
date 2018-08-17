@@ -17,18 +17,17 @@ Note: new DB column should be nullable to make migration easier. (prevents the n
 
 Current:
 
-IT_003
+IT_004
 
-features: (added to Model and DossierRules, needs to be added to Overview controller and form.)
-- Procedure (Name) - done
-- W/L/D
-- Nat / EUR
-- AO
-- Type Contract
-
+features: 
 - candidates
-
 - Financial info.
+
+
+
+
+
+
 
 
 
@@ -45,6 +44,16 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+20180817  Started IT_004
+
+20180817  Deployed V3 to production
+
+20180817  added W/L/D/ to dossier form and controller. 
+	  Removed delegates.
+	  Add NAT/EUR, AO and contract type.
+	  now dossier is saved when another is selected in the listbox.
+
 20180816  added procedure to Dossier form and controller. (ref 20180406)
 
 20180413  added DisplayErrorMessage to the validators

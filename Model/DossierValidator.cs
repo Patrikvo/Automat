@@ -18,6 +18,13 @@
         public int DossierProcedure { get; set; }
 
         public int DossierType { get; set; }
+
+        public bool IsEuropeanPublished { get; set; }
+
+        public int TypeOfContract { get; set; }
+
+        public int ProcuringEnity { get; set; }
+
          * */
 
         public DossierValidator()
