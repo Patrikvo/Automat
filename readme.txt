@@ -20,7 +20,7 @@ Current:
 IT_003
 
 features: (added to Model and DossierRules, needs to be added to Overview controller and form.)
-- Procedure (Name)
+- Procedure (Name) - done
 - W/L/D
 - Nat / EUR
 - AO
@@ -45,6 +45,8 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+20180816  added procedure to Dossier form and controller. (ref 20180406)
+
 20180413  added DisplayErrorMessage to the validators
 20180413  added Fluent Validation. second instance added to PersoonController
 
