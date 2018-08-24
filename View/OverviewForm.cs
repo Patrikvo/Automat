@@ -148,12 +148,16 @@ namespace Automat.View
 
         private void NieuwDossierToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.listboxDossiersSupressEvent = true;
             int result = this.overviewController.SaveNewDossier(out this.id, "Geen nummer", "Geen titel", string.Empty);
+            this.listboxDossiersSupressEvent = false;
             if (result > 0)
             {
                 this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
 
+                this.suppressSave = true;
                 this.listBoxDossiers.SelectedValue = this.id;
+                this.suppressSave = false;
             }
             else
             {

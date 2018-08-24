@@ -158,7 +158,7 @@ namespace Automat.Controller
                         {
                             DossierValidator.DisplayErrorMessage(validationResult);
                         }
-
+                        
                         this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
                     }
                     else

@@ -239,7 +239,7 @@
             this.linkLabelfiles.AutoEllipsis = true;
             this.linkLabelfiles.AutoSize = true;
             this.linkLabelfiles.ContextMenuStrip = this.contextMenuStripFiles;
-            this.linkLabelfiles.Location = new System.Drawing.Point(187, 593);
+            this.linkLabelfiles.Location = new System.Drawing.Point(97, 204);
             this.linkLabelfiles.Name = "linkLabelfiles";
             this.linkLabelfiles.Size = new System.Drawing.Size(83, 13);
             this.linkLabelfiles.TabIndex = 13;
