@@ -22,6 +22,8 @@ namespace Automat.Database
 
         public DbSet<Model.DossierPersoon> DossierPersoon { get; set; }
 
+        public DbSet<Model.Planning> Planning { get; set; }
+
         public static bool ByteArrayCompare(byte[] a1, byte[] a2)
         {
             if (a1 == null && a2 == null)

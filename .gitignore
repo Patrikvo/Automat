@@ -11,7 +11,7 @@
 .vs
 *.sln
 *.config
-database.db
+*.db
 
 
 # Cordova bestanden

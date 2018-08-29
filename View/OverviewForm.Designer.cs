@@ -63,6 +63,17 @@
             this.buttonAddPerson = new System.Windows.Forms.Button();
             this.listBoxAllPersons = new System.Windows.Forms.ListBox();
             this.listBoxLinkedPersons = new System.Windows.Forms.ListBox();
+            this.tabPagePlanning = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBoxAddEvent = new System.Windows.Forms.GroupBox();
+            this.radioButtonExtern = new System.Windows.Forms.RadioButton();
+            this.radioButtonKlant = new System.Windows.Forms.RadioButton();
+            this.radioButtonDossierbeheerder = new System.Windows.Forms.RadioButton();
+            this.labelDeadline = new System.Windows.Forms.Label();
+            this.buttonAddEvent = new System.Windows.Forms.Button();
+            this.textBoxOnderwerp = new System.Windows.Forms.TextBox();
+            this.labelOnderwerp = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -75,6 +86,7 @@
             this.toonArchiefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -83,6 +95,9 @@
             this.tabPage1.SuspendLayout();
             this.contextMenuStripFiles.SuspendLayout();
             this.tabPageContact.SuspendLayout();
+            this.tabPagePlanning.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBoxAddEvent.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -123,6 +138,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPageContact);
+            this.tabControl1.Controls.Add(this.tabPagePlanning);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -455,6 +471,128 @@
             this.listBoxLinkedPersons.Size = new System.Drawing.Size(208, 173);
             this.listBoxLinkedPersons.TabIndex = 0;
             // 
+            // tabPagePlanning
+            // 
+            this.tabPagePlanning.Controls.Add(this.panel1);
+            this.tabPagePlanning.Controls.Add(this.groupBoxAddEvent);
+            this.tabPagePlanning.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePlanning.Name = "tabPagePlanning";
+            this.tabPagePlanning.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePlanning.Size = new System.Drawing.Size(469, 612);
+            this.tabPagePlanning.TabIndex = 2;
+            this.tabPagePlanning.Text = "Planning";
+            this.tabPagePlanning.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Location = new System.Drawing.Point(3, 136);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(463, 473);
+            this.panel1.TabIndex = 2;
+            // 
+            // groupBoxAddEvent
+            // 
+            this.groupBoxAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxAddEvent.Controls.Add(this.radioButtonExtern);
+            this.groupBoxAddEvent.Controls.Add(this.radioButtonKlant);
+            this.groupBoxAddEvent.Controls.Add(this.radioButtonDossierbeheerder);
+            this.groupBoxAddEvent.Controls.Add(this.labelDeadline);
+            this.groupBoxAddEvent.Controls.Add(this.buttonAddEvent);
+            this.groupBoxAddEvent.Controls.Add(this.textBoxOnderwerp);
+            this.groupBoxAddEvent.Controls.Add(this.labelOnderwerp);
+            this.groupBoxAddEvent.Controls.Add(this.dateTimePicker1);
+            this.groupBoxAddEvent.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxAddEvent.Name = "groupBoxAddEvent";
+            this.groupBoxAddEvent.Size = new System.Drawing.Size(455, 121);
+            this.groupBoxAddEvent.TabIndex = 1;
+            this.groupBoxAddEvent.TabStop = false;
+            this.groupBoxAddEvent.Text = "Toevoegen";
+            // 
+            // radioButtonExtern
+            // 
+            this.radioButtonExtern.AutoSize = true;
+            this.radioButtonExtern.Location = new System.Drawing.Point(6, 91);
+            this.radioButtonExtern.Name = "radioButtonExtern";
+            this.radioButtonExtern.Size = new System.Drawing.Size(55, 17);
+            this.radioButtonExtern.TabIndex = 7;
+            this.radioButtonExtern.TabStop = true;
+            this.radioButtonExtern.Text = "Extern";
+            this.radioButtonExtern.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonKlant
+            // 
+            this.radioButtonKlant.AutoSize = true;
+            this.radioButtonKlant.Location = new System.Drawing.Point(6, 68);
+            this.radioButtonKlant.Name = "radioButtonKlant";
+            this.radioButtonKlant.Size = new System.Drawing.Size(49, 17);
+            this.radioButtonKlant.TabIndex = 6;
+            this.radioButtonKlant.Text = "Klant";
+            this.radioButtonKlant.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDossierbeheerder
+            // 
+            this.radioButtonDossierbeheerder.AutoSize = true;
+            this.radioButtonDossierbeheerder.Checked = true;
+            this.radioButtonDossierbeheerder.Location = new System.Drawing.Point(6, 45);
+            this.radioButtonDossierbeheerder.Name = "radioButtonDossierbeheerder";
+            this.radioButtonDossierbeheerder.Size = new System.Drawing.Size(108, 17);
+            this.radioButtonDossierbeheerder.TabIndex = 5;
+            this.radioButtonDossierbeheerder.TabStop = true;
+            this.radioButtonDossierbeheerder.Text = "Dossierbeheerder";
+            this.radioButtonDossierbeheerder.UseVisualStyleBackColor = true;
+            // 
+            // labelDeadline
+            // 
+            this.labelDeadline.AutoSize = true;
+            this.labelDeadline.Location = new System.Drawing.Point(194, 51);
+            this.labelDeadline.Name = "labelDeadline";
+            this.labelDeadline.Size = new System.Drawing.Size(49, 13);
+            this.labelDeadline.TabIndex = 4;
+            this.labelDeadline.Text = "Deadline";
+            // 
+            // buttonAddEvent
+            // 
+            this.buttonAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEvent.Location = new System.Drawing.Point(374, 92);
+            this.buttonAddEvent.Name = "buttonAddEvent";
+            this.buttonAddEvent.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddEvent.TabIndex = 3;
+            this.buttonAddEvent.Text = "Toevoegen";
+            this.buttonAddEvent.UseVisualStyleBackColor = true;
+            // 
+            // textBoxOnderwerp
+            // 
+            this.textBoxOnderwerp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxOnderwerp.Location = new System.Drawing.Point(71, 19);
+            this.textBoxOnderwerp.Name = "textBoxOnderwerp";
+            this.textBoxOnderwerp.Size = new System.Drawing.Size(378, 20);
+            this.textBoxOnderwerp.TabIndex = 2;
+            // 
+            // labelOnderwerp
+            // 
+            this.labelOnderwerp.AutoSize = true;
+            this.labelOnderwerp.Location = new System.Drawing.Point(6, 22);
+            this.labelOnderwerp.Name = "labelOnderwerp";
+            this.labelOnderwerp.Size = new System.Drawing.Size(59, 13);
+            this.labelOnderwerp.TabIndex = 1;
+            this.labelOnderwerp.Text = "Onderwerp";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(249, 45);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 0;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -550,6 +688,14 @@
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(11, 21);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(440, 395);
+            this.textBox1.TabIndex = 0;
+            // 
             // OverviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,6 +718,11 @@
             this.contextMenuStripFiles.ResumeLayout(false);
             this.tabPageContact.ResumeLayout(false);
             this.tabPageContact.PerformLayout();
+            this.tabPagePlanning.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.groupBoxAddEvent.ResumeLayout(false);
+            this.groupBoxAddEvent.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -629,5 +780,17 @@
         private System.Windows.Forms.ComboBox comboBoxTypeOfContract;
         private System.Windows.Forms.ComboBox comboBoxProcuringEntity;
         private System.Windows.Forms.Label labelProcuringEntity;
+        private System.Windows.Forms.TabPage tabPagePlanning;
+        private System.Windows.Forms.GroupBox groupBoxAddEvent;
+        private System.Windows.Forms.RadioButton radioButtonKlant;
+        private System.Windows.Forms.RadioButton radioButtonDossierbeheerder;
+        private System.Windows.Forms.Label labelDeadline;
+        private System.Windows.Forms.Button buttonAddEvent;
+        private System.Windows.Forms.TextBox textBoxOnderwerp;
+        private System.Windows.Forms.Label labelOnderwerp;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.RadioButton radioButtonExtern;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

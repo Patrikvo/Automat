@@ -1,10 +1,11 @@
 Future:
 
-- phases + dates
+- candidates
+- Financial info.
 
 - Form manager (dispatcher)
 
-- dates and info during CBS-process
+
 - send-email-button for contactpersons.
 
 - generate documents
@@ -20,8 +21,8 @@ Current:
 IT_004
 
 features: 
-- candidates
-- Financial info.
+- phases + dates
+- dates and info during CBS-process
 
 
 
@@ -44,6 +45,12 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+
+20180829  Added initial table Planning (code first), requires a link to phases, milestones.
+
+20180824  fixed bugs: new Dossier resulted in duplication of an existing dossier.
+	  	      Moved link to files higher up the form.
 
 20180817  Started IT_004
 

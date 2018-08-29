@@ -23,7 +23,10 @@
         private static string[] procedureType = { "Onbekend", "Werken", "Leveringen", "Diensten" };
         private static string[] procedureTypeShort = { "?", "W", "L", "D" };
 
-        private static string[] procuringEnities = { "Onbekend", "Stad", "OCMW", "VZW" };
+        private static string[] procuringEnities = { "Onbekend", "Stad", "OCMW", "VZW Antwerpen Kunstenstad", "VZW Antwerpen Sportstad", "VZW Stadsmarketing en Toerisme",
+                                                     "Brandweerzone Antwerpen", "AG Kinderopvang", "AG Mobiliteit en Parkeren Antwerpen", "IVA Sodi+",
+                                                     "District Antwerpen", "District Berchem", "District Berendrecht Zandvliet Lillo", "District Borgerhout", "District Deurne", "District Ekeren", "District Hoboken", "District Merksem", "District Wilrijk"
+                                                    };
 
         private static string[] contractType = { "Onbekend", "Eenmalige opdracht", "meerjarenopdracht", "Raamcontract", "RC met meerdere ondernemers" };
 

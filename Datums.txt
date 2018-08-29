@@ -1,0 +1,51 @@
+Datum intake
+//
+datum ontwerp selectieleidraad
+
+datum def selectieleidraad + aanleveren fin. gegevens
+(1 week)
+datum indienen CBS selectieleidraad
+(3 weken)
+datum CBS selectieleidraad
+datum publicatie
+
+datum einde vragen
+datum opening kanidaturen
+datum adm. nazicht + bezorgen offertes
+
+datum eerste beoordeling
+//
+
+datum eerste ontwerpbestek
+
+
+datum def bestek, aanleveren fin. gegevens // def. selectieverslag //
+( 1 week)
+datum indienen def CBS bestek // + selectie //
+( 3 weken)
+datum CBS bestek // + selectie //
+datum publicatie  // of verzenden brieven //
+
+datum einde vragen
+datum opening offertes
+datum adm. nazicht + bezorgen offertes
+
+datum eerste beoordeling + beslissing onderhandelingen
+//datum verzenden uitnodigen//
+//datum onderhandelingen//
+
+datum bafo
+datum def. beoordeling
+datum afronden verslag en sturen voor ok
+
+datum aanleveren ok def verslag, fin gegevens, bestelbons,...
+(1 week)
+datum indienen def CBS gunning
+(3 weken)
+datum CBS gunning
+datum verzending niet weerhouden // kennisgeving gunning //
+// mogelijke standstill 15 dagen //
+datum verzending gunningsbrief
+
+Startdatum contract
+einddatum contract

@@ -155,6 +155,7 @@
     <Compile Include="Model\DossierValidator.cs" />
     <Compile Include="Model\Persoon.cs" />
     <Compile Include="Model\PersoonValidator.cs" />
+    <Compile Include="Model\Planning.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\DossierRules.cs" />
