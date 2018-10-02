@@ -8,6 +8,7 @@ namespace Automat.Controller
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
+    using Automat.Common;
     using Automat.Model;
     using Automat.View;
 
@@ -82,6 +83,11 @@ namespace Automat.Controller
                 string type = Rules.DossierRules.GetProcedureTypeName(dossier.DossierType, true);
                 string procuringEnityName = Rules.DossierRules.GetProcuringEntityName(dossier.ProcuringEnity);
                 string contractTypeName = Rules.DossierRules.GetContractTypeName(dossier.TypeOfContract);
+
+                Controller.PlanningController planningController = new PlanningController(null);
+                List<Tripple<string, DateTime, int>> events = planningController.GetEvents(id);
+
+
                 this.overviewForm.Setdossier(
                                                 dossier.Id,
                                                 dossier.DossierNummer,
@@ -95,6 +101,7 @@ namespace Automat.Controller
                                                 dossier.IsEuropeanPublished,
                                                 procuringEnityName,
                                                 contractTypeName,
+                                                events,
                                                 dossier.RowVersion);
             }
         }
@@ -158,7 +165,7 @@ namespace Automat.Controller
                         {
                             DossierValidator.DisplayErrorMessage(validationResult);
                         }
-                        
+
                         this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
                     }
                     else
@@ -259,6 +266,41 @@ namespace Automat.Controller
         public List<string> GetAllProcedures()
         {
             return Automat.Rules.DossierRules.GetProcedureNames();
+        }
+
+        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = new Planning();
+                planning.DossierId = dossierId;
+                planning.Description = description;
+                planning.Responsible = responsible;
+                planning.Deadline = deadline;
+                planning.Created = DateTime.Now;
+
+
+            /*  FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
+
+                if (validationResult.IsValid)
+                {*/
+                    dossierContext.Planning.Add(planning);
+
+                    result = dossierContext.SaveChanges();
+
+
+                // TODO add refresh of task list
+
+            //        this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
+           /*     }
+                else
+                {
+                    DossierValidator.DisplayErrorMessage(validationResult);
+                }*/
+            }
+
+            return result;
         }
     }
 }

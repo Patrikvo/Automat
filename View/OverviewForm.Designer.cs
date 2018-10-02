@@ -65,7 +65,6 @@
             this.listBoxLinkedPersons = new System.Windows.Forms.ListBox();
             this.tabPagePlanning = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBoxAddEvent = new System.Windows.Forms.GroupBox();
             this.radioButtonExtern = new System.Windows.Forms.RadioButton();
             this.radioButtonKlant = new System.Windows.Forms.RadioButton();
@@ -74,7 +73,7 @@
             this.buttonAddEvent = new System.Windows.Forms.Button();
             this.textBoxOnderwerp = new System.Windows.Forms.TextBox();
             this.labelOnderwerp = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerDeadline = new System.Windows.Forms.DateTimePicker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -89,6 +88,7 @@
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toonOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBoxTasks = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -492,19 +492,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.listBoxTasks);
             this.panel1.Location = new System.Drawing.Point(3, 136);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(463, 473);
             this.panel1.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(11, 21);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(440, 395);
-            this.textBox1.TabIndex = 0;
             // 
             // groupBoxAddEvent
             // 
@@ -517,7 +509,7 @@
             this.groupBoxAddEvent.Controls.Add(this.buttonAddEvent);
             this.groupBoxAddEvent.Controls.Add(this.textBoxOnderwerp);
             this.groupBoxAddEvent.Controls.Add(this.labelOnderwerp);
-            this.groupBoxAddEvent.Controls.Add(this.dateTimePicker1);
+            this.groupBoxAddEvent.Controls.Add(this.dateTimePickerDeadline);
             this.groupBoxAddEvent.Location = new System.Drawing.Point(6, 6);
             this.groupBoxAddEvent.Name = "groupBoxAddEvent";
             this.groupBoxAddEvent.Size = new System.Drawing.Size(455, 121);
@@ -576,6 +568,7 @@
             this.buttonAddEvent.TabIndex = 3;
             this.buttonAddEvent.Text = "Toevoegen";
             this.buttonAddEvent.UseVisualStyleBackColor = true;
+            this.buttonAddEvent.Click += new System.EventHandler(this.buttonAddEvent_Click);
             // 
             // textBoxOnderwerp
             // 
@@ -595,13 +588,13 @@
             this.labelOnderwerp.TabIndex = 1;
             this.labelOnderwerp.Text = "Onderwerp";
             // 
-            // dateTimePicker1
+            // dateTimePickerDeadline
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(249, 45);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePickerDeadline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePickerDeadline.Location = new System.Drawing.Point(249, 45);
+            this.dateTimePickerDeadline.Name = "dateTimePickerDeadline";
+            this.dateTimePickerDeadline.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerDeadline.TabIndex = 0;
             // 
             // statusStrip1
             // 
@@ -644,12 +637,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // afsluitenToolStripMenuItem
             // 
             this.afsluitenToolStripMenuItem.Name = "afsluitenToolStripMenuItem";
-            this.afsluitenToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.afsluitenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.afsluitenToolStripMenuItem.Text = "Afsluiten";
             this.afsluitenToolStripMenuItem.Click += new System.EventHandler(this.AfsluitenToolStripMenuItem_Click);
             // 
@@ -666,21 +659,21 @@
             // nieuwDossierToolStripMenuItem1
             // 
             this.nieuwDossierToolStripMenuItem1.Name = "nieuwDossierToolStripMenuItem1";
-            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.nieuwDossierToolStripMenuItem1.Text = "Nieuw Dossier";
             this.nieuwDossierToolStripMenuItem1.Click += new System.EventHandler(this.NieuwDossierToolStripMenuItem_Click);
             // 
             // dossierWissenToolStripMenuItem
             // 
             this.dossierWissenToolStripMenuItem.Name = "dossierWissenToolStripMenuItem";
-            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dossierWissenToolStripMenuItem.Text = "Dossier wissen";
             this.dossierWissenToolStripMenuItem.Click += new System.EventHandler(this.DossierWissenToolStripMenuItem_Click);
             // 
             // toonArchiefToolStripMenuItem
             // 
             this.toonArchiefToolStripMenuItem.Name = "toonArchiefToolStripMenuItem";
-            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.toonArchiefToolStripMenuItem.Text = "Toon Archief";
             this.toonArchiefToolStripMenuItem.Click += new System.EventHandler(this.ToonArchiefToolStripMenuItem_Click);
             // 
@@ -695,7 +688,7 @@
             // overzichtToolStripMenuItem
             // 
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
-            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
@@ -710,9 +703,18 @@
             // toonOverzichtToolStripMenuItem
             // 
             this.toonOverzichtToolStripMenuItem.Name = "toonOverzichtToolStripMenuItem";
-            this.toonOverzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.toonOverzichtToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.toonOverzichtToolStripMenuItem.Text = "Toon Overzicht";
             this.toonOverzichtToolStripMenuItem.Click += new System.EventHandler(this.toonOverzichtToolStripMenuItem_Click);
+            // 
+            // listBoxTasks
+            // 
+            this.listBoxTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxTasks.FormattingEnabled = true;
+            this.listBoxTasks.Location = new System.Drawing.Point(0, 0);
+            this.listBoxTasks.Name = "listBoxTasks";
+            this.listBoxTasks.Size = new System.Drawing.Size(461, 471);
+            this.listBoxTasks.TabIndex = 0;
             // 
             // OverviewForm
             // 
@@ -738,7 +740,6 @@
             this.tabPageContact.PerformLayout();
             this.tabPagePlanning.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.groupBoxAddEvent.ResumeLayout(false);
             this.groupBoxAddEvent.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -806,11 +807,11 @@
         private System.Windows.Forms.Button buttonAddEvent;
         private System.Windows.Forms.TextBox textBoxOnderwerp;
         private System.Windows.Forms.Label labelOnderwerp;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerDeadline;
         private System.Windows.Forms.RadioButton radioButtonExtern;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toonOverzichtToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBoxTasks;
     }
 }

@@ -1,7 +1,10 @@
 Future:
 
-- candidates
-- Financial info.
+- bedrijfseenheid (sp: SW)
+- beveiliging wissen
+- Toon archief meer naar voor plaatsen
+- candidates (name, ond, contactname, email, total price, def. total price)
+- Financial info. (raming)
 
 - Form manager (dispatcher)
 
@@ -24,10 +27,11 @@ features:
 - phases + dates
 - dates and info during CBS-process
 
+- fix: added comfirmation before deleting (undo?)
 
 
-
-
+++ Add modifying and deleting of Tasks
+++ fix refresh of tasklist after write
 
 
 
@@ -46,6 +50,9 @@ Using Db Browser import sql to database (issue: need someway to add non-nullable
 
 Log:
 
+20181002  added adding and reading of events. Misses modifying and deleting. Also Takslist isn't updated after write yet.
+
+20181002  fixed: added Mbox warning before deleting a file.
 
 20180829  Added initial table Planning (code first), requires a link to phases, milestones.
 

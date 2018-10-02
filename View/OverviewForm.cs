@@ -9,6 +9,7 @@ namespace Automat.View
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Forms;
+    using Automat.Common;
     using Automat.Controller;
 
     public partial class OverviewForm : Form
@@ -22,6 +23,7 @@ namespace Automat.View
         private OverviewController overviewController;
 
         private BindingSource binding1;
+        private BindingSource bindingEvents;
 
         private List<Tuple<string, int>> contactpersonen;
 
@@ -40,6 +42,7 @@ namespace Automat.View
         private List<Tuple<string, int>> personList;
 
         private ObservableCollection<Tuple<string, int>> linkedPersonList;
+        private ObservableCollection<Tripple<string, DateTime, int>> linkedEventList;
 
         /* COMMON CONSTRUCTOR */
 
@@ -49,6 +52,7 @@ namespace Automat.View
             this.InitializeComponent();
             this.toolStripStatusLabel1.Text = "Ready";
             this.binding1 = new BindingSource();
+            this.bindingEvents = new BindingSource();
         }
 
         /* COMMON PROPERTIES */
@@ -72,6 +76,7 @@ namespace Automat.View
                                 bool isEuropeanPublished,
                                 string procuringEntityName,
                                 string contractTypeName,
+                                List<Tripple<string, DateTime, int>> events,
                                 byte[] rowVersion)
         {
             this.contactpersonen = contactpersonen;
@@ -118,6 +123,14 @@ namespace Automat.View
 
             this.comboBoxTypeOfContract.DataSource = Rules.DossierRules.GetContractTypes();
             this.comboBoxTypeOfContract.SelectedIndex = this.comboBoxTypeOfContract.Items.IndexOf(contractTypeName);
+
+
+            this.listBoxTasks.DataSource = null;
+            this.linkedEventList = new ObservableCollection<Tripple<string, DateTime, int>>(events);
+            this.bindingEvents.DataSource = this.linkedEventList;
+            this.listBoxTasks.DataSource = this.bindingEvents;
+            this.listBoxTasks.DisplayMember = "Item1";
+            this.listBoxTasks.ValueMember = "Item3";
 
             this.rowVersion = rowVersion;
             this.id = id;
@@ -381,5 +394,42 @@ namespace Automat.View
         {
             this.overviewController.ShowPlanningForm();
         }
+
+        private void buttonAddEvent_Click(object sender, EventArgs e)
+        {
+             // listBoxTasks
+
+            int responsible = 0;
+            if (this.radioButtonDossierbeheerder.Checked == true)
+            {
+                responsible = 1;
+            }
+            else if (this.radioButtonKlant.Checked == true)
+            {
+                responsible = 2;
+            }
+            else if (this.radioButtonExtern.Checked == true)
+            {
+                responsible = 3;
+            }
+
+            int result = this.overviewController.AddEvent(
+                                             this.id,
+                                             this.textBoxOnderwerp.Text,
+                                             responsible,
+                                             this.dateTimePickerDeadline.Value);
+            if (result == 1)
+            {
+                this.toolStripStatusLabel1.Text = "Taak toegevoegd";
+            }
+            else
+            {
+                this.toolStripStatusLabel1.Text = "Taak toevoegen mislukt";
+            }
+        }
+
+        
+
+
     }
 }

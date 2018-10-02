@@ -84,16 +84,24 @@ namespace Automat.View
 
         private void NieuwePersoonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int result = this.SaveNew(out this.id, "Geen Naam", "Geen email", string.Empty, string.Empty);
-            if (result > 0)
+            DialogResult dialogResult = MessageBox.Show("Persoon wissen?", "Persoon verwijderen", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
             {
-                this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
+                int result = this.SaveNew(out this.id, "Geen Naam", "Geen email", string.Empty, string.Empty);
+                if (result > 0)
+                {
+                    this.toolStripStatusLabel1.Text = result.ToString() + " objects saved.";
 
-                this.listBoxPersons.SelectedValue = this.id;
+                    this.listBoxPersons.SelectedValue = this.id;
+                }
+                else
+                {
+                    this.toolStripStatusLabel1.Text = "Adding person failed.";
+                }
             }
             else
             {
-                this.toolStripStatusLabel1.Text = "Adding person failed.";
+                this.toolStripStatusLabel1.Text = "Verwijderen geannulleerd";
             }
         }
 
