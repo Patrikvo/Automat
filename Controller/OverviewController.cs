@@ -227,6 +227,13 @@ namespace Automat.Controller
                 personController.ShowView();
         }
 
+
+        public void ShowPlanningForm()
+        {
+            Controller.PlanningController planningController = new PlanningController(null);
+            planningController.ShowView();
+        }
+
         public void ExitApplication()
         {
             if (this.parent != null)

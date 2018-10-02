@@ -65,6 +65,7 @@
             this.listBoxLinkedPersons = new System.Windows.Forms.ListBox();
             this.tabPagePlanning = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBoxAddEvent = new System.Windows.Forms.GroupBox();
             this.radioButtonExtern = new System.Windows.Forms.RadioButton();
             this.radioButtonKlant = new System.Windows.Forms.RadioButton();
@@ -86,7 +87,8 @@
             this.toonArchiefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toonOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -496,6 +498,14 @@
             this.panel1.Size = new System.Drawing.Size(463, 473);
             this.panel1.TabIndex = 2;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(11, 21);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(440, 395);
+            this.textBox1.TabIndex = 0;
+            // 
             // groupBoxAddEvent
             // 
             this.groupBoxAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -614,7 +624,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bestandToolStripMenuItem,
             this.dossierToolStripMenuItem,
-            this.persoonToolStripMenuItem});
+            this.persoonToolStripMenuItem,
+            this.planningToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(742, 24);
@@ -688,13 +699,20 @@
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
-            // textBox1
+            // planningToolStripMenuItem
             // 
-            this.textBox1.Location = new System.Drawing.Point(11, 21);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(440, 395);
-            this.textBox1.TabIndex = 0;
+            this.planningToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toonOverzichtToolStripMenuItem});
+            this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
+            this.planningToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.planningToolStripMenuItem.Text = "Planning";
+            // 
+            // toonOverzichtToolStripMenuItem
+            // 
+            this.toonOverzichtToolStripMenuItem.Name = "toonOverzichtToolStripMenuItem";
+            this.toonOverzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.toonOverzichtToolStripMenuItem.Text = "Toon Overzicht";
+            this.toonOverzichtToolStripMenuItem.Click += new System.EventHandler(this.toonOverzichtToolStripMenuItem_Click);
             // 
             // OverviewForm
             // 
@@ -792,5 +810,7 @@
         private System.Windows.Forms.RadioButton radioButtonExtern;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toonOverzichtToolStripMenuItem;
     }
 }

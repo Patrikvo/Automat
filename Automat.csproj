@@ -142,6 +142,13 @@
     </Compile>
     <Compile Include="Controller\OverviewController.cs" />
     <Compile Include="Controller\PersonController.cs" />
+    <Compile Include="Controller\PlanningController.cs" />
+    <Compile Include="Controls\PlanningControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanningControl.Designer.cs">
+      <DependentUpon>PlanningControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Database\dossierContext.cs" />
     <Compile Include="DossierControl.cs">
       <SubType>UserControl</SubType>
@@ -171,8 +178,17 @@
     <Compile Include="View\PersonViewForm.Designer.cs">
       <DependentUpon>PersonViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\PlanningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\PlanningForm.Designer.cs">
+      <DependentUpon>PlanningForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Common\EditFileLocationForm.resx">
       <DependentUpon>EditFileLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanningControl.resx">
+      <DependentUpon>PlanningControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DossierControl.resx">
       <DependentUpon>DossierControl.cs</DependentUpon>
@@ -191,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\PersonViewForm.resx">
       <DependentUpon>PersonViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PlanningForm.resx">
+      <DependentUpon>PlanningForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="dossiers.db" />
     <None Include="packages.config" />

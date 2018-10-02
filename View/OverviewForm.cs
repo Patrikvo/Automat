@@ -167,21 +167,30 @@ namespace Automat.View
 
         private void DossierWissenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.suppressSave = true;
-            int index = this.listBoxDossiers.SelectedIndex;
-
-            int result = this.overviewController.DeleteDossier(this.id, this.rowVersion);
-            if (result > 0)
+            DialogResult dialogResult = MessageBox.Show("Dossier wissen?", "Dossier verwijderen", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
             {
-                this.toolStripStatusLabel1.Text = result.ToString() + " objects Deleted.";
+
+                this.suppressSave = true;
+                int index = this.listBoxDossiers.SelectedIndex;
+
+                int result = this.overviewController.DeleteDossier(this.id, this.rowVersion);
+                if (result > 0)
+                {
+                    this.toolStripStatusLabel1.Text = result.ToString() + " objects Deleted.";
+                }
+                else
+                {
+                    this.toolStripStatusLabel1.Text = "deleting object failed.";
+                }
+
+                this.SetListboxDossiersIndex(index - 1);
+                this.suppressSave = false;
             }
             else
             {
-                this.toolStripStatusLabel1.Text = "deleting object failed.";
+                this.toolStripStatusLabel1.Text = "Verwijderen geannulleerd";
             }
-
-            this.SetListboxDossiersIndex(index - 1);
-            this.suppressSave = false;
         }
 
         private void OverzichtToolStripMenuItem_Click(object sender, EventArgs e)
@@ -366,6 +375,11 @@ namespace Automat.View
 
         private void TextBoxStavaza_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void toonOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.overviewController.ShowPlanningForm();
         }
     }
 }
