@@ -1,4 +1,6 @@
-﻿
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.View
 {
@@ -18,10 +20,9 @@ namespace Automat.View
     {
         private PlanningController planningController;
 
-
         public PlanningForm(PlanningController planningController)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.planningController = planningController;
         }
     }

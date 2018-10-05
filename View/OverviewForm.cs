@@ -42,7 +42,6 @@ namespace Automat.View
         private List<Tuple<string, int>> personList;
 
         private ObservableCollection<Tuple<string, int>> linkedPersonList;
-        private ObservableCollection<Tripple<string, DateTime, int>> linkedEventList;
 
         /* COMMON CONSTRUCTOR */
 
@@ -123,17 +122,54 @@ namespace Automat.View
 
             this.comboBoxTypeOfContract.DataSource = Rules.DossierRules.GetContractTypes();
             this.comboBoxTypeOfContract.SelectedIndex = this.comboBoxTypeOfContract.Items.IndexOf(contractTypeName);
-
-
-            this.listBoxTasks.DataSource = null;
-            this.linkedEventList = new ObservableCollection<Tripple<string, DateTime, int>>(events);
-            this.bindingEvents.DataSource = this.linkedEventList;
-            this.listBoxTasks.DataSource = this.bindingEvents;
-            this.listBoxTasks.DisplayMember = "Item1";
-            this.listBoxTasks.ValueMember = "Item3";
+            this.DisplayEvents(events);
 
             this.rowVersion = rowVersion;
             this.id = id;
+        }
+
+        public void DisplayEvents(List<Tripple<string, DateTime, int>> events)
+        {
+
+            // Fill Treeview
+            this.treeViewEvents.Nodes.Clear();
+            foreach (Tripple<string, DateTime, int> e in events)
+            {
+                TreeNode t;
+
+                // find date node
+                string key = e.Item2.Year.ToString() + e.Item2.Month.ToString() + e.Item2.Day.ToString();
+
+                // 'key' mathces 'Name'-field in Node.
+                if (this.treeViewEvents.Nodes.ContainsKey(key))
+                {
+                    t = this.treeViewEvents.Nodes[this.treeViewEvents.Nodes.IndexOfKey(key)];
+                }
+                else
+                {
+                    t = new TreeNode();
+                    t.Name = key;
+                    t.Text = e.Item2.ToShortDateString();
+                    this.treeViewEvents.Nodes.Add(t);
+                }
+
+                TreeNode newEvent = new TreeNode();
+                newEvent.Name = e.Item3.ToString();
+                newEvent.Text = e.Item1;
+                newEvent.Tag = e.Item3;
+
+                t.Nodes.Add(newEvent);
+            }
+
+            this.treeViewEvents.ExpandAll();
+
+            this.monthCalendarTasks.RemoveAllBoldedDates();
+            foreach (Tripple<string, DateTime, int> t in events)
+            {
+                this.monthCalendarTasks.AddBoldedDate(t.Item2);
+            }
+
+            this.monthCalendarTasks.UpdateBoldedDates();
         }
 
         public void SetStatusText(string statusText)
@@ -183,7 +219,6 @@ namespace Automat.View
             DialogResult dialogResult = MessageBox.Show("Dossier wissen?", "Dossier verwijderen", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             if (dialogResult == DialogResult.Yes)
             {
-
                 this.suppressSave = true;
                 int index = this.listBoxDossiers.SelectedIndex;
 
@@ -390,15 +425,13 @@ namespace Automat.View
         {
         }
 
-        private void toonOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToonOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.overviewController.ShowPlanningForm();
         }
 
-        private void buttonAddEvent_Click(object sender, EventArgs e)
+        private void ButtonAddEvent_Click(object sender, EventArgs e)
         {
-             // listBoxTasks
-
             int responsible = 0;
             if (this.radioButtonDossierbeheerder.Checked == true)
             {
@@ -427,9 +460,5 @@ namespace Automat.View
                 this.toolStripStatusLabel1.Text = "Taak toevoegen mislukt";
             }
         }
-
-        
-
-
     }
 }

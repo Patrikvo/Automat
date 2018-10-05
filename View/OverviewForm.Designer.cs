@@ -65,6 +65,8 @@
             this.listBoxLinkedPersons = new System.Windows.Forms.ListBox();
             this.tabPagePlanning = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.treeViewEvents = new System.Windows.Forms.TreeView();
+            this.monthCalendarTasks = new System.Windows.Forms.MonthCalendar();
             this.groupBoxAddEvent = new System.Windows.Forms.GroupBox();
             this.radioButtonExtern = new System.Windows.Forms.RadioButton();
             this.radioButtonKlant = new System.Windows.Forms.RadioButton();
@@ -88,7 +90,6 @@
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toonOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listBoxTasks = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -112,7 +113,7 @@
             this.listBoxDossiers.Location = new System.Drawing.Point(0, 0);
             this.listBoxDossiers.Name = "listBoxDossiers";
             this.listBoxDossiers.ScrollAlwaysVisible = true;
-            this.listBoxDossiers.Size = new System.Drawing.Size(261, 638);
+            this.listBoxDossiers.Size = new System.Drawing.Size(335, 638);
             this.listBoxDossiers.TabIndex = 0;
             this.listBoxDossiers.ValueMember = "Id";
             this.listBoxDossiers.SelectedIndexChanged += new System.EventHandler(this.ListBoxDossiers_SelectedIndexChanged);
@@ -132,8 +133,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(742, 638);
-            this.splitContainer1.SplitterDistance = 261;
+            this.splitContainer1.Size = new System.Drawing.Size(954, 638);
+            this.splitContainer1.SplitterDistance = 335;
             this.splitContainer1.TabIndex = 1;
             // 
             // tabControl1
@@ -145,7 +146,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(477, 638);
+            this.tabControl1.Size = new System.Drawing.Size(615, 638);
             this.tabControl1.TabIndex = 11;
             // 
             // tabPage1
@@ -173,7 +174,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(469, 612);
+            this.tabPage1.Size = new System.Drawing.Size(607, 612);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Voorblad";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -402,7 +403,7 @@
             this.tabPageContact.Location = new System.Drawing.Point(4, 22);
             this.tabPageContact.Name = "tabPageContact";
             this.tabPageContact.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageContact.Size = new System.Drawing.Size(469, 612);
+            this.tabPageContact.Size = new System.Drawing.Size(607, 612);
             this.tabPageContact.TabIndex = 1;
             this.tabPageContact.Text = "Contact";
             this.tabPageContact.UseVisualStyleBackColor = true;
@@ -480,7 +481,7 @@
             this.tabPagePlanning.Location = new System.Drawing.Point(4, 22);
             this.tabPagePlanning.Name = "tabPagePlanning";
             this.tabPagePlanning.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePlanning.Size = new System.Drawing.Size(469, 612);
+            this.tabPagePlanning.Size = new System.Drawing.Size(607, 612);
             this.tabPagePlanning.TabIndex = 2;
             this.tabPagePlanning.Text = "Planning";
             this.tabPagePlanning.UseVisualStyleBackColor = true;
@@ -492,11 +493,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.listBoxTasks);
+            this.panel1.Controls.Add(this.treeViewEvents);
+            this.panel1.Controls.Add(this.monthCalendarTasks);
             this.panel1.Location = new System.Drawing.Point(3, 136);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(463, 473);
+            this.panel1.Size = new System.Drawing.Size(601, 473);
             this.panel1.TabIndex = 2;
+            // 
+            // treeViewEvents
+            // 
+            this.treeViewEvents.Location = new System.Drawing.Point(-1, 3);
+            this.treeViewEvents.Name = "treeViewEvents";
+            this.treeViewEvents.Size = new System.Drawing.Size(596, 285);
+            this.treeViewEvents.TabIndex = 2;
+            // 
+            // monthCalendarTasks
+            // 
+            this.monthCalendarTasks.CalendarDimensions = new System.Drawing.Size(3, 1);
+            this.monthCalendarTasks.Location = new System.Drawing.Point(11, 300);
+            this.monthCalendarTasks.Name = "monthCalendarTasks";
+            this.monthCalendarTasks.ShowWeekNumbers = true;
+            this.monthCalendarTasks.TabIndex = 1;
             // 
             // groupBoxAddEvent
             // 
@@ -512,7 +529,7 @@
             this.groupBoxAddEvent.Controls.Add(this.dateTimePickerDeadline);
             this.groupBoxAddEvent.Location = new System.Drawing.Point(6, 6);
             this.groupBoxAddEvent.Name = "groupBoxAddEvent";
-            this.groupBoxAddEvent.Size = new System.Drawing.Size(455, 121);
+            this.groupBoxAddEvent.Size = new System.Drawing.Size(593, 121);
             this.groupBoxAddEvent.TabIndex = 1;
             this.groupBoxAddEvent.TabStop = false;
             this.groupBoxAddEvent.Text = "Toevoegen";
@@ -562,13 +579,13 @@
             // buttonAddEvent
             // 
             this.buttonAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddEvent.Location = new System.Drawing.Point(374, 92);
+            this.buttonAddEvent.Location = new System.Drawing.Point(512, 92);
             this.buttonAddEvent.Name = "buttonAddEvent";
             this.buttonAddEvent.Size = new System.Drawing.Size(75, 23);
             this.buttonAddEvent.TabIndex = 3;
             this.buttonAddEvent.Text = "Toevoegen";
             this.buttonAddEvent.UseVisualStyleBackColor = true;
-            this.buttonAddEvent.Click += new System.EventHandler(this.buttonAddEvent_Click);
+            this.buttonAddEvent.Click += new System.EventHandler(this.ButtonAddEvent_Click);
             // 
             // textBoxOnderwerp
             // 
@@ -576,7 +593,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOnderwerp.Location = new System.Drawing.Point(71, 19);
             this.textBoxOnderwerp.Name = "textBoxOnderwerp";
-            this.textBoxOnderwerp.Size = new System.Drawing.Size(378, 20);
+            this.textBoxOnderwerp.Size = new System.Drawing.Size(516, 20);
             this.textBoxOnderwerp.TabIndex = 2;
             // 
             // labelOnderwerp
@@ -591,7 +608,7 @@
             // dateTimePickerDeadline
             // 
             this.dateTimePickerDeadline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePickerDeadline.Location = new System.Drawing.Point(249, 45);
+            this.dateTimePickerDeadline.Location = new System.Drawing.Point(387, 45);
             this.dateTimePickerDeadline.Name = "dateTimePickerDeadline";
             this.dateTimePickerDeadline.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerDeadline.TabIndex = 0;
@@ -602,7 +619,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 668);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(742, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(954, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -621,7 +638,7 @@
             this.planningToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(742, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(954, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -637,12 +654,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
             // 
             // afsluitenToolStripMenuItem
             // 
             this.afsluitenToolStripMenuItem.Name = "afsluitenToolStripMenuItem";
-            this.afsluitenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.afsluitenToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.afsluitenToolStripMenuItem.Text = "Afsluiten";
             this.afsluitenToolStripMenuItem.Click += new System.EventHandler(this.AfsluitenToolStripMenuItem_Click);
             // 
@@ -659,21 +676,21 @@
             // nieuwDossierToolStripMenuItem1
             // 
             this.nieuwDossierToolStripMenuItem1.Name = "nieuwDossierToolStripMenuItem1";
-            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.nieuwDossierToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
             this.nieuwDossierToolStripMenuItem1.Text = "Nieuw Dossier";
             this.nieuwDossierToolStripMenuItem1.Click += new System.EventHandler(this.NieuwDossierToolStripMenuItem_Click);
             // 
             // dossierWissenToolStripMenuItem
             // 
             this.dossierWissenToolStripMenuItem.Name = "dossierWissenToolStripMenuItem";
-            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dossierWissenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.dossierWissenToolStripMenuItem.Text = "Dossier wissen";
             this.dossierWissenToolStripMenuItem.Click += new System.EventHandler(this.DossierWissenToolStripMenuItem_Click);
             // 
             // toonArchiefToolStripMenuItem
             // 
             this.toonArchiefToolStripMenuItem.Name = "toonArchiefToolStripMenuItem";
-            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toonArchiefToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.toonArchiefToolStripMenuItem.Text = "Toon Archief";
             this.toonArchiefToolStripMenuItem.Click += new System.EventHandler(this.ToonArchiefToolStripMenuItem_Click);
             // 
@@ -688,7 +705,7 @@
             // overzichtToolStripMenuItem
             // 
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
-            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.OverzichtToolStripMenuItem_Click);
             // 
@@ -705,22 +722,13 @@
             this.toonOverzichtToolStripMenuItem.Name = "toonOverzichtToolStripMenuItem";
             this.toonOverzichtToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.toonOverzichtToolStripMenuItem.Text = "Toon Overzicht";
-            this.toonOverzichtToolStripMenuItem.Click += new System.EventHandler(this.toonOverzichtToolStripMenuItem_Click);
-            // 
-            // listBoxTasks
-            // 
-            this.listBoxTasks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxTasks.FormattingEnabled = true;
-            this.listBoxTasks.Location = new System.Drawing.Point(0, 0);
-            this.listBoxTasks.Name = "listBoxTasks";
-            this.listBoxTasks.Size = new System.Drawing.Size(461, 471);
-            this.listBoxTasks.TabIndex = 0;
+            this.toonOverzichtToolStripMenuItem.Click += new System.EventHandler(this.ToonOverzichtToolStripMenuItem_Click);
             // 
             // OverviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 690);
+            this.ClientSize = new System.Drawing.Size(954, 690);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.splitContainer1);
@@ -812,6 +820,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toonOverzichtToolStripMenuItem;
-        private System.Windows.Forms.ListBox listBoxTasks;
+        private System.Windows.Forms.MonthCalendar monthCalendarTasks;
+        private System.Windows.Forms.TreeView treeViewEvents;
     }
 }

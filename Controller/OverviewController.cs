@@ -87,7 +87,6 @@ namespace Automat.Controller
                 Controller.PlanningController planningController = new PlanningController(null);
                 List<Tripple<string, DateTime, int>> events = planningController.GetEvents(id);
 
-
                 this.overviewForm.Setdossier(
                                                 dossier.Id,
                                                 dossier.DossierNummer,
@@ -234,7 +233,6 @@ namespace Automat.Controller
                 personController.ShowView();
         }
 
-
         public void ShowPlanningForm()
         {
             Controller.PlanningController planningController = new PlanningController(null);
@@ -280,7 +278,6 @@ namespace Automat.Controller
                 planning.Deadline = deadline;
                 planning.Created = DateTime.Now;
 
-
             /*  FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
 
                 if (validationResult.IsValid)
@@ -289,18 +286,23 @@ namespace Automat.Controller
 
                     result = dossierContext.SaveChanges();
 
-
-                // TODO add refresh of task list
-
-            //        this.RefreshDossierList(this.overviewForm.IsShowingArchivedItems());
-           /*     }
-                else
-                {
-                    DossierValidator.DisplayErrorMessage(validationResult);
-                }*/
+                    // Refresh task list
+                    this.RefreshEventList(dossierId);
+                /*     }
+                     else
+                     {
+                         DossierValidator.DisplayErrorMessage(validationResult);
+                     }*/
             }
 
             return result;
+        }
+
+        private void RefreshEventList(int dossierId)
+        {
+            Controller.PlanningController planningController = new PlanningController(null);
+            List<Tripple<string, DateTime, int>> events = planningController.GetEvents(dossierId);
+            this.overviewForm.DisplayEvents(events);
         }
     }
 }

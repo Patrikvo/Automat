@@ -31,7 +31,7 @@ features:
 
 
 ++ Add modifying and deleting of Tasks
-++ fix refresh of tasklist after write
+
 
 
 
@@ -49,6 +49,10 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+20181005  replaced listbox Tasks with Treeview, fixed Event refresh when adding events.
+
+20181003  added monthcalendar
 
 20181002  added adding and reading of events. Misses modifying and deleting. Also Takslist isn't updated after write yet.
 

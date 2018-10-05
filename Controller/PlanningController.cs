@@ -1,4 +1,6 @@
-﻿
+﻿/*  Notes:
+ *
+ * */
 
 namespace Automat.Controller
 {
@@ -8,9 +10,9 @@ namespace Automat.Controller
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using Automat.Common;
     using Automat.Model;
     using Automat.View;
-    using Automat.Common;
 
     public class PlanningController
     {
@@ -21,21 +23,9 @@ namespace Automat.Controller
         {
             this.parent = parent;
             this.planningForm = new PlanningForm(this);
-
-
         }
 
-        internal void ShowView()
-        {
-            if (this.planningForm != null)
-            {
-                this.planningForm.Show();
-            }
-        }
-
-
-        //private List<Planning> planningList;
-
+        // private List<Planning> planningList;
         public List<Planning> GetEventList(int? dossierId)
         {
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -48,7 +38,7 @@ namespace Automat.Controller
                 {
                     return dossierContext.Planning.Where(c => c.DossierId == dossierId).OrderBy(s => s.Deadline).ToList();
 
-                    //  return (from t3 in dossierContext.Planning where t3.Id == dossierId select t3).ToList();
+                    // return (from t3 in dossierContext.Planning where t3.Id == dossierId select t3).ToList();
                 }
             }
         }
@@ -65,10 +55,12 @@ namespace Automat.Controller
             return tripples;
         }
 
-
-
-
+        internal void ShowView()
+        {
+            if (this.planningForm != null)
+            {
+                this.planningForm.Show();
+            }
+        }
     }
-
-
 }
