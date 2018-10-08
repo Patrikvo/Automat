@@ -31,7 +31,8 @@ features:
 
 
 ++ Add modifying and deleting of Tasks
-
+// started with right click menu. methodes still have to filled. "Add" adds an event to the current date (what with first event?)
+// remove and edit apply to the selected Event node. (// what with date nodes?)
 
 
 
@@ -49,6 +50,8 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+20181008  added editing and removing of Events.
 
 20181005  replaced listbox Tasks with Treeview, fixed Event refresh when adding events.
 

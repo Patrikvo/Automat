@@ -298,6 +298,63 @@ namespace Automat.Controller
             return result;
         }
 
+        public int RemoveEvent(int id)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                dossierContext.Planning.Remove(planning);
+                result = dossierContext.SaveChanges();
+
+                this.RefreshEventList(planning.DossierId);
+            }
+
+            return result;
+        }
+
+        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                if (planning != null)
+                {
+                    result = 1;
+                }
+
+                dossierId = planning.DossierId;
+                description = planning.Description;
+                responsible = planning.Responsible;
+                deadline = planning.Deadline;
+            }
+
+            return result;
+        }
+
+
+        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                if (planning != null)
+                {
+                    planning.DossierId = dossierId;
+                    planning.Description = description;
+                    planning.Responsible = responsible;
+                    planning.Deadline = deadline;
+                    result = dossierContext.SaveChanges();
+                    this.RefreshEventList(planning.DossierId);
+                }
+            }
+
+            return result;
+        }
+
+
         private void RefreshEventList(int dossierId)
         {
             Controller.PlanningController planningController = new PlanningController(null);

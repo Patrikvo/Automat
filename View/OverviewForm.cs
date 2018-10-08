@@ -130,7 +130,6 @@ namespace Automat.View
 
         public void DisplayEvents(List<Tripple<string, DateTime, int>> events)
         {
-
             // Fill Treeview
             this.treeViewEvents.Nodes.Clear();
             foreach (Tripple<string, DateTime, int> e in events)
@@ -140,7 +139,7 @@ namespace Automat.View
                 // find date node
                 string key = e.Item2.Year.ToString() + e.Item2.Month.ToString() + e.Item2.Day.ToString();
 
-                // 'key' mathces 'Name'-field in Node.
+                // 'key' matches 'Name'-field in Node.
                 if (this.treeViewEvents.Nodes.ContainsKey(key))
                 {
                     t = this.treeViewEvents.Nodes[this.treeViewEvents.Nodes.IndexOfKey(key)];
@@ -150,6 +149,7 @@ namespace Automat.View
                     t = new TreeNode();
                     t.Name = key;
                     t.Text = e.Item2.ToShortDateString();
+                    t.Tag = null;
                     this.treeViewEvents.Nodes.Add(t);
                 }
 
@@ -446,18 +446,176 @@ namespace Automat.View
                 responsible = 3;
             }
 
-            int result = this.overviewController.AddEvent(
-                                             this.id,
-                                             this.textBoxOnderwerp.Text,
-                                             responsible,
-                                             this.dateTimePickerDeadline.Value);
-            if (result == 1)
+            if (this.isEditingEvent)
             {
-                this.toolStripStatusLabel1.Text = "Taak toegevoegd";
+                // store event
+                int result = this.overviewController.UpdateEvent(
+                                                 this.EditingEventId,
+                                                 this.id,
+                                                 this.textBoxOnderwerp.Text,
+                                                 responsible,
+                                                 this.dateTimePickerDeadline.Value);
+
+                if (result == 1)
+                {
+                    this.toolStripStatusLabel1.Text = "Taak bewaard";
+                }
+                else
+                {
+                    this.toolStripStatusLabel1.Text = "Taak bewaren mislukt";
+                }
+
+                this.isEditingEvent = false;
+                this.buttonAddEvent.Text = "Toevoegen";
+                this.buttonEventCancel.Enabled = false;
             }
             else
             {
-                this.toolStripStatusLabel1.Text = "Taak toevoegen mislukt";
+                // Add event
+                int result = this.overviewController.AddEvent(
+                                                 this.id,
+                                                 this.textBoxOnderwerp.Text,
+                                                 responsible,
+                                                 this.dateTimePickerDeadline.Value);
+                if (result == 1)
+                {
+                    this.toolStripStatusLabel1.Text = "Taak toegevoegd";
+                }
+                else
+                {
+                    this.toolStripStatusLabel1.Text = "Taak toevoegen mislukt";
+                }
+            }
+        }
+
+        private void ButtonEventCancel_Click(object sender, EventArgs e)
+        {
+            this.isEditingEvent = false;
+            this.buttonAddEvent.Text = "Toevoegen";
+            this.buttonEventCancel.Enabled = false;
+        }
+
+        private void ToolStripMenuItemAddEvent_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolStripMenuItemRemove_Click(object sender, EventArgs e)
+        {
+            if (string.Equals(this.contextMenuStripEvents.SourceControl.Name, this.treeViewEvents.Name) == true)
+            {
+                if (this.treeViewEvents.SelectedNode.Tag != null)
+                {
+                    try
+                    {
+                        int id = (int)this.treeViewEvents.SelectedNode.Tag;
+
+                        // remove Event with this ID.
+                        int result = this.overviewController.RemoveEvent(id);
+                        if (result == 1)
+                        {
+                            this.toolStripStatusLabel1.Text = "Taak verwijderd";
+                        }
+                        else
+                        {
+                            this.toolStripStatusLabel1.Text = "Taak verwijderen mislukt";
+                        }
+                    }
+                    catch (InvalidCastException)
+                    {
+                        this.statusStrip1.Text = "Taak verwijderen mislukt, id niet gevonden.";
+                    }
+                }
+            }
+        }
+
+        private bool isEditingEvent = false;
+        private int EditingEventId = -1;
+
+        private void ToolStripMenuItemBewerken_Click(object sender, EventArgs e)
+        {
+            if (string.Equals(this.contextMenuStripEvents.SourceControl.Name, this.treeViewEvents.Name) == true)
+            {
+                if (this.treeViewEvents.SelectedNode.Tag != null)
+                {
+                    try
+                    {
+                        int id = (int)this.treeViewEvents.SelectedNode.Tag;
+
+                        // edit Event with this ID.
+                        int dossierId;
+                        string description;
+                        int responsible;
+                        DateTime deadline;
+
+                        int result = this.overviewController.GetEvent(id, out dossierId, out description, out responsible, out deadline);
+
+                        if (result == 1)
+                        {
+                            this.textBoxOnderwerp.Text = description;
+                            this.dateTimePickerDeadline.Value = deadline;
+
+                            if (responsible == 1)
+                            {
+                                this.radioButtonDossierbeheerder.Checked = true;
+                            }
+                            else if (responsible == 2)
+                            {
+                                this.radioButtonKlant.Checked = true;
+                            }
+                            else if (responsible == 3)
+                            {
+                                this.radioButtonExtern.Checked = true;
+                            }
+
+                            this.EditingEventId = id;
+                            this.isEditingEvent = true;
+                            this.buttonAddEvent.Text = "Bewaren";
+                            this.buttonEventCancel.Enabled = true;
+                            this.toolStripStatusLabel1.Text = "Taak bewerken";
+                        }
+                        else
+                        {
+                            this.isEditingEvent = false;
+                            this.buttonAddEvent.Text = "Toevoegen";
+                            this.buttonEventCancel.Enabled = false;
+                            this.toolStripStatusLabel1.Text = "Taak lezen voor bewerken mislukt";
+                        }
+
+                    }
+                    catch (InvalidCastException)
+                    {
+                        this.statusStrip1.Text = "Taak bewerken mislukt, id niet gevonden.";
+                    }
+                }
+            }
+        }
+
+        private void ContextMenuStripEvents_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (string.Equals(this.contextMenuStripEvents.SourceControl.Name, this.treeViewEvents.Name) == true)
+            {
+                this.toolStripMenuItemAddEvent.Visible = false;
+                this.toolStripMenuItemBewerken.Visible = false;
+                this.toolStripMenuItemRemove.Visible = false;
+
+                if (this.treeViewEvents.SelectedNode != null)
+                {
+                    if (this.treeViewEvents.SelectedNode.Tag == null)
+                    {
+                        // is date node
+                        this.toolStripMenuItemAddEvent.Visible = true;
+                        this.toolStripMenuItemBewerken.Visible = false;
+                        this.toolStripMenuItemRemove.Visible = false;
+                    }
+                    else
+                    {
+                        // is Event node
+                        this.toolStripMenuItemAddEvent.Visible = false;
+                        this.toolStripMenuItemBewerken.Visible = true;
+                        this.toolStripMenuItemRemove.Visible = true;
+                    }
+                }
             }
         }
     }

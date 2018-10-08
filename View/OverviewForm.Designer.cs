@@ -66,8 +66,13 @@
             this.tabPagePlanning = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.treeViewEvents = new System.Windows.Forms.TreeView();
+            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemAddEvent = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemBewerken = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.monthCalendarTasks = new System.Windows.Forms.MonthCalendar();
             this.groupBoxAddEvent = new System.Windows.Forms.GroupBox();
+            this.buttonEventCancel = new System.Windows.Forms.Button();
             this.radioButtonExtern = new System.Windows.Forms.RadioButton();
             this.radioButtonKlant = new System.Windows.Forms.RadioButton();
             this.radioButtonDossierbeheerder = new System.Windows.Forms.RadioButton();
@@ -100,6 +105,7 @@
             this.tabPageContact.SuspendLayout();
             this.tabPagePlanning.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.contextMenuStripEvents.SuspendLayout();
             this.groupBoxAddEvent.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -502,10 +508,42 @@
             // 
             // treeViewEvents
             // 
+            this.treeViewEvents.ContextMenuStrip = this.contextMenuStripEvents;
             this.treeViewEvents.Location = new System.Drawing.Point(-1, 3);
             this.treeViewEvents.Name = "treeViewEvents";
             this.treeViewEvents.Size = new System.Drawing.Size(596, 285);
             this.treeViewEvents.TabIndex = 2;
+            // 
+            // contextMenuStripEvents
+            // 
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAddEvent,
+            this.toolStripMenuItemBewerken,
+            this.toolStripMenuItemRemove});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(137, 70);
+            this.contextMenuStripEvents.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripEvents_Opening);
+            // 
+            // toolStripMenuItemAddEvent
+            // 
+            this.toolStripMenuItemAddEvent.Name = "toolStripMenuItemAddEvent";
+            this.toolStripMenuItemAddEvent.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemAddEvent.Text = "Toevoegen";
+            this.toolStripMenuItemAddEvent.Click += new System.EventHandler(this.ToolStripMenuItemAddEvent_Click);
+            // 
+            // toolStripMenuItemBewerken
+            // 
+            this.toolStripMenuItemBewerken.Name = "toolStripMenuItemBewerken";
+            this.toolStripMenuItemBewerken.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemBewerken.Text = "Bewerken";
+            this.toolStripMenuItemBewerken.Click += new System.EventHandler(this.ToolStripMenuItemBewerken_Click);
+            // 
+            // toolStripMenuItemRemove
+            // 
+            this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
+            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemRemove.Text = "Verwijderen";
+            this.toolStripMenuItemRemove.Click += new System.EventHandler(this.ToolStripMenuItemRemove_Click);
             // 
             // monthCalendarTasks
             // 
@@ -519,6 +557,7 @@
             // 
             this.groupBoxAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxAddEvent.Controls.Add(this.buttonEventCancel);
             this.groupBoxAddEvent.Controls.Add(this.radioButtonExtern);
             this.groupBoxAddEvent.Controls.Add(this.radioButtonKlant);
             this.groupBoxAddEvent.Controls.Add(this.radioButtonDossierbeheerder);
@@ -533,6 +572,17 @@
             this.groupBoxAddEvent.TabIndex = 1;
             this.groupBoxAddEvent.TabStop = false;
             this.groupBoxAddEvent.Text = "Toevoegen";
+            // 
+            // buttonEventCancel
+            // 
+            this.buttonEventCancel.Enabled = false;
+            this.buttonEventCancel.Location = new System.Drawing.Point(431, 91);
+            this.buttonEventCancel.Name = "buttonEventCancel";
+            this.buttonEventCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonEventCancel.TabIndex = 8;
+            this.buttonEventCancel.Text = "Annuleren";
+            this.buttonEventCancel.UseVisualStyleBackColor = true;
+            this.buttonEventCancel.Click += new System.EventHandler(this.ButtonEventCancel_Click);
             // 
             // radioButtonExtern
             // 
@@ -748,6 +798,7 @@
             this.tabPageContact.PerformLayout();
             this.tabPagePlanning.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.contextMenuStripEvents.ResumeLayout(false);
             this.groupBoxAddEvent.ResumeLayout(false);
             this.groupBoxAddEvent.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -822,5 +873,10 @@
         private System.Windows.Forms.ToolStripMenuItem toonOverzichtToolStripMenuItem;
         private System.Windows.Forms.MonthCalendar monthCalendarTasks;
         private System.Windows.Forms.TreeView treeViewEvents;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAddEvent;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemBewerken;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemove;
+        private System.Windows.Forms.Button buttonEventCancel;
     }
 }
