@@ -140,6 +140,12 @@
     <Compile Include="Common\EditFileLocationForm.Designer.cs">
       <DependentUpon>EditFileLocationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\EventForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\EventForm.Designer.cs">
+      <DependentUpon>EventForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\Tripple.cs" />
     <Compile Include="Controller\OverviewController.cs" />
     <Compile Include="Controller\PersonController.cs" />
@@ -187,6 +193,9 @@
     </Compile>
     <EmbeddedResource Include="Common\EditFileLocationForm.resx">
       <DependentUpon>EditFileLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\EventForm.resx">
+      <DependentUpon>EventForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanningControl.resx">
       <DependentUpon>PlanningControl.cs</DependentUpon>

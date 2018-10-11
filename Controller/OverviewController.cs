@@ -268,46 +268,23 @@ namespace Automat.Controller
 
         public int AddEvent(int dossierId, string description, int responsible, DateTime deadline)
         {
-            int result = 0;
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            PlanningController planningController = new PlanningController(null);
+            int result = planningController.AddEvent(dossierId, description, responsible, deadline);
+            if (result > 0)
             {
-                Planning planning = new Planning();
-                planning.DossierId = dossierId;
-                planning.Description = description;
-                planning.Responsible = responsible;
-                planning.Deadline = deadline;
-                planning.Created = DateTime.Now;
-
-            /*  FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
-
-                if (validationResult.IsValid)
-                {*/
-                    dossierContext.Planning.Add(planning);
-
-                    result = dossierContext.SaveChanges();
-
-                    // Refresh task list
-                    this.RefreshEventList(dossierId);
-                /*     }
-                     else
-                     {
-                         DossierValidator.DisplayErrorMessage(validationResult);
-                     }*/
+                this.RefreshEventList(dossierId);
             }
 
             return result;
         }
 
-        public int RemoveEvent(int id)
+        public int RemoveEvent(int id, int dossierId)
         {
-            int result = 0;
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            PlanningController planningController = new PlanningController(null);
+            int result = planningController.RemoveEvent(id);
+            if (result > 0)
             {
-                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
-                dossierContext.Planning.Remove(planning);
-                result = dossierContext.SaveChanges();
-
-                this.RefreshEventList(planning.DossierId);
+                this.RefreshEventList(dossierId);
             }
 
             return result;
@@ -315,44 +292,42 @@ namespace Automat.Controller
 
         public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline)
         {
-            int result = 0;
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
-            {
-                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
-                if (planning != null)
-                {
-                    result = 1;
-                }
+            PlanningController planningController = new PlanningController(null);
 
-                dossierId = planning.DossierId;
-                description = planning.Description;
-                responsible = planning.Responsible;
-                deadline = planning.Deadline;
-            }
-
+            int result = planningController.GetEvent(id, out dossierId, out description, out responsible, out deadline);
             return result;
         }
-
 
         public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline)
         {
-            int result = 0;
-            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            PlanningController planningController = new PlanningController(null);
+
+            int result = planningController.UpdateEvent(id, dossierId, description, responsible, deadline);
+            if (result > 0)
             {
-                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
-                if (planning != null)
-                {
-                    planning.DossierId = dossierId;
-                    planning.Description = description;
-                    planning.Responsible = responsible;
-                    planning.Deadline = deadline;
-                    result = dossierContext.SaveChanges();
-                    this.RefreshEventList(planning.DossierId);
-                }
+                this.RefreshEventList(dossierId);
             }
 
             return result;
         }
+
+        public bool ShowEventUpdateForm(int eventId)
+        {
+            bool result = false;
+            EventForm eventForm = new EventForm();
+            eventForm.ShowEvent(eventId);
+            DialogResult dialogResult = eventForm.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                result = true;
+                this.RefreshEventList(eventForm.DossierID);
+            }
+
+            return result;
+        }
+
+
 
 
         private void RefreshEventList(int dossierId)

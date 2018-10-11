@@ -55,6 +55,88 @@ namespace Automat.Controller
             return tripples;
         }
 
+        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = new Planning();
+                planning.DossierId = dossierId;
+                planning.Description = description;
+                planning.Responsible = responsible;
+                planning.Deadline = deadline;
+                planning.Created = DateTime.Now;
+
+                /*  FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
+
+                    if (validationResult.IsValid)
+                    {*/
+                dossierContext.Planning.Add(planning);
+
+                result = dossierContext.SaveChanges();
+
+                /*     }
+                     else
+                     {
+                         DossierValidator.DisplayErrorMessage(validationResult);
+                     }*/
+            }
+
+            return result;
+        }
+
+        public int RemoveEvent(int id)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                dossierContext.Planning.Remove(planning);
+                result = dossierContext.SaveChanges();
+            }
+
+            return result;
+        }
+
+        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                if (planning != null)
+                {
+                    result = 1;
+                }
+
+                dossierId = planning.DossierId;
+                description = planning.Description;
+                responsible = planning.Responsible;
+                deadline = planning.Deadline;
+            }
+
+            return result;
+        }
+
+        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline)
+        {
+            int result = 0;
+            using (Database.DossierContext dossierContext = new Database.DossierContext())
+            {
+                Planning planning = dossierContext.Planning.Where(c => c.Id == id).First();
+                if (planning != null)
+                {
+                    planning.DossierId = dossierId;
+                    planning.Description = description;
+                    planning.Responsible = responsible;
+                    planning.Deadline = deadline;
+                    result = dossierContext.SaveChanges();
+                }
+            }
+
+            return result;
+        }
+
         internal void ShowView()
         {
             if (this.planningForm != null)

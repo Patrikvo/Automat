@@ -511,7 +511,7 @@ namespace Automat.View
                         int id = (int)this.treeViewEvents.SelectedNode.Tag;
 
                         // remove Event with this ID.
-                        int result = this.overviewController.RemoveEvent(id);
+                        int result = this.overviewController.RemoveEvent(id, this.id);
                         if (result == 1)
                         {
                             this.toolStripStatusLabel1.Text = "Taak verwijderd";
@@ -542,46 +542,14 @@ namespace Automat.View
                     {
                         int id = (int)this.treeViewEvents.SelectedNode.Tag;
 
-                        // edit Event with this ID.
-                        int dossierId;
-                        string description;
-                        int responsible;
-                        DateTime deadline;
-
-                        int result = this.overviewController.GetEvent(id, out dossierId, out description, out responsible, out deadline);
-
-                        if (result == 1)
+                        if (this.overviewController.ShowEventUpdateForm(id) == true)
                         {
-                            this.textBoxOnderwerp.Text = description;
-                            this.dateTimePickerDeadline.Value = deadline;
-
-                            if (responsible == 1)
-                            {
-                                this.radioButtonDossierbeheerder.Checked = true;
-                            }
-                            else if (responsible == 2)
-                            {
-                                this.radioButtonKlant.Checked = true;
-                            }
-                            else if (responsible == 3)
-                            {
-                                this.radioButtonExtern.Checked = true;
-                            }
-
-                            this.EditingEventId = id;
-                            this.isEditingEvent = true;
-                            this.buttonAddEvent.Text = "Bewaren";
-                            this.buttonEventCancel.Enabled = true;
-                            this.toolStripStatusLabel1.Text = "Taak bewerken";
+                            this.toolStripStatusLabel1.Text = "Taak bewaart";
                         }
                         else
                         {
-                            this.isEditingEvent = false;
-                            this.buttonAddEvent.Text = "Toevoegen";
-                            this.buttonEventCancel.Enabled = false;
-                            this.toolStripStatusLabel1.Text = "Taak lezen voor bewerken mislukt";
+                            this.toolStripStatusLabel1.Text = "Taak bewerken geannulleerd.";
                         }
-
                     }
                     catch (InvalidCastException)
                     {
