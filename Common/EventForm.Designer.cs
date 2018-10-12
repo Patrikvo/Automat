@@ -38,7 +38,7 @@
             this.labelOnderwerp = new System.Windows.Forms.Label();
             this.dateTimePickerDeadline = new System.Windows.Forms.DateTimePicker();
             this.checkBoxEventCompleted = new System.Windows.Forms.CheckBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerEventCompleted = new System.Windows.Forms.DateTimePicker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
@@ -101,6 +101,7 @@
             // buttonAddEvent
             // 
             this.buttonAddEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEvent.Enabled = false;
             this.buttonAddEvent.Location = new System.Drawing.Point(512, 94);
             this.buttonAddEvent.Name = "buttonAddEvent";
             this.buttonAddEvent.Size = new System.Drawing.Size(75, 23);
@@ -117,6 +118,7 @@
             this.textBoxOnderwerp.Name = "textBoxOnderwerp";
             this.textBoxOnderwerp.Size = new System.Drawing.Size(512, 20);
             this.textBoxOnderwerp.TabIndex = 2;
+            this.textBoxOnderwerp.TextChanged += new System.EventHandler(this.TextBoxOnderwerp_TextChanged);
             // 
             // labelOnderwerp
             // 
@@ -144,14 +146,15 @@
             this.checkBoxEventCompleted.TabIndex = 9;
             this.checkBoxEventCompleted.Text = "Afgehandeld";
             this.checkBoxEventCompleted.UseVisualStyleBackColor = true;
+            this.checkBoxEventCompleted.CheckedChanged += new System.EventHandler(this.CheckBoxEventCompleted_CheckedChanged);
             // 
-            // dateTimePicker1
+            // dateTimePickerEventCompleted
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(387, 68);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 10;
-            this.dateTimePicker1.Visible = false;
+            this.dateTimePickerEventCompleted.Location = new System.Drawing.Point(387, 68);
+            this.dateTimePickerEventCompleted.Name = "dateTimePickerEventCompleted";
+            this.dateTimePickerEventCompleted.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerEventCompleted.TabIndex = 10;
+            this.dateTimePickerEventCompleted.Visible = false;
             // 
             // statusStrip1
             // 
@@ -174,7 +177,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 159);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePickerEventCompleted);
             this.Controls.Add(this.checkBoxEventCompleted);
             this.Controls.Add(this.buttonEventCancel);
             this.Controls.Add(this.radioButtonExtern);
@@ -206,7 +209,7 @@
         private System.Windows.Forms.Label labelOnderwerp;
         private System.Windows.Forms.DateTimePicker dateTimePickerDeadline;
         private System.Windows.Forms.CheckBox checkBoxEventCompleted;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerEventCompleted;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }

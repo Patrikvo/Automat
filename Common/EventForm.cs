@@ -15,6 +15,14 @@
 
         public int DossierID { get; set; }
 
+        public void SetDeadlineDate(DateTime date)
+        {
+            if (date != null)
+            {
+                this.dateTimePickerDeadline.Value = date;
+            }
+        }
+
         public bool ShowEvent(int id)
         {
             Controller.PlanningController planningController = new PlanningController(null);
@@ -108,6 +116,31 @@
             this.StoreEvent();
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void TextBoxOnderwerp_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxOnderwerp.Text.Length == 0)
+            {
+                this.buttonAddEvent.Enabled = false;
+            }
+            else
+            {
+                this.buttonAddEvent.Enabled = true;
+            }
+        }
+
+        private void CheckBoxEventCompleted_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxEventCompleted.Checked == true)
+            {
+                this.dateTimePickerEventCompleted.Value = DateTime.Today;
+                this.dateTimePickerEventCompleted.Visible = true;
+            }
+            else
+            {
+                this.dateTimePickerEventCompleted.Visible = false;
+            }
         }
     }
 }

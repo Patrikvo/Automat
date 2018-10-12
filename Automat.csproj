@@ -173,11 +173,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\DossierRules.cs" />
-    <Compile Include="View\OverviewForm.cs">
+    <Compile Include="View\Overview\OverviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\OverviewForm.Designer.cs">
+    <Compile Include="View\Overview\OverviewForm.Designer.cs">
       <DependentUpon>OverviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Overview\PlanningSubForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Overview\PlanningSubForm.Designer.cs">
+      <DependentUpon>PlanningSubForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\PersonViewForm.cs">
       <SubType>Form</SubType>
@@ -212,8 +218,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\OverviewForm.resx">
+    <EmbeddedResource Include="View\Overview\OverviewForm.resx">
       <DependentUpon>OverviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Overview\PlanningSubForm.resx">
+      <DependentUpon>PlanningSubForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\PersonViewForm.resx">
       <DependentUpon>PersonViewForm.cs</DependentUpon>

@@ -27,6 +27,8 @@ namespace Automat.Controller
             this.RefreshDossierList(false);
         }
 
+        public int DossierId { get; private set; }
+
         public string LastError { get; set; }
 
         public void RefreshDossierList(bool showArchived)
@@ -86,6 +88,8 @@ namespace Automat.Controller
 
                 Controller.PlanningController planningController = new PlanningController(null);
                 List<Tripple<string, DateTime, int>> events = planningController.GetEvents(id);
+
+                this.DossierId = id;
 
                 this.overviewForm.Setdossier(
                                                 dossier.Id,
@@ -327,8 +331,22 @@ namespace Automat.Controller
             return result;
         }
 
+        public bool ShowEventAddForm(DateTime date)
+        {
+            bool result = false;
+            EventForm eventForm = new EventForm();
+            eventForm.DossierID = this.DossierId;
+            eventForm.SetDeadlineDate(date);
+            DialogResult dialogResult = eventForm.ShowDialog();
 
+            if (dialogResult == DialogResult.OK)
+            {
+                result = true;
+                this.RefreshEventList(eventForm.DossierID);
+            }
 
+            return result;
+        }
 
         private void RefreshEventList(int dossierId)
         {
