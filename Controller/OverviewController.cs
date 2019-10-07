@@ -11,18 +11,20 @@ namespace Automat.Controller
     using Automat.Common;
     using Automat.Model;
     using Automat.View;
+    using Automat.View.Overview;
 
     public class OverviewController
     {
         private OverviewForm overviewForm;
+        private PlanningSubForm planningSubForm;
         private List<Dossier> dossierList;
         private Form parent;
 
         public OverviewController(Form parent)
         {
             this.parent = parent;
-
-            this.overviewForm = new OverviewForm(this);
+            this.planningSubForm = new Automat.View.Overview.PlanningSubForm(this);
+            this.overviewForm = new OverviewForm(this, this.planningSubForm);
 
             this.RefreshDossierList(false);
         }
@@ -270,10 +272,10 @@ namespace Automat.Controller
             return Automat.Rules.DossierRules.GetProcedureNames();
         }
 
-        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline)
+        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline, DateTime? completationDate)
         {
             PlanningController planningController = new PlanningController(null);
-            int result = planningController.AddEvent(dossierId, description, responsible, deadline);
+            int result = planningController.AddEvent(dossierId, description, responsible, deadline, completationDate);
             if (result > 0)
             {
                 this.RefreshEventList(dossierId);
@@ -294,19 +296,19 @@ namespace Automat.Controller
             return result;
         }
 
-        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline)
+        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline, out DateTime? completionDate, out DateTime creationDate)
         {
             PlanningController planningController = new PlanningController(null);
 
-            int result = planningController.GetEvent(id, out dossierId, out description, out responsible, out deadline);
+            int result = planningController.GetEvent(id, out dossierId, out description, out responsible, out deadline, out completionDate, out creationDate);
             return result;
         }
 
-        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline)
+        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline, DateTime? completationDate)
         {
             PlanningController planningController = new PlanningController(null);
 
-            int result = planningController.UpdateEvent(id, dossierId, description, responsible, deadline);
+            int result = planningController.UpdateEvent(id, dossierId, description, responsible, deadline, completationDate);
             if (result > 0)
             {
                 this.RefreshEventList(dossierId);

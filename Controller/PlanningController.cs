@@ -55,7 +55,7 @@ namespace Automat.Controller
             return tripples;
         }
 
-        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline)
+        public int AddEvent(int dossierId, string description, int responsible, DateTime deadline, DateTime? completionDate)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -65,6 +65,7 @@ namespace Automat.Controller
                 planning.Description = description;
                 planning.Responsible = responsible;
                 planning.Deadline = deadline;
+                planning.CompletionDate = completionDate;
                 planning.Created = DateTime.Now;
 
                 /*  FluentValidation.Results.ValidationResult validationResult = new DossierValidator().Validate(dossier);
@@ -98,7 +99,7 @@ namespace Automat.Controller
             return result;
         }
 
-        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline)
+        public int GetEvent(int id, out int dossierId, out string description, out int responsible, out DateTime deadline, out DateTime? completionDate, out DateTime creationDate)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -113,12 +114,14 @@ namespace Automat.Controller
                 description = planning.Description;
                 responsible = planning.Responsible;
                 deadline = planning.Deadline;
+                completionDate = planning.CompletionDate;
+                creationDate = planning.Created;
             }
 
             return result;
         }
 
-        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline)
+        public int UpdateEvent(int id, int dossierId, string description, int responsible, DateTime deadline, DateTime? completionDate)
         {
             int result = 0;
             using (Database.DossierContext dossierContext = new Database.DossierContext())
@@ -130,6 +133,7 @@ namespace Automat.Controller
                     planning.Description = description;
                     planning.Responsible = responsible;
                     planning.Deadline = deadline;
+                    planning.CompletionDate = completionDate;
                     result = dossierContext.SaveChanges();
                 }
             }

@@ -34,8 +34,10 @@
                 string description;
                 int responsible;
                 DateTime deadline;
+                DateTime? completationDate;
+                DateTime creationDate;
 
-                if (planningController.GetEvent(id, out dossierId, out description, out responsible, out deadline) == 1)
+                if (planningController.GetEvent(id, out dossierId, out description, out responsible, out deadline, out completationDate, out creationDate) == 1)
                 {
                     this.textBoxOnderwerp.Text = description;
                     this.dateTimePickerDeadline.Value = deadline;
@@ -51,6 +53,12 @@
                     else if (responsible == 3)
                     {
                         this.radioButtonExtern.Checked = true;
+                    }
+
+                    if (completationDate != null)
+                    {
+                        this.checkBoxEventCompleted.Checked = true;
+                        this.dateTimePickerEventCompleted.Value = (DateTime)completationDate;
                     }
                 }
                 else
@@ -90,16 +98,22 @@
                 responsible = 3;
             }
 
+            DateTime? completationDate = null;
+            if (this.checkBoxEventCompleted.Checked == true)
+            {
+                completationDate = this.dateTimePickerEventCompleted.Value;
+            }
+
             int result = 0;
             if (this.id >= 0)
             {
                 // update
-                result = planningController.UpdateEvent(this.id, this.DossierID, this.textBoxOnderwerp.Text, responsible, this.dateTimePickerDeadline.Value);
+                result = planningController.UpdateEvent(this.id, this.DossierID, this.textBoxOnderwerp.Text, responsible, this.dateTimePickerDeadline.Value, completationDate);
             }
             else
             {
                 // new event
-                result = planningController.AddEvent(this.DossierID, this.textBoxOnderwerp.Text, responsible, this.dateTimePickerDeadline.Value);
+                result = planningController.AddEvent(this.DossierID, this.textBoxOnderwerp.Text, responsible, this.dateTimePickerDeadline.Value, completationDate);
             }
 
             return result > 0;

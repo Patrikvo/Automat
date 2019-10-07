@@ -1,5 +1,9 @@
 Future:
-
+- CTRL+S voor bewaren toevoegen.
+- backup?
+- zoekfunctie voor dossierlijst (op titel, nummer, ...)
+- bestektekst inlezen en zoekbaar maken?
+- emails inlezen en zoekbaar maken?
 - bedrijfseenheid (sp: SW)
 - beveiliging wissen
 - Toon archief meer naar voor plaatsen
@@ -27,13 +31,10 @@ features:
 - phases + dates
 - dates and info during CBS-process
 
-- fix: added comfirmation before deleting (undo?)
+++Next refactor and cleanup.
 
 
-++ Add modifying and deleting of Tasks
-// started with right click menu. . "Add" adds an event to the current date (what with first event?)
-// remove and edit apply to the selected Event node. (// what with date nodes?)
-// EventForm already works for updateing, "adding" events has to be moved to this form as well. 
+TODO: make first image in ImageListTreeview "blank". pick correct images.
 
 
 
@@ -51,6 +52,12 @@ apply 'Add-Migration initial' and 'Update-Database'
 Using Db Browser import sql to database (issue: need someway to add non-nullable fields)
 
 Log:
+
+20181031  added completionDate to planning events. Started adding images. 
+
+20181015  created UML class diagram.
+
+20181012  moved Planning tabpage to separate control, added Adding of events to Evenform. Added selecting a date on the calendar, selects the date node in the Treeview.
 
 20181011  added add+update Event form. updating work through this form, add needs to be moved to this form as well.
 

@@ -11,6 +11,7 @@ namespace Automat.View
     using System.Windows.Forms;
     using Automat.Common;
     using Automat.Controller;
+    using Automat.View.Overview;
 
     public partial class OverviewForm : Form
     {
@@ -47,7 +48,7 @@ namespace Automat.View
 
         /* COMMON CONSTRUCTOR */
 
-        public OverviewForm(OverviewController overviewController)
+        public OverviewForm(OverviewController overviewController, PlanningSubForm planningSubForm)
         {
             this.overviewController = overviewController;
             this.InitializeComponent();
@@ -55,11 +56,11 @@ namespace Automat.View
             this.binding1 = new BindingSource();
             this.bindingEvents = new BindingSource();
 
-            this.planningSubForm = new Overview.PlanningSubForm(overviewController);
-            this.planningSubForm.TopLevel = false;
-            this.planningSubForm.Dock = DockStyle.Fill;
-            this.panel1.Controls.Add(this.planningSubForm);
-            this.planningSubForm.Show();
+            planningSubForm.TopLevel = false;
+            planningSubForm.Dock = DockStyle.Fill;
+            this.panel1.Controls.Add(planningSubForm);
+            planningSubForm.Show();
+            this.planningSubForm = planningSubForm;
         }
 
         /* COMMON PROPERTIES */

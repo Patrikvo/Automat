@@ -24,6 +24,7 @@
 
         public void DisplayEvents(List<Tripple<string, DateTime, int>> events)
         {
+            Controller.PlanningController planningController = new PlanningController(null);
             // Fill Treeview
             this.treeViewEvents.SuspendLayout();
             this.treeViewEvents.Nodes.Clear();
@@ -42,19 +43,47 @@
                 }
                 else
                 {
+                    // add new date node
                     t = new TreeNode();
                     t.Name = key;
                     t.Text = e.Item2.ToShortDateString();
                     t.Tag = null;
+                    t.ImageIndex = 1;
                     this.treeViewEvents.Nodes.Add(t);
                 }
 
-                TreeNode newEvent = new TreeNode();
-                newEvent.Name = e.Item3.ToString();
-                newEvent.Text = e.Item1;
-                newEvent.Tag = e.Item3;
+                int dossierId;
+                string description;
+                int responsible;
+                DateTime deadline;
+                DateTime? completetionDate;
+                DateTime creationDate;
 
-                t.Nodes.Add(newEvent);
+                if (planningController.GetEvent(e.Item3, out dossierId, out description, out responsible, out deadline, out completetionDate, out creationDate) == 1)
+                {
+                    TreeNode newEvent = new TreeNode();
+                    newEvent.Name = e.Item3.ToString();
+                    newEvent.Text = e.Item1;
+                    newEvent.Tag = e.Item3;
+
+                    if (completetionDate != null)
+                    {
+                        newEvent.ImageIndex = 2; // is done
+                    }
+                    else
+                    {
+                        if (deadline.Date.CompareTo(DateTime.Now.Date) < 0 )
+                        {
+                            newEvent.ImageIndex = 3; // late
+                        }
+                        else
+                        {
+                            newEvent.ImageIndex = 6;
+                        }
+                    }
+
+                    t.Nodes.Add(newEvent);
+                }
             }
 
             this.treeViewEvents.ExpandAll();

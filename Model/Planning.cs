@@ -27,6 +27,8 @@ namespace Automat.Model
 
         public System.DateTime Deadline { get; set; }
 
+        public System.DateTime? CompletionDate { get; set; }
+
         public byte[] RowVersion { get; set; }
 
         public System.DateTime Created { get; set; }

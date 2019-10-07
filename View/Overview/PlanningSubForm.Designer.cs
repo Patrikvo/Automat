@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlanningSubForm));
             this.treeViewEvents = new System.Windows.Forms.TreeView();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAddEvent = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemBewerken = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListTreeview = new System.Windows.Forms.ImageList(this.components);
             this.monthCalendarTasks = new System.Windows.Forms.MonthCalendar();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.contextMenuStripEvents.SuspendLayout();
@@ -48,8 +50,11 @@
             this.treeViewEvents.ContextMenuStrip = this.contextMenuStripEvents;
             this.treeViewEvents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewEvents.HotTracking = true;
+            this.treeViewEvents.ImageIndex = 0;
+            this.treeViewEvents.ImageList = this.imageListTreeview;
             this.treeViewEvents.Location = new System.Drawing.Point(0, 0);
             this.treeViewEvents.Name = "treeViewEvents";
+            this.treeViewEvents.SelectedImageIndex = 0;
             this.treeViewEvents.Size = new System.Drawing.Size(605, 425);
             this.treeViewEvents.TabIndex = 5;
             // 
@@ -60,29 +65,42 @@
             this.toolStripMenuItemBewerken,
             this.toolStripMenuItemRemove});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(137, 70);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(136, 70);
             this.contextMenuStripEvents.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripEvents_Opening);
             // 
             // toolStripMenuItemAddEvent
             // 
             this.toolStripMenuItemAddEvent.Name = "toolStripMenuItemAddEvent";
-            this.toolStripMenuItemAddEvent.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemAddEvent.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemAddEvent.Text = "Toevoegen";
             this.toolStripMenuItemAddEvent.Click += new System.EventHandler(this.ToolStripMenuItemAddEvent_Click_1);
             // 
             // toolStripMenuItemBewerken
             // 
             this.toolStripMenuItemBewerken.Name = "toolStripMenuItemBewerken";
-            this.toolStripMenuItemBewerken.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemBewerken.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemBewerken.Text = "Bewerken";
             this.toolStripMenuItemBewerken.Click += new System.EventHandler(this.ToolStripMenuItemBewerken_Click_1);
             // 
             // toolStripMenuItemRemove
             // 
             this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
-            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemRemove.Text = "Verwijderen";
             this.toolStripMenuItemRemove.Click += new System.EventHandler(this.ToolStripMenuItemRemove_Click_1);
+            // 
+            // imageListTreeview
+            // 
+            this.imageListTreeview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeview.ImageStream")));
+            this.imageListTreeview.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTreeview.Images.SetKeyName(0, "blank.png");
+            this.imageListTreeview.Images.SetKeyName(1, "Date.png");
+            this.imageListTreeview.Images.SetKeyName(2, "accept.png");
+            this.imageListTreeview.Images.SetKeyName(3, "cross.png");
+            this.imageListTreeview.Images.SetKeyName(4, "exclamation.png");
+            this.imageListTreeview.Images.SetKeyName(5, "house.png");
+            this.imageListTreeview.Images.SetKeyName(6, "user.png");
+            this.imageListTreeview.Images.SetKeyName(7, "user_gray.png");
             // 
             // monthCalendarTasks
             // 
@@ -142,5 +160,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemBewerken;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemove;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ImageList imageListTreeview;
     }
 }
